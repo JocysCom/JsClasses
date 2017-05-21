@@ -1,0 +1,13 @@
+MySCMServerInfo
+*\MySCMServerInfo
+Thumbs.db
+*\Thumbs.db
+.scc
+*\.scc\*
+*.svn*
+*\.svn\*
+*.zip
+*.suo
+*.csproj.user
+bin
+obj

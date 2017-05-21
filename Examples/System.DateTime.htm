@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.DateTime</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+</head>
+<body>
+	<span id="TraceLog">
+		<input id="tbxDateTime" type="text" value="2006-05-22 21:11:44" />
+		<input id="btnParseDate" type="button" value="Parse Date" /></span><br />
+	Parset auto to Local: <span id="parsedDate"></span>
+	<br />
+	Parset auto to UTC: <span id="parsedUtc"></span>
+	<br />
+	Parsed as UTC to Local: <span id="parsedAsUtcLocal"></span>
+	<br />
+	Parsed as UTC to UTC: <span id="parsedAsUtcUtc"></span>
+	<br />
+	<hr />
+	Date1: <span id="spnDate1"></span>
+	<br />
+	Date2: <span id="spnDate2"></span>
+	<br />
+	Equal: <span id="spnEqual"></span>
+	<br />
+	<br />
+	yyyy-MM-dd HH:mm:ss: <span id="Time24Span"></span>
+	<br />
+	yyyy-MM-dd hh:mm tt: <span id="Time12Span"></span>
+	<br />
+
+	<script type="text/javascript" language="javascript">
+		//Trace.IsEnabled = true;
+
+
+		//var date = new System.DateTime();
+		//alert(date);
+		var lastTime = 0;
+
+		function writeTime(){
+			var now = new Date();
+			var diff = now.getTime() - lastTime;
+			Trace.Write(diff);
+			Trace.Write(now.getTime());
+			lastTime = now.getTime();
+		}
+
+		//window.setInterval("writeTime()",1000);
+		ParseDate = function(){
+			var date = document.getElementById("tbxDateTime").value;
+			var pDate = new Date().GetFromString(date);
+			document.getElementById("parsedDate").innerHTML = pDate.toString("yyyy-MM-dd HH:mm:ss.fffzzz");
+			document.getElementById("parsedUtc").innerHTML = pDate.toUTCString();
+			document.getElementById("parsedAsUtcLocal").innerHTML = new Date().GetFromUtcString(date);
+			document.getElementById("parsedAsUtcUtc").innerHTML = new Date().GetFromUtcString(date).toUTCString();
+			// 24:12
+			document.getElementById("Time24Span").innerHTML = pDate.toString("yyyy-MM-dd HH:mm:ss");
+			document.getElementById("Time12Span").innerHTML = pDate.toString("yyyy-MM-dd hh:mm tt");
+		}
+
+		function Window_Load(){
+			// Set Date 1
+			var date1 = new Date();
+			date1.setFullYear(2000,1,1);
+			date1.setHours(0,0,0,0);
+			document.getElementById("spnDate1").innerHTML = date1.toString() +"; UTC = " + date1.toUTCString()+"; Value = "+date1.getTime();
+			// Set Date 2
+			var date2 = new Date();
+			date2.setUTCFullYear(2000,1,1);
+			date2.setUTCHours(8,0,0,0);
+			document.getElementById("spnDate2").innerHTML = date2.toString() +"; UTC = " + date2.toUTCString()+"; Value = "+date2.getTime();
+			// Compare Dates.
+			document.getElementById("spnEqual").innerHTML = (date1.getTime() == date2.getTime());
+
+			document.getElementById("btnParseDate").onclick = ParseDate;
+
+			ParseDate();
+
+		}
+		
+		window.onload = Window_Load;
+		
+	</script>
+
+</body>
+</html>

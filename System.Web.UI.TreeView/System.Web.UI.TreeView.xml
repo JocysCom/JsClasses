@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE treeview SYSTEM "System.Web.UI.TreeView.dtd">
+<treeview title="Windows XP Explorer Treview">
+	<folder title="My documents" img="MyDocuments.gif">
+		<folder title="House" img="folder.gif">
+			<leaf title="What\'s going on?" code="1" img="ie_link.gif"/>
+			<leaf title="What\'s up?" code="1" img="question.gif"/>
+			<leaf title="Why you should hire me?" code="1" img="question.gif"/>
+		</folder>
+		<folder title="My images" img="MyImages.gif">
+			<leaf title="funny" code="1" img="red_ball.gif"/>
+			<leaf title="ounga ounga" code="1" img="red_ball.gif"/>
+		</folder>
+	</folder>
+	<folder title="My computer" img="computer.gif">
+		<folder title="Floppy (A:)" code="1" img="floppy.gif"/>
+		<folder title="Hard drive (C:)" code="1" img="harddrive.gif">
+			<leaf title="Linux" code="1" img="folder.gif"/>
+			<leaf title="Open source" code="1" img="folder.gif"/>
+			<leaf title="Freedom" code="1" img="folder.gif"/>
+		</folder>
+		<leaf title="Configuration Pannel" code="1" img="config.gif"/>
+		<leaf title="Shared documents" code="1" img="folder.gif"/>
+	</folder>
+	<folder title="Network" img="network.gif"/>
+	<folder title="Trash" img="trash.gif"/>
+</treeview>

@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.IO.Compression</title>
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.IO.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Convert.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.IO.Compression.debug.js"></script>
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+	<script type="text/javascript" language="javascript">
+
+		//#region Init Example
+
+		function Window_Load() {
+
+			System.Type.RegisterProperty = function (context, name) {
+				var c = context[name];
+				if (typeof (Object.defineProperty) == "function") {
+					// 8 but only on DOM objects and with some non standard behaviors
+					Object.defineProperty(context, name, { get: c.get, set: c.set });
+				} else if (typeof (context.__defineGetter__) == "function") {
+					context.__defineSetter__(name, c.set);
+					context.__defineGetter__(name, c.get);
+				} else {
+					context[name] = function (value) {
+						if (arguments.length == 0) return c.get();
+						if (arguments.length == 1) c.set(value);
+					}
+				}
+			}
+			var buffer = 0;
+			var startIndex = 0;
+			//---------------------------------------------------------
+			this.Buffer = {
+				get: function () { return buffer; },
+				set: function (value) { buffer = value; }
+			}
+			System.Type.RegisterProperty(this, "Buffer");
+			//---------------------------------------------------------
+			this.StartIndex = {
+				get: function () { return startIndex; },
+				set: function (value) { startIndex = value; }
+			}
+			System.Type.RegisterProperty(this, "StartIndex");
+			//---------------------------------------------------------
+			//StartIndex = 10;
+			this.Buffer = 20;
+
+			Trace.IsEnabled = true;
+			WriteLog("Start Demo");
+			//$("TestAesButton").onclick = TestAesButton_Click;
+			var text = "";
+			for (var i = 0; i < 100; i++) {
+				if (i > 0) text += " ";
+				text += "Demo text.";
+			}
+			document.getElementById("DecompressedTextBox").value = text;
+			System.EventsManager.Current.Add("CompressButton", "click", CompressButton_Click, true);
+			System.EventsManager.Current.Add("DecompressButton", "click", DecompressButton_Click, true);
+		}
+
+
+		function CompressButton_Click(sender, e) {
+			var text = document.getElementById("DecompressedTextBox").value;
+			var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+			var srcStream = new System.IO.MemoryStream(bytes);
+			var dstStream = new System.IO.MemoryStream();
+			srcStream.Position = 0;
+			var stream = new System.IO.Compression.DeflateStream(dstStream, System.IO.Compression.CompressionMode.Compress);
+			srcStream.CopyTo(stream);
+			stream.Close();
+			var base64 = System.Convert.ToBase64String(dstStream.ToArray());
+			document.getElementById("CompressedTextBox").value = base64;
+			WriteLog("Compress: srcStream.Length = " + srcStream.Length + ", dstStream.Length = " + dstStream.ToArray().length + "\r\n");
+
+		}
+
+		function DecompressButton_Click(sender, e) {
+			var bytes = System.Convert.FromBase64String(document.getElementById("CompressedTextBox").value);
+			var srcStream = new System.IO.MemoryStream(bytes);
+			var dstStream = new System.IO.MemoryStream();
+			srcStream.Position = 0;
+			var stream = new System.IO.Compression.DeflateStream(srcStream, System.IO.Compression.CompressionMode.Decompress);
+			stream.CopyTo(dstStream);
+			dstStream.Close();
+			var text = System.Text.Encoding.UTF8.GetString(dstStream.ToArray());
+			document.getElementById("DecompressedTextBox").value = text;
+			WriteLog("Decompress: srcStream.Length = " + srcStream.Length + ", dstStream.Length = " + dstStream.ToArray().length + "\r\n");
+		}
+
+		System.EventsManager.Current.Add(window, "load", Window_Load, true);
+
+		//#endregion
+
+		//#region Log Function
+
+		function WriteLog(text) {
+			Trace.Write("<code>" + text + "</code>");
+		}
+
+		function WriteEnc(input, output) {
+			WriteLog("Transform: " + System.BitConverter.ToString(input, '') +
+			" -> " + System.BitConverter.ToString(output, ''));
+		}
+
+		//#endregion
+
+	</script>
+</head>
+<body>
+	<table border="0" cellpadding="0" cellspacing="4" class="DebugTable">
+		<tr>
+			<td>
+				Decompressed:<br />
+				<textarea id="DecompressedTextBox" cols="64" rows="6"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input id="CompressButton" type="button" value="Compress" class="SWUI_Prg" />
+				<input id="DecompressButton" type="button" value="Decompress" class="SWUI_Prg" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Compressed:<br />
+				<textarea id="CompressedTextBox" cols="64" rows="6"></textarea>
+			</td>
+		</tr>
+	</table>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+</body>
+</html>

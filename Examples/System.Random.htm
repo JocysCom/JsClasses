@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Random</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Convert.debug.js"></script>
+
+	<script type="text/javascript" language="javascript">
+		function Window_Load(){
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			Trace.Write("----------------------------");
+			Trace.Write("var rnd = new System.Random();");
+			var rnd = new System.Random();
+			Trace.Write("// Generate: 0 <= value < Integer.MAX_VALUE - (2^31)-1");
+			Trace.Write("var value = rnd.Next(); // value = "+rnd.Next());
+			Trace.Write("// Generate: 0 <= value < 128");
+			Trace.Write("value = rnd.Next(128); // value = "+rnd.Next(128));
+			Trace.Write("// Generate: 0 <= value < 256");
+			Trace.Write("value = rnd.Next(0, 256); // value = "+rnd.Next(0, 255));
+			// Declare array with length of 16.
+			var bytes = new Array(16);
+			rnd.NextBytes(bytes);
+			Trace.Write("// Fill bytes[16] with random numbers:");
+			Trace.Write(bytes.join());
+			Trace.Write("Done");
+		}
+		window.onload = Window_Load;
+		
+	</script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+</body>
+</html>

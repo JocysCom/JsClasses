@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Untitled Page</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.Interface.debug.js"></script>
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+<script type="text/javascript" language="javascript">
+window.onload = function(){
+	Trace.IsEnabled = true;
+	Trace.Write("Start Demo");
+	var helpHeader = new System.Web.UI.Interface.HelpHeader("helpHeader",document,"Help Header","use .setSubject(s), .setBody(s), setImage(s) to set properties","../../Images/Icons/TicketState_unknown.48x48.png");
+	Trace.Write(helpHeader.id);
+	document.body.appendChild(helpHeader.Node);
+}
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Untitled Page</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.Interface.debug.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+	<div id="ControlsHolder" style="width: 800px; height: 100px; border: solid 1px #000000;
+		margin-top: 8px;">
+	</div>
+
+	<script type="text/javascript" language="javascript">
+
+function firstButton_Click(){
+	Trace.Write("First Button Click");
+}
+
+function secondButton_Click(){
+	Trace.Write("Second Button Click");
+}
+
+function Window_Load(){
+	Trace.IsEnabled = true;
+	Trace.Write("Start Demo");
+	// Create toolbar.
+	var toolBar = new System.Web.UI.Interface.ToolBar("MyToolBar");
+	// Add toolbar to document.
+	$("ControlsHolder").appendChild(toolBar.Node);
+	// Create Bar.
+	var bar = new System.Web.UI.Interface.Bar("MainBar", document, "Bar Title");
+	toolBar.Add(bar);
+	// Create first button.
+	var firstButton = new System.Web.UI.Interface.Button("FirstButton", document);
+	firstButton.SetText("First");
+	firstButton.SetImage("Images/Icons/Options-16x16.png");
+	firstButton.SetTitle("First Button");
+	firstButton.customAction = firstButton_Click;
+	bar.Add(firstButton);	
+	// Create second button.
+	var secondButton = new System.Web.UI.Interface.Button("SecondButton", document);
+	secondButton.SetText("Second");
+	secondButton.SetImage("Images/Icons/Trace.16x16.png");
+	secondButton.SetTitle("Second Button");
+	secondButton.customAction = secondButton_Click;
+	bar.Add(secondButton);	
+}
+
+window.onload = Window_Load;
+	
+	</script>
+
+</body>
+</html>

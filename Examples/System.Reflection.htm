@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Interface Test</title>
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+
+	<script type="text/javascript" language="javascript">
+
+		var System = System ? System : {}
+
+		System.EventArgs = function(name){
+			/// <summary>
+			/// Event arguments.
+			/// </summary>
+			/// <param name="name">Name of event</param>
+			this.Name = "";
+			//---------------------------------------------------------
+			this.ToString = function(){
+				/// <summary>
+				/// Convert this object to string representation.
+				/// </summary>
+				var results = "";
+				for (var property in this){
+					var skip = false;
+					// Don't show own methods.
+					skip = skip || (property == "Initialize");
+					skip = skip || (property == "ToString");
+					if (!skip) results += property+"='"+this[property]+"';";
+				}
+				results = "e["+results+"]";
+				return results;
+			}
+			//---------------------------------------------------------
+			this.Initialize = function(name){
+				this.Name = name ? name : "";
+			}
+			this.Initialize.apply(this, arguments);
+		}
+
+		var MyNamespace = MyNamespace ? MyNamespace : {}
+
+		MyNamespace.DataView = function(){
+			/// <summary>
+			/// Initializes a new instance of the System.Data.DataView class.
+			/// </summary>
+			/// <remarks>These XML Comments were created only for IntelliSense.</remarks>
+		}
+
+		MyNamespace.DataView = function(array){
+			/// <summary>
+			/// Initializes a new instance of the System.Data.DataView class with the specified
+			/// System.Data.DataTable.
+			/// </summary>
+			/// <param type="string[]" name="array">A string[] to add to the MyNamespace.DataView.</param>
+			/// <remarks>These XML Comments were created only for IntelliSense.</remarks>
+		}
+
+		MyNamespace.DataView = function(id, context){
+			/// <summary>
+			/// Initializes a new instance of the System.Data.DataView class with the specified
+			/// System.Data.DataTable.
+			/// </summary>
+			/// <param type="string" name="id">ID of HTML DOM node.</param>
+			/// <param type="window" name="context">Context where HTML DOM node will be created.</param>
+			//---------------------------------------------------------
+			this.id = "";
+			this.Context = null;
+			this.DataSource = null
+ 			this.Node = null;
+ 			//---------------------------------------------------------
+			// This property is required.
+			var me = this;
+			//---------------------------------------------------------
+			// Function which runs external function if it was attached.
+			function riseEvent(e){ if (this[e.Name]){ this[e.Name](this,e) } }
+			//---------------------------------------------------------
+			// Assign 'null' to event handlers.
+			this.OnInit = null;
+			this.OnDataBound = null
+			this.OnClick = null;
+			//---------------------------------------------------------
+			this.DataBind = function(){
+				// Bind array to Node.
+				var text = "";
+				for (var i = 0; i < this.DataSource.length; i++){
+					text += this.DataSource[i]+",";
+				}
+				this.Node.innerHTML = "Data: "+text+" - Click Here.";
+				var e = new System.EventArgs("OnDataBound");
+				// Always: set parameter first time with quotes.
+				// Get parameter value with e.Data reference.
+				e["Data"] = this.DataSource;
+				this.RiseEvent(e);
+			}
+ 			//---------------------------------------------------------
+			this.onClick = function(sender, e){
+				sender.Node.innerHTML = "Clicked! Wait...";
+				// Display content of node after 1 second.
+				// We need to use 'me' otherwise we will loose reference to object.
+				setTimeout(function(){ me.Node.innerHTML += "Done."; },1000);
+			}
+			//---------------------------------------------------------
+			// INIT: InitializeInterface
+			//---------------------------------------------------------
+			function initializeInterface(sender, e){
+				this.Node = this.Context.createElement("div");
+				this.Node.style.position = "absolute";
+				this.Node.style.top = "10px";
+				this.Node.style.left = "10px";
+				this.Node.style.cursor = "pointer";
+				this.Node.style.padding = "8px";
+				this.Node.style.border = "solid 1px #000000";
+				this.Node.style.backgroundColor = "#d0ffd0";
+				this.Node.innerHTML = "no data";
+				this.Context.body.appendChild(this.Node);
+			}
+   			//---------------------------------------------------------
+			function initializeEvents(sender, e){
+				this.Node.onclick = function(){ me.onClick(me, new System.EventArgs("OnClick")) };
+			}
+			//---------------------------------------------------------
+			function initialize(){
+				// By default use current document.
+				this.Context = context ? context : document;
+				// Set submited values or default values.
+				this.id = id ? id : "";
+        			// Create HTML Element.
+				initializeInterface.call(this);
+				// Attach events.
+				initializeEvents.call(this);
+				// Rise init event.
+				riseEvent.call(new System.EventArgs("OnInit"));
+			}
+			initialize.apply(this, arguments); 
+		}
+
+		function class1_OnDataBound(sender, e){
+			alert("Data DataSource["+e.Data+"] was binded to "+sender.Type);
+		}
+		
+		
+
+
+		function Window_Load(){
+			// Create array with some Data.
+			var array = [];
+			array.push("one");
+			array.push("two");
+			// Create class.
+			var class1 = new MyNamespace.DataView();
+			// Bind function to event.
+			class1.OnDataBound = class1_OnDataBound;
+			// Set data source.
+			class1.DataSource = array;
+			// Bind Data. 
+			class1.DataBind();
+		}
+
+		window.onload = Window_Load;
+
+	</script>
+
+</head>
+<body>
+	<span id="statusMessage"></span>
+</body>
+</html>

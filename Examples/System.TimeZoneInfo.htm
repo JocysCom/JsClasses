@@ -1,0 +1,82 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Web.Mobile</title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.IO.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Convert.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.Mobile.debug.js"></script>
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+	<script type="text/javascript" language="javascript">
+
+		//#region Init Example
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			WriteLog("Start Demo");
+			WriteLog(new Date("2007-01-01T00:00Z"));
+			WriteLog(new Date("0001-01-01T00:00Z"));
+
+			//System.EventsManager.Current.Add("ResetDataButton", "click", ResetDataButton_Click, true);
+			//System.EventsManager.Current.Add("SaveDataButton", "click", SaveDataButton_Click, true);
+			//System.EventsManager.Current.Add("SendToServer", "click", SendToServer_Click, true);
+			//System.EventsManager.Current.Add("ClearCardButton", "click", ClearCardButton_Click, true);
+		}
+
+		System.Web.Mobile.DataLoaded = function (sender, e) {
+			Trace.Write("Got value from Server.");
+			var r = new System.Web.Mobile.KeyValueList();
+			r.Load(e, false)
+			if (r.GetValue("ErrorCode") > 0) {
+				Trace.Write(r.GetValue("ErrorMessage"));
+				return;
+			}
+			switch (r.GetValue("DataType")) {
+				case "TimeZones":
+					var timeZones = r.GetValue("TimeZones");
+					break;
+				default:
+			}
+		}
+
+		System.EventsManager.Current.Add(window, "load", Window_Load, true);
+
+		//#endregion
+
+		//#region Log Function
+
+		function WriteLog(text) {
+			Trace.Write("<code>" + text + "</code>");
+		}
+
+		function WriteEnc(input, output) {
+			WriteLog("Transform: " + System.BitConverter.ToString(input, '') +
+			" -> " + System.BitConverter.ToString(output, ''));
+		}
+
+		//#endregion
+
+	</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td align="right">
+				<input id="SaveDataButton" type="button" value="Save" class="SWUI_Prg SWUI_Prg_Button" />
+			</td>
+			<td>Get RSA Key from server, encrypt and save protected card data localy. </td>
+		</tr>
+		<tr>
+			<td valign="top"></td>
+			<td style="width: 100%;" valign="top">
+				<div id="TraceLog" style="width: 100%; height: 600px;"></div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

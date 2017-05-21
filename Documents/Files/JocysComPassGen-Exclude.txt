@@ -1,0 +1,9 @@
+MySCMServerInfo
+*\MySCMServerInfo
+Thumbs.db
+*\Thumbs.db
+.scc
+*\.scc\*
+*.svn*
+*\.svn\*
+*.zip

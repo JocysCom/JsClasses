@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Untitled Page</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Text.CodeColorizer.debug.js"></script>
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+<div id="sqlCode">
+-- Make sure that database name corresponds to name of your database!<br />
+USE PinnacleCSS<br />
+-- Script to automatically re-index all tables in a database. ERT: 4 min.<br />
+DECLARE @TableName sysname<br />
+DECLARE TableCursor CURSOR FOR<br />
+SELECT [table_name] FROM [information_schema].[tables] WHERE [table_type] = 'base table'<br />
+OPEN TableCursor<br />
+FETCH NEXT FROM TableCursor INTO @TableName<br />
+WHILE @@FETCH_STATUS = 0<br />
+BEGIN<br />
+    SELECT @TableName AS 'Reindexig Table'<br />
+    -- Do reindexing of table.<br />
+    DBCC DBREINDEX (@TableName)<br />
+    FETCH NEXT FROM TableCursor INTO @TableName<br />
+END<br />
+CLOSE TableCursor<br />
+DEALLOCATE TableCursor<br />
+</div>
+<div id="divColorized"></div>
+<script type="text/javascript" language="javascript">
+window.onload = function(){
+	Trace.IsEnabled = true;
+	Trace.Write("Start Demo");
+	var colorizer = new System.Text.CodeColorizer.Colorizer();
+	var div = document.getElementById("sqlCode");
+	var code = (div.innerText) ? div.innerText : div.textContent;
+	//alert(code);
+	document.getElementById("divColorized").innerHTML = colorizer.GetHtml(code,"SQL");
+}
+</script>
+
+
+</body>
+</html>

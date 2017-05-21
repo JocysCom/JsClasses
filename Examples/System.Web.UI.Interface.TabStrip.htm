@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Untitled Page</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.Interface.debug.js"></script>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+<div id="TabStripHolder" style="width: 800px; height: 300px; margin-top: 8px;"></div>
+<script type="text/javascript" language="javascript">
+
+MultiPage_PropertyChange = function(sender,e){
+	Trace.Write("on MultiPage_PropertyChange(sender[id='"+sender.id+"';Name='"+sender.Name+"';Type='"+sender.Type+"'],e[Name='"+e.Name+"'])");
+}
+
+TabStrip_PropertyChange = function(sender,e){
+	Trace.Write("on TabStrip_PropertyChange(sender[id='"+sender.id+"';Name='"+sender.Name+"';Type='"+sender.Type+"'],e[Name='"+e.Name+"'])");
+}
+
+window.onload = function(){
+	Trace.IsEnabled = true;
+	Trace.Write("Start Demo");
+	// Create Tab Strip.
+	var tabStrip = new System.Web.UI.Interface.TabStrip("Interface.TabStrip");
+	// Add Tabstrip to Page.
+	document.getElementById("TabStripHolder").appendChild(tabStrip.Node);
+	// Create multipage.
+	var multiPage = new System.Web.UI.Interface.MultiPage("Interface.MultiPage");
+	// Fire events on change.
+	multiPage.OnPropertyChange = MultiPage_PropertyChange;
+	tabStrip.OnPropertyChange = TabStrip_PropertyChange;
+	// Link MultiPage with TabStrip.
+	tabStrip.SetMultiPage(multiPage);
+	// Add strip.
+	tabStrip.Add("MainListStrip","Main","Images/Icons/Options-16x16.png","System.FrameEmpty.htm",true);
+	// Add strip.
+	tabStrip.Add("AdminStrip","Administration","Images/Icons/Administration.16x16.png","System.Random.htm",false);
+}
+</script>
+
+
+</body>
+</html>

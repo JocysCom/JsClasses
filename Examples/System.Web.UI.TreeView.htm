@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Untitled Page</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.TreeView.debug.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.TreeView/System.Web.UI.TreeView.css" />
+	<style type="text/css">
+			.TW_Folder {
+				background: url(http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-ipE-VYPjSWR2LGOChcArA-c1&t=632805362451875000);
+				background-repeat: repeat-y;
+				background-position: left;				
+			}
+			.TW_Container {
+				margin-left: 19px;
+			 }
+			.TW_Line {
+				background: url(http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-ipE-VYPjSWR2LGOChcArA-c1&t=632805362451875000);
+				background-repeat: repeat-y;
+				background-position: left;				
+			}
+			.TW_Folder table { height: 20px; border-collapse: collapse;}
+			.TW_Folder table tbody tr td { padding: 0;  font-family: Verdana; font-size: 8pt;}
+			.TW_File { }
+			.TW_File table { height: 20px; border-collapse: collapse;}
+			.TW_File table tbody tr td { padding: 0; cursor: default; font-family: Verdana; font-size: 8pt; }
+			.TW_File table tbody { }
+			.TW_Cell_Ident { width: 19px;}
+			.TW_Cell_Icon { width: 16px; height: 16px; }
+			.TW_Cell_Name {}
+			.TW_Cell_Name div { margin: 0 0 0 1px; padding: 2px 3px 2px 3px; }
+			.TW_Cell_Name_Hover div {  margin: 0 0 0 1px; border: activecaption 1px solid; background-color: #c0c0ff; color: #000000; padding: 1px 2px 1px 2px; cursor: default; }
+			.TW_Cell_Value { }
+			.TW_Cell_Value div { color: blue; padding-left: 2px; }
+			.tt {
+
+			}
+			
+		</style>
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+
+	<script language="javascript" type="text/javascript">
+
+		function PageInit(){
+			var scriptedTree = document.getElementById("ScriptedTree");		
+			var n_0 = new System.Web.UI.TreeView.Item(null, null, "File", null, "Node-0", "");
+			var n_1 = new System.Web.UI.TreeView.Item(null, null, "Folder", null, "Node-1", "20");
+			scriptedTree.appendChild(n_0.Node);
+			scriptedTree.appendChild(n_1.Node);
+		}
+
+		window.onload = function(){
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			var treeView = new System.Web.UI.TreeView(document,"someTree","../../../Scripts/Classes/System.Web.UI.TreeView");
+			treeView.SetParam("param-img-directory","'../System.Web.UI.TreeView/Images/'");
+			//alert(treeView.GetParam("param-img-directory"));
+			treeView.DataBind();
+			//param-img-directory
+			document.body.appendChild(treeView.Node);
+			PageInit();
+		}
+
+//// ***********************************************
+//// AUTHOR: WWW.CGISCRIPT.NET, LLC
+//// URL: http://www.cgiscript.net
+//// Use the script, just leave this message intact.
+//// Download your FREE CGI/Perl Scripts today!
+//// ( http://www.cgiscript.net/scripts.htm )
+//// ***********************************************
+
+
+
+//startPop = function(thisurl,thiswidth,thisheight) {
+//	var popUp = 0;
+//	var popURL = 0;
+//	var popWidth = 0;
+//	var popHeight = 0;
+
+//	var thisMargin = 10;
+
+//	var popTopPosition = thisMargin;
+//	var popLeftPosition = thisMargin;
+
+//	var pause = 20;
+//	var step = 10;	// The higher the number, the faster the window.
+//	var timer = 0;
+
+//	var screenWidth = 0;
+//	var screenHeight = 0;
+
+//	var endX = 0;
+//	var endY = 0;
+
+
+//	this.popURL = thisurl;
+//	this.popWidth = thiswidth;
+//	this.popHeight = thisheight;
+
+//	this.popUp = window.open(popURL, "traveler","toolbar=no,width="+popWidth+",height="+popHeight+",top="+popTopPosition+",left="+(popLeftPosition)+"");
+
+//	this.screenWidth = window.screen.width;
+//	this.screenHeight = window.screen.height;
+//	this.endX = screenWidth - thiswidth - thisMargin;
+//	this.endY = screenHeight - thisheight - thisMargin;
+
+//	var me = this;
+
+//	this.movedown = function(){
+//		if (popTopPosition <= endY - 50) {
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			popTopPosition += step;
+//			timer = setTimeout(function(){ me.movedown(); },pause);
+//		}else{
+//			clearTimeout(timer);
+//			popTopPosition = endY - 50;
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			this.moveright();
+//		}
+//	}
+
+//	this.moveright = function() {
+//		if (popLeftPosition <= endX){
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			popLeftPosition += step;
+//			timer = setTimeout(function(){ me.moveright(); },pause);
+//		}else{
+//			clearTimeout(timer);
+//			popLeftPosition = endX;
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			this.moveup();
+//		}
+//	}
+
+//	this.moveup = function(){
+//		if (popTopPosition >= thisMargin) {
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			popTopPosition -= step;
+//			timer = setTimeout(function(){ me.moveup(); },pause);
+//		}else{
+//			clearTimeout(timer);
+//			popTopPosition = thisMargin;
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			this.moveleft();
+//		}
+//	}
+//	// 
+//	this.moveleft = function() {
+//		if (popLeftPosition >= thisMargin){
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//			popLeftPosition -= step;
+//			timer = setTimeout(function(){ me.moveleft(); },pause);
+//		}else{
+//			clearTimeout(timer);
+//			popLeftPosition = thisMargin;
+//			this.popUp.moveTo(popLeftPosition,popTopPosition);
+//		}
+//	}
+//	window.setTimeout(function(){ me.movedown(); }, 2000);
+//}
+
+//var popUp = new startPop('popup_window.htm','300','200');
+
+	</script>
+
+	<div class="TW_File">
+		<table>
+			<tbody>
+				<tr>
+					<td class="TW_Cell_Ident">
+						<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-ikdzGXF7hA8ZnzSegLIvkd01&t=632805362451875000" /></td>
+					<td class="TW_Cell_Icon">
+						<img src="/Images/Icons/Favorites.16x16.png" /></td>
+					<td class="TW_Cell_Name">
+						<div>
+							Node-0</div>
+					</td>
+					<td class="TW_Cell_Value">
+						<div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="TW_Folder">
+		<table>
+			<tbody>
+				<tr>
+					<td class="TW_Cell_Ident">
+						<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-itYeQ_4CDHgcoGehm91Duf1r_2RUNFMxISYNPhcDWHHq0&t=632805362451875000" /></td>
+					<td class="TW_Cell_Icon">
+						<img src="/Scripts/Classes/System.Web.UI.TreeView/Images/Icons/Folder_false-16x16.png" /></td>
+					<td class="TW_Cell_Name_Hover">
+						<div>
+							Node-1</div>
+					</td>
+					<td class="TW_Cell_Value">
+						<div>
+							[20]</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="TW_Container" style="background-color: #d0d0d0">
+			<div class="TW_Folder">
+				<table>
+					<tbody>
+						<tr>
+							<td class="TW_Cell_Ident">
+								<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-itYeQ_4CDHgcoGehm91Duf1r_2RUNFMxISYNPhcDWHHq0&t=632805362451875000" /></td>
+							<td class="TW_Cell_Icon">
+								<img src="/Scripts/Classes/System.Web.UI.TreeView/Images/Icons/Folder_false-16x16.png" /></td>
+							<td class="TW_Cell_Name_Hover">
+								<div>
+									Node-1</div>
+							</td>
+							<td class="TW_Cell_Value">
+								<div>
+									[20]</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="TW_Container" style="background-color: #a0a0a0">
+					<div class="TW_File">
+						<table>
+							<tbody>
+								<tr>
+									<td class="TW_Cell_Ident">
+										<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-ikdzGXF7hA8ZnzSegLIvkd01&t=632805362451875000" /></td>
+									<td class="TW_Cell_Icon">
+										<img src="/Images/Icons/Favorites.16x16.png" /></td>
+									<td class="TW_Cell_Name">
+										<div>
+											Node-2</div>
+									</td>
+									<td class="TW_Cell_Value">
+										<div>
+											[7]</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="TW_File">
+						<table>
+							<tbody>
+								<tr>
+									<td class="TW_Cell_Ident">
+										<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-io55DPnIdwkaTmK7YnzQK3g1&t=632805362451875000" /></td>
+									<td class="TW_Cell_Icon">
+										<img src="/Images/Icons/Favorites.16x16.png" /></td>
+									<td class="TW_Cell_Name">
+										<div>
+											Node-2</div>
+									</td>
+									<td class="TW_Cell_Value">
+										<div>
+											[7]</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="TW_File">
+				<table>
+					<tbody>
+						<tr>
+							<td class="TW_Cell_Ident">
+								<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-io55DPnIdwkaTmK7YnzQK3g1&t=632805362451875000" /></td>
+							<td class="TW_Cell_Icon">
+								<img src="/Images/Icons/Favorites.16x16.png" /></td>
+							<td class="TW_Cell_Name">
+								<div>
+									Node-2</div>
+							</td>
+							<td class="TW_Cell_Value">
+								<div>
+									[7]</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="TW_File">
+		<table>
+			<tbody>
+				<tr>
+					<td class="TW_Cell_Ident">
+						<img src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-io55DPnIdwkaTmK7YnzQK3g1&t=632805362451875000" /></td>
+					<td class="TW_Cell_Icon">
+						<img src="/Images/Icons/Favorites.16x16.png" /></td>
+					<td class="TW_Cell_Name">
+						<div>
+							Node-2</div>
+					</td>
+					<td class="TW_Cell_Value">
+						<div>
+							[7]</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<hr />
+	<div id="ScriptedTree" style="padding: 8px;">
+	</div>
+	<div class="TW_Folder" style="background-color: #d0d0d0; height: 36px;">
+	</div>
+	<div class="TW_Container" style="background-color: #a0a0a0; height: 36px;">
+		<div style="background-color: #808080; height: 100%; width: 19px; position: relative;
+			float: left; left: 19px; overflow: hidden;">
+			<div class="TW_Line" style="height: 100%; position: relative; width: 19px; top: -8px;"></div>
+		</div>
+		<div class="TW_File" style="position: relative; background-color: Red; padding: 0; margin: 0; overflow:hidden;">
+			<table style="background-color: Green;">
+				<tbody>
+					<tr>
+						<td class="TW_Cell_Ident">
+							<img style="padding: 0; margin: 0;" vspace="0" hspace="0" src="http://css/WebResource.axd?d=wZvkaPHHbK_MFQNJMEK-io55DPnIdwkaTmK7YnzQK3g1&t=632805362451875000" /></td>
+						<td class="TW_Cell_Icon">
+							<img src="/Images/Icons/Favorites.16x16.png" /></td>
+						<td class="TW_Cell_Name">
+							<div>
+								Node-2</div>
+						</td>
+						<td class="TW_Cell_Value">
+							<div>
+								[7]</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

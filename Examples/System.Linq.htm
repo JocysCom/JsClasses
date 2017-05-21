@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Linq</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	
+	<script type="text/javascript" language="JavaScript" src="Scripts/LogFunctions.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Linq.debug.js"></script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+
+	<script type="text/javascript" language="javascript">
+
+		// Good source of info.
+		// http://newt.codeplex.com/
+
+		Array.prototype.Where = function(source, predicate) {
+			/// <summary>Filters a sequence of values based on a predicate.</summary>
+			/// <param name="source">An System.Collections.Generic.IEnumerable<T> to filter.</param>
+			/// <param name="predicate">A function to test each element for a condition.</param>
+			/// <returns>
+			/// An System.Collections.Generic.IEnumerable<T> that contains elements from
+			/// the input sequence that satisfy the condition.
+			/// </returns>
+			WriteLog(arguments.length);
+		}
+		// public static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate);
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			WriteLog("Start Demo");
+
+			var a = new Array(10);
+			for (var i = 0; i < a.length; i++) a[i] = i;
+
+			var z = a.Where(function(x) { return x == 0; });
+		
+		}
+
+		window.onload = Window_Load;
+
+	</script>
+
+</body>
+</html>

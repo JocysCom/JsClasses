@@ -1,0 +1,17 @@
+// Help: Javascript inheritance:
+//		http://www.kevlindev.com/tutorials/javascript/inheritance/
+//		http://prototype.conio.net/
+//		http://docs.sun.com/source/816-6408-10/function.htm#1194243
+//=============================================================================
+
+// Some Links: Autocomplete Example.
+// dropdown - http://www.objectgraph.com/dictionary/how.html  
+// fill - http://www.mattkruse.com/javascript/autocomplete/
+// Theme swich functions: http://liorean.web-graphics.com/scripts/themeswitch.html
+// Node add administrator:  Favorite Links Manager...  <BUTTON id=btn1 onclick="window.external.AddFavorite(parent.fm2.document.location, parent.fm2.document.title)">Add to Favorites >></BUTTON>
+
+
+// http://www.famfamfam.com/lab/icons/
+
+//Recommended Tags for Documentation Comments... /// <summary>...
+//http://msdn2.microsoft.com/en-us/library/5ast78ax(VS.80).aspx

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.BigInt</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.BitConverter.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.BigInt.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="Scripts/LogFunctions.js"></script>
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+	<script type="text/javascript" language="javascript">
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			WriteLog("Start Demo");
+			var r;
+			WriteLog("// Import from HEX and DEC strings.");
+			WriteLog("var n1 = new BigInt(\"010203040506\");");
+			WriteLog("var n2 = new BigInt(\"-280422911905295\");");
+			var n1 = new System.BigInt("0x010203040506");
+			var n2 = new System.BigInt("-280422911905295");
+			WriteLog("//-----------");
+			WriteLog("n1 (H) = " + n1.ToHex());
+			WriteLog("n1 (D) = " + n1.ToDecimal());
+			WriteLog("n1 (B) = " + System.BitConverter.ToString(n1.ToByteArray()));
+			WriteLog("n2 (H) = " + n2.ToHex());
+			WriteLog("n2 (D) = " + n2.ToDecimal());
+			WriteLog("n2 (B) = " + System.BitConverter.ToString(n2.ToByteArray()));
+			WriteLog("//-----------");
+			// Negate.
+			var nn1 = new System.BigInt();
+			var nn2 = new System.BigInt();
+			nn1.CopyFrom(n1);
+			nn2.CopyFrom(n2);
+			System.BigInt.Negate(nn1);
+			System.BigInt.Negate(nn2);
+			WriteBi2("n1 * -1", nn1);
+			WriteBi2("n2 * -1", nn2);
+			// Add and subtract.
+			r = System.BigInt.Add(n1, n2);
+			WriteBi2("n1 + n2", r);
+			WriteBi2("   - n1", System.BigInt.Subtract(r, n1));
+			WriteBi2("   - n2", System.BigInt.Subtract(r, n2));
+			// Multiply and divide.
+			r = System.BigInt.Multiply(n2, n1);
+			WriteBi2("n1 * n2", r);
+			var qBi = new System.BigInt();
+			var rBi = new System.BigInt();
+			System.BigInt.Divide(r, n1, qBi, rBi)
+			WriteBi2("   / n1", qBi);
+			//System.BigInt.Divide(r, n2, qBi, rBi)
+			//WriteBi2("   / n2", qBi);
+		}
+
+		window.onload = Window_Load;
+
+	</script>
+</body>
+</html>

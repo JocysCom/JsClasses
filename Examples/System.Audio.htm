@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<title>System.Audio</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en" />
+
+	<style type="text/css">
+		A:link { text-decoration: none; }
+		A:visited { text-decoration: none; }
+		A:active { text-decoration: none; }
+		A:hover { text-decoration: none; }
+
+		A:link.Track { color: #ff0000; text-decoration: none; }
+		A:visited.Track { color: #ff0000; text-decoration: none; }
+		A:active.Track { color: #ff0000; text-decoration: none; }
+		A:hover.Track { color: #0000ff; text-decoration: none; }
+		.Track { font-family: Courier New; font-size: 8pt; }
+	</style>
+
+</head>
+
+<body style="background-color: #dddddd; margin: 0px;">
+
+	<center>
+
+		<div style="width: 460px; padding: 10px; background-color: #eeeeee; text-align: justify; font-family: Courier New; font-size: 8pt;">
+			<p style="text-align: center;"><a target="_blank" href="/">Jocys.com</a> Audio Background Effects 1.1.0.0 (2008-11-26)</p>
+			<p>JavaScript (<a href="System.Audio.js">System.Audio.js</a>) allows you to auto-play different MP3 files if horizontal position of mouse pointer is over marked part of the page. Very useful when you want to vary reading of e-book by adding sounds related to text.</p>
+			<p>You can copy <span style="color: #008000">Audio Background, Player, START Track</span> and <span style="color: #008000">END Track</span> script codes from page source. Also you need to download XSPF (Flash) Player <a href="/Common/XSPF_Player/xspf_player_v3.6.swf">xspf_player_v3.6.swf</a> and its script file <a href="/Common/XSPF_Player/xspf_player_v3.6.as">xspf_player_v3.6.as</a></p>
+			<p>For developers: editable file <a href="/Common/XSPF_Player/xspf_player_v3.6.fla">xspf_player_v3.6.fla</a> and about changes of standard XSPF (Flash) Player <a href="/Common/XSPF_Player/Changes.txt">Changes.txt</a></p>
+			<p style="text-align: right; margin-bottom: 0">If you have an advice: <a href="mailto:info@soft.lt?subject=Jocys.com Audio Background Effects">info@soft.lt</a></p>
+		</div>
+
+		<!-- Audio Background Script Start -->
+		<script type="text/javascript" language="javascript" src="http://www.jocys.com/Common/JsClasses/Examples/System.Audio.js"></script>
+		<!-- Audio Background Script End -->
+
+		<div style="width: 460px; padding: 10px; background-color: #ffffff; text-align: justify; font-family: Verdana; font-size: 8pt;">
+
+			<center>
+				<!-- Audio Background Player Start -->
+				<table cellpadding="0" cellspacing="0" id="PlayerPlaceHolder" style=" border-collapse:collapse; width: 400px; background-color: #cccccc; border: solid 1px #cccccc; text-align: left;" title="Audio Background Player">
+					<tr>
+						<td>
+							<input type="checkbox" id="AudioEnabledCheckBox" checked="checked" style="vertical-align: middle;" /><label for="AudioEnabledCheckBox" style="font-family: Arial; font-size: 7pt; color: #585858;">Audio Background Enabled</label><br />
+							<input readonly="readonly" type="text" id="EyePosition" name="EyePosition" value="" size="47" style="width: 100%; border: 0px; text-align: left; background-color: #dddddd; color: #585858; font-family: Arial; font-size: 7pt; margin-bottom: 2px;" /><br />
+							<object type="application/x-shockwave-flash" style="margin: 0; width: 100%; height: 18px;" id="PlayerObject" height="18" data="http://www.jocys.com//Common/XSPF_Player/xspf_player_v3.6.swf?autoplay=1&song_url=">
+								<param name="movie" value="http://www.jocys.com/Common/XSPF_Player/xspf_player_v3.6.swf?autoplay=1&song_url=" />
+								<param name="allowScriptAccess" value="always" />
+							</object>
+						</td>
+					</tr>
+				</table>
+				<!-- Audio Background Player End -->
+			</center>
+
+			<p style="margin: 0px; border-bottom: dotted 1px #000000;">&nbsp;</p>
+
+			<!-- Audio Background START Track Start -->
+			<p><a class="Track" href="http://www.jocys.com/Vaidotas/audio/Koto - Tender Force.mp3" title="Koto - Tender Force">START Track 1</a></p>
+			<!-- Audio Background START Track End -->
+
+			<p style="text-align: center;"><img src="/Common/XSPF_Player/Force.jpg" style="width: 460px; height: 211px;" alt="Force" /></p>
+
+			<p>It has been related to me, O happy King, said Shahrazad, that there was a certain merchant who had great wealth, and traded extensively with surrounding countries; and one day he mounted his horse, and journeyed to a neighbouring country to collect what was due to him, and, the heat oppressing him, he sat under a tree, in a garden, and put his hand into his saddle-bag, and ate a morsel of bread and a date which were among his provisions. Having eaten the date, he threw aside the stone, and immediately there appeared before him an ‘Efrit, of enormous height, who, holding a drawn sword in his hand, approached him, and said, Rise, that I may kill thee, as thou hast killed my son.</p>
+
+			<!-- Audio Background END Track Start -->
+			<p><a class="Track"><span style="color: #ff0000;">END Track 1</span></a></p>
+			<!-- Audio Background END Track End -->
+
+			<p style="color: #999999;">The merchant, on hearing these words, exclaimed, Verily to God we belong, and verily to Him we must return! There is no strength nor power but in God, the High, the Great! If I killed him, I did it not intentionally, but without knowing it; and I trust in thee that thou wilt pardon me. — The Jinni answered, Thy death is indispensable, as thou hast killed my son: — and so saying, he dragged him, and threw him on the ground, and raised his arm to strike him with the sword.</p>
+
+			<p><a class="Track" href="http://www.jocys.com/Vaidotas/audio/Chris Rea - The Road To Hell.mp3" title="Chris Rea - The Road To Hell">START Track 2</a></p>
+
+			<p style="text-align: center;"><img src="/Common/XSPF_Player/Road.jpg" style="width: 460px; height: 211px;" alt="The Road To Hell" /></p>
+
+			<p>Time consists of two days; this, bright; and that, gloomy; and life, of two moieties; this, safe; and that, a fearful.</p>
+
+			<p>Say to him who hath taunted us on account of misfortunes, Doth fortune oppose any but the eminent?</p>
+			<p>Dost thou observe that corpses float upon the sea, while the precious pearls remain in its furthest depths?</p>
+			<p>When the hands of time play with us, misfortune is imparted to us by its protracted kiss.</p>
+
+			<p><a class="Track"><span style="color: #ff0000;">END Track 2</span></a></p>
+
+			<p><a class="Track" href="http://www.jocys.com/Vaidotas/audio/Vanessa Mae - Contradanza.mp3" title="Vanessa Mae - Storm">START Track 3</a></p>
+
+			<p style="text-align: center;"><img src="/Common/XSPF_Player/Violin.jpg" style="width: 460px; height: 211px;" alt="Violin" /></p>
+
+			<p> &#151; When he had finished reciting these verses, the Jinni said to him, Spare thy words, for thy death is unavoidable.</p>
+			<p>Then said the merchant, Know, O &#145;Efrit, that I have debts to pay, and I have much property, and children, and a wife, and I have pledges also in my possession: let me, therefore, go back to my house, and give to every one his due, and then I will return to thee: I bind myself by a vow and covenant that I will return to thee, and thou shalt do what thou wilt; and God is witness of what I say. &#151; Upon this, the Jinni accepted his covenant, and liberated him; granting him a respite until the expiration of the year.</p>
+
+			<p><a class="Track"><span style="color: #ff0000;">END Track 3</span></a></p>
+
+			<p style="color: #999999;">Immediately after, the dust was agitated, and became an enormous revolving pillar, approaching them from the midst of the desert: and this dust subsided, and behold, the Jinni, with a drawn sword in his hand; his eyes casting forth sparks of fire. He came to them, and dragged from them the merchant, and said to him, Rise, that I may kill thee, as thou killedst my son, the vital spirit of my heart. And the merchant wailed and wept: and the three sheykhs also manifested their sorrow by weeping and crying aloud and wailing: but the first sheykh, who was the owner of the gazelle, recovering his self-possession, kissed the hand of the ‘Efrit, and said to him, O thou Jinni, and crown of the kings of the Jann, if I relate to thee the story of myself and this gazelle, and thou find it to be wonderful, and more so than the adventure of this merchant, wilt thou give up to me a third of thy claim to his blood?</p>
+
+
+		</div>
+
+	</center>
+
+</body>
+</html>

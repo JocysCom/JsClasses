@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Untitled Page</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js" ></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.IO.debug.js"></script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+
+	<script type="text/javascript" language="javascript">
+		window.onload = function(){
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			var builder = new System.Text.StringBuilder("Some Text");
+			Trace.Write(builder.ToString());
+			Trace.Write("---------------------");
+			for (property in builder){
+				Trace.Write(property);
+			}
+			Trace.Write("---------------------");
+			for (property in System.Text.StringBuilder){
+				Trace.Write(property+" = '"+System.Text.StringBuilder[property]+"'");
+			}
+			Trace.Write("---------------------");
+			Trace.Write(System.Text.StringBuilder.FullName);
+			Trace.Write(builder.GetType().IsAbstract);
+			Trace.Write(builder.GetType().Name);
+			//builder.Show();
+		}
+		
+		
+	</script>
+
+</body>
+</html>

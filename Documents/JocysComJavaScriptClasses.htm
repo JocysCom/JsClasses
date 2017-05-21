@@ -1,0 +1,894 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shCore.css" />
+	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shThemeDefault.css" />
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" language="javascript" src="SyntaxHighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" language="javascript" src="SyntaxHighlighter/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" language="javascript" src="SyntaxHighlighter/scripts/shBrushCSharp.js"></script>
+	<script type="text/javascript" language="javascript">
+
+		function update() {
+			var controls = document.getElementsByTagName("pre");
+			var found = false;
+			for (var i = 0; i < controls.length; i++) {
+				var convert = false;
+				switch (controls[i]["lang"]) {
+					case "jscript": controls[i].className = "brush: js;"; convert = true; break;
+					case "cs": controls[i].className = "brush: c-sharp;"; convert = true; break;
+					default:
+				}
+				if (convert) {
+					found = true;
+					SyntaxHighlighter.highlight(controls[i]);
+				}
+			}
+			return found;
+		}
+		SyntaxHighlighter.config.clipboardSwf = 'SyntaxHighlighter/Scripts/clipboard.swf';
+		window.onload = function () {
+			while (update()) { }
+		}
+
+	</script>
+	<title>Article Source</title>
+	<link rel="stylesheet" type="text/css" href="../../../Styles/CodeProject.css" />
+	<!-- base href="http://www.codeproject.com/KB/tips/" -->
+</head>
+<body style="padding: 8px;">
+	<div>
+		<!-- Start Article -->
+		<div id="ArticleContent">
+			<ul class="download">
+				<li><a href="http://www.codeproject.com/KB/tips/JocysComJavaScriptClasses/JocysComJavaScriptClasses.zip">
+				</a><a href="http://www.codeproject.com/KB/tips/JocysComJavaScriptClasses/JocysComJavaScriptClasses.zip">
+					Download source - 1,389 KB </a></li>
+				<li><a href="https://jocys.com:8443/svn/Default/Projects/Jocys.com/WebSites/WebApp/Common/JsClasses/">
+					Latest SVN source (ReadOnly) (user: guest)</a> </li>
+			</ul>
+			<h2>
+				Introduction &nbsp;</h2>
+			<p>
+				Welcome to Object Oriented JavaScript class library in <em>C#/.NET style</em>.
+			</p>
+			<h2>
+				Background &nbsp;</h2>
+			<p>
+				I like coding with JavaScript in object oriented style. But one day, I decided to
+				bring my code into another level and make my JavaScript code to look like C# as
+				much as possible. So I did the following:</p>
+			<ol>
+				<li>Started to use .NET coding standards on my JavaScripts. You can find them on MSDN
+					- <a href="http://msdn.microsoft.com/library/en-us/cpgenref/html/cpconnamingguidelines.aspx">
+						.NET Framework General Reference: Naming Guidelines</a>. </li>
+				<li>Ported some useful classes and methods from .NET to JavaScript with the same class
+					and property names. Some code parts were written from scratch, some parts were borrowed
+					from the Internet and some parts were ported from C# directly. This JavaScript library
+					also contains AES and RSA algorithm classes compatible with Microsoft .NET Framework
+					"<code>System.Security.Cryptography</code>" classes. </li>
+				<li>Started to use XML Comments inside JavaScript. They are not supported very well
+					by Visual Studio 2008 but I hope support will be better in the future. </li>
+			</ol>
+			<a href="http://www.jocys.com/Common/JsClasses/Documents">http://www.jocys.com/Common/JsClasses/Documents</a>:
+			<p>
+				<img alt="Screenshot - JocysComClassBrowser.jpg" src="JocysComJavaScriptClasses/JocysComClassBrowser.jpg"
+					width="500" height="487" />
+			</p>
+			<h3>
+				Example: Hash Algorithm - HMAC-MD5 Checksum
+			</h3>
+			<p>
+				C# (3.0) code to create HMAC-MD5 checksum:</p>
+			<pre lang="cs">// Create HMAC-MD5 Algorithm.
+var hmac = new System.Security.Cryptography.HMACMD5();  
+// Convert string to array of bytes.
+var key = System.Text.Encoding.UTF8.GetBytes("test key");  
+var data = System.Text.Encoding.UTF8.GetBytes("test data");  
+// Compute hash.  
+var hashBytes = hmac.ComputeHash(key, data);
+// Convert to HEX string.
+var hex = System.BitConverter.ToString(hashBytes);
+// Convert to GUID so you can store it inside database.
+var guid = new System.Guid(hashBytes);</pre>
+			<p>
+				HMAC-MD5 checksum code written with this JavaScript library:</p>
+			<p>
+				Include JavaScripts:</p>
+			<ul>
+				<li><em>System.js</em> </li>
+				<li><em>System.BitConverter.js</em> </li>
+				<li><em>System.Text.js</em> </li>
+				<li><em>System.Security.Cryptography.MD5.js</em> </li>
+				<li><em>System.Security.Cryptography.HMACMD5.js</em> </li>
+			</ul>
+			<pre lang="jscript">// Create HMAC-MD5 Algorithm.
+var hmac = new System.Security.Cryptography.HMACMD5();  
+// Convert string to array of bytes.
+var key = System.Text.Encoding.UTF8.GetBytes("test key");  
+var data = System.Text.Encoding.UTF8.GetBytes("test data");  
+// Compute hash.  
+var hashBytes = hmac.ComputeHash(key, data);
+// Convert to HEX string.
+var hex = System.BitConverter.ToString(hashBytes);
+// Convert to GUID so you can store it inside database.
+var guid = new System.Guid(hashBytes);</pre>
+			<p>
+				As you can see, the&nbsp;code is 100% identical. SHA-1 hash algorithm class is also
+				available.</p>
+			<h3>
+				Example: Symmetric algorithm - AES-256 encryption</h3>
+			<p>
+				Online Examples:</p>
+			<ul>
+				<li><a href="http://www.jocys.com/Common/JsClasses/Examples/System.Security.Cryptography.AES.htm">
+					System.Security.Cryptography.AES.htm</a></li>
+				<li><a href="http://www.jocys.com/Common/JsClasses/Examples/System.Security.Cryptography.AES.aspx">
+					System.Security.Cryptography.AES.aspx</a></li>
+			</ul>
+			<p>
+				JavaScript code for AES-256 encryption is identical to C# code except only one minor
+				difference. In JavaScript, I need to use "<code>new System.Byte(length)</code>"
+				(line 20) instead of simple "<code>new byte[length]</code>". Of course, I can create
+				a class alias by doing "<code>byte = System.Byte</code>" inside JavaScript and make
+				that difference smaller:
+			</p>
+			<p>
+				Include JavaScripts:</p>
+			<ul>
+				<li><em>System.js</em> </li>
+				<li><em>System.IO.js</em> </li>
+				<li><em>System.Text.js </em></li>
+				<li><em>System.Convert.js</em> </li>
+				<li><em>System.BitConverter.js</em> </li>
+				<li><em>System.Security.Cryptography.js</em> </li>
+				<li><em>System.Security.Cryptography.SHA1.js</em> </li>
+				<li><em>System.Security.Cryptography.HMACSHA1.js</em> </li>
+				<li><em>System.Security.Cryptography.RijndaelManaged.js</em> </li>
+			</ul>
+			<pre lang="jscript">// Turn input string into a byte array.
+var input = System.Text.Encoding.Unicode.GetBytes("Plain Text");
+// Create an instance of the Rijndael class.
+var cipher = new System.Security.Cryptography.RijndaelManaged();
+// Calculate salt to make it harder to guess key by using a dictionary attack.
+var password = System.Text.Encoding.UTF8.GetBytes("password");
+var hmac = new System.Security.Cryptography.HMACSHA1(password);
+var salt = hmac.ComputeHash(passwordBytes);
+// Generate Secret Key from the password and salt.
+// Note: Set number of iterations to 10 in order for JavaScript example to work faster.
+var secretKey = new System.Security.Cryptography.Rfc2898DeriveBytes(password, salt, 10);
+// Create a encryptor from the existing SecretKey bytes by using
+// 32 bytes (256 bits) for the secret key and
+// 16 bytes (128 bits) for the initialization vector (IV).
+var key = secretKey.GetBytes(32);
+var iv = secretKey.GetBytes(16);
+// Get cryptor as System.Security.Cryptography.ICryptoTransform class.
+var cryptor = cipher.CreateEncryptor(key, iv);
+// Create new Input.
+var inputBuffer = new System.Byte(input.length);
+// Copy data bytes to input buffer.
+System.Buffer.BlockCopy(input, 0, inputBuffer, 0, inputBuffer.length);
+// Create a MemoryStream to hold the output bytes.
+var stream = new System.IO.MemoryStream();
+// Create a CryptoStream through which we are going to be processing our data.
+var mode = System.Security.Cryptography.CryptoStreamMode.Write;
+var cryptoStream = new System.Security.Cryptography.CryptoStream(stream, cryptor, mode);
+// Start the crypting process.
+cryptoStream.Write(inputBuffer, 0, inputBuffer.length);
+// Finish crypting.
+cryptoStream.FlushFinalBlock();
+// Convert data from a memoryStream into a byte array.
+var outputBuffer = stream.ToArray();
+// Close both streams.
+stream.Close();
+cryptoStream.Close();
+// Convert encrypted data into a base64-encoded string.
+var base64String = System.Convert.ToBase64String(outputBuffer);
+// base64String = laFf3eKu9tzB2XksJjd8EVM3PA9O30wz0Y+X3nyelW4=</pre>
+			<h3>
+				Example: Asymmetric algorithm - RSA encryption</h3>
+			<p>
+				RSA JavaScript classes are compatible with Microsoft .NET Framework. It means that
+				you can encrypt/decrypt data with JavaScript and encrypt/decrypt it with "<code>System.Security.Cryptography.RSACryptoServiceProvider</code>"
+				Microsoft .NET Framework class. You can export, import, generate RSA Keys and use
+				"Direct Encryption (PKCS#1 v1.5)" and "OAEP padding (PKCS#1 v2)" padding.
+			</p>
+			<p>
+				RSA allows you to encrypt and submit data securely <em>without</em> Secure Sockets
+				Layer (SSL). You can check <em>System.Security.Cryptography.RSA.aspx</em> example.
+				This is done in 3 simple steps:</p>
+			<ul>
+				<li>Step 1: Server generates RSA key and shows only public key to the user on the web
+					page.<br />
+					Note: Private RSA key is stored on server side and only server can decrypt submitted
+					data. </li>
+				<li>Step 2: User enters password or other sensitive data into textbox. </li>
+				<li>Step 3: User hits [Submit] button. JavaScript will encrypt password with RSA public
+					key, replace plain text with encrypted Base64 code and submit web form to the server.<br />
+					Note: You can use strong password and AES symmetric encryption to submit extra data.
+				</li>
+			</ul>
+			<p>
+				Online Examples:</p>
+			<ul>
+				<li><a href="http://www.jocys.com/Common/JsClasses/Examples/System.Security.Cryptography.RSA.htm">
+					System.Security.Cryptography.RSA.htm</a></li>
+				<li><a href="http://www.jocys.com/Common/JsClasses/Examples/System.Security.Cryptography.RSA.aspx">
+					System.Security.Cryptography.RSA.aspx</a></li>
+			</ul>
+			<p>
+				Include JavaScripts:</p>
+			<ul>
+				<li><em>System.js</em> </li>
+				<li><em>System.IO.js</em> </li>
+				<li><em>System.Text.js </em></li>
+				<li><em>System.Convert.js</em> </li>
+				<li><em>System.BitConverter.js</em> </li>
+				<li><em>System.Security.Cryptography.js</em> </li>
+				<li><em>System.Security.Cryptography.SHA1.js</em> </li>
+				<li><em>System.Security.Cryptography.HMACSHA1.js</em> </li>
+				<li><em>System.Security.Cryptography.RSA.js</em> </li>
+			</ul>
+			<p>
+				C# and JavaScript code for RSA encryption/decryption is 100% identical:</p>
+			<pre lang="cs">
+// Text to encrypt and decrypt.
+var text = "plain text";
+// Use OAEP padding (PKCS#1 v2).
+var doOaepPadding = true;
+// RSA 512-bit key: Public (Modulus), Private (D) and CRT (P, Q, DP, DQ, InverseQ).
+var xmlParams =
+	&quot;&lt;RSAKeyValue&gt;&quot; +
+		&quot;&lt;Modulus&gt;pxtmFnrGI6Sb8ziyY+NRUDuQ4b/ETw5WabQ4daFQqzsCEr/6J/LLBU/2D5mO5/Wu5U/Rya1E55aYFZeaZMNqAw==&lt;/Modulus&gt;&quot; +
+		&quot;&lt;Exponent&gt;AQAB&lt;/Exponent&gt;&quot; +
+		&quot;&lt;P&gt;2TsVXWPEvDIJv/gd2rX9k0UOyXuaYgoAchIH6vUicis=&lt;/P&gt;&quot; +
+		&quot;&lt;Q&gt;xO4+OYREQfqYRQK7y73+RaUG0IxobT0OQ0c+Ok2hc4k=&lt;/Q&gt;&quot; +
+		&quot;&lt;DP&gt;K7/xgpiIU9rECeyfnp/OjS14V+3T3vDivBaTj6eFI3c=&lt;/DP&gt;&quot; +
+		&quot;&lt;DQ&gt;K4N9ClZ4gp+tn6oP9t//XEIvtEsiE+kmyqTmUhmvMAk=&lt;/DQ&gt;&quot; +
+		&quot;&lt;InverseQ&gt;p7o4BOlKZQZ693R1ViZ66y5gTjUkNNTd2za7/1YGBCs=&lt;/InverseQ&gt;&quot; +
+		&quot;&lt;D&gt;XZqFVrYy4qhECruJgVZFp/GVuD5Y0gev88nVjl5r911QT+I8vgJSklTso7jTlpMtf2oe7UZ0WRWEtgPS3tZn4Q==&lt;/D&gt;&quot; +
+	&quot;&lt;/RSAKeyValue&gt;&quot;; 
+// ------------------------------------------------
+// RSA Keys
+// ------------------------------------------------
+var rsa = new System.Security.Cryptography.RSACryptoServiceProvider();
+// Import parameters from XML string.
+rsa.FromXmlString(xmlParams);
+// Export RSA key to RSAParameters and include:
+//    false - Only public key required for encryption.
+//    true  - Private key required for decryption.
+// Export parameters and include only Public Key (Modulus + Exponent) required for encryption.
+var rsaParamsPublic = rsa.ExportParameters(false);
+// Export Public Key (Modulus + Exponent) and include Private Key (D) required for decryption.
+var rsaParamsPrivate = rsa.ExportParameters(true);
+// ------------------------------------------------
+// Encrypt
+// ------------------------------------------------
+var decryptedBytes = System.Text.Encoding.UTF8.GetBytes(text);
+// Create a new instance of RSACryptoServiceProvider.
+rsa = new System.Security.Cryptography.RSACryptoServiceProvider();
+// Import the RSA Key information.
+rsa.ImportParameters(rsaParamsPublic);
+// Encrypt byte array.
+var encryptedBytes = rsa.Encrypt(decryptedBytes, doOaepPadding);
+// Convert bytes to base64 string.
+var encryptedString = System.Convert.ToBase64String(encryptedBytes);
+// ------------------------------------------------
+// Decrypt
+// ------------------------------------------------
+// Convert base64 string back to bytes.
+encryptedBytes = System.Convert.FromBase64String(encryptedString);
+// Create a new instance of RSACryptoServiceProvider.
+rsa = new System.Security.Cryptography.RSACryptoServiceProvider();
+// Import the RSA Key information.
+rsa.ImportParameters(rsaParamsPrivate);
+// Decrypt byte array.
+decryptedBytes = rsa.Decrypt(encryptedBytes, doOaepPadding);
+// Get decrypted data.
+text = System.Text.Encoding.UTF8.GetString(decryptedBytes);
+// ------------------------------------------------
+// Generate new RSA Key pair
+// ------------------------------------------------
+// Specify RSA key size.
+var keySize = 512;
+// Create a new instance of RSACryptoServiceProvider.
+rsa = new System.Security.Cryptography.RSACryptoServiceProvider(keySize);
+// Export the RSA Key information as XML string.
+//    false - Only public key required for encryption.
+//    true  - Private key required for decryption.
+xmlParams = rsa.ToXmlString(true);</pre>
+			<h3>
+				Example: User Interface</h3>
+			<p>
+				Library contains some user interface classes.</p>
+			<pre lang="jscript">function firstButton_Click(){
+    Trace.Write("First Button Click");
+}
+
+function secondButton_Click(){
+    Trace.Write("Second Button Click");
+}
+
+function Window_Load(){
+    Trace.IsEnabled = true;
+    Trace.Write("Start Demo");
+    // Create toolbar.
+    var toolBar = new System.Web.UI.Interface.ToolBar("MyToolBar");
+    // Add toolbar to document.
+    document.body.appendChild(toolBar.Node);
+    // Create Bar.
+    var bar = new System.Web.UI.Interface.Bar("MainBar", document, "Bar Title");
+    toolBar.Add(bar);
+    // Create first button.
+    var firstButton = new System.Web.UI.Interface.Button("FirstButton", document);
+    firstButton.SetText("First");
+    firstButton.SetImage("Images/Icons/Options-16x16.png");
+    firstButton.SetTitle("First Button");
+    firstButton.customAction = firstButton_Click;
+    bar.Add(firstButton);    
+    // Create second button.
+    var secondButton = new System.Web.UI.Interface.Button("SecondButton", document);
+    secondButton.SetText("Second");
+    secondButton.SetImage("Images/Icons/Trace.16x16.png");
+    secondButton.SetTitle("Second Button");
+    secondButton.customAction = secondButton_Click;
+    bar.Add(secondButton);    
+}
+
+window.onload = Window_Load;</pre>
+			<p>
+				Will produce this interface on the web page:</p>
+			<img alt="JocysComJavaScriptClassesToolBar.png" src="JocysComJavaScriptClasses/JocysComJavaScriptClassesToolBar.png"
+				width="205" height="49" />
+			<h2>
+				Benefits
+			</h2>
+			<p>
+				Coding with JavaScript in C# .NET style provides these benefits:
+			</p>
+			<ol>
+				<li>Any C# developer instantly understands the purpose of JavaScript code. </li>
+				<li>You don't need to write help for your new JavaScript classes because Microsoft did
+					it already. </li>
+				<li>When porting a new class from C# to JavaScript, you don't need to think about how
+					to name it or where to put it. All you need is to look for the same class in C#
+					and use the same naming. </li>
+				<li>More JavaScript classes you have, the&nbsp;easier it will be to port new ones.
+				</li>
+				<li>By using C# classes as primary reference, it will be much easier for different developers
+					to write and integrate JavaScript classes into one big file library. It is because
+					by looking at some C# class, the&nbsp;developer knows what type of input and output
+					function must support/produce and he doesn't need to coordinate this with other
+					developers. </li>
+				<li>And many more... </li>
+			</ol>
+			<h2>
+				Requirements
+			</h2>
+			<p>
+				JavaScript has a very limited number of types:</p>
+			<table class="ArticleTable" width="640">
+				<thead>
+					<tr>
+						<td>
+							JavaScript Object
+						</td>
+						<td>
+							typeof(Object)
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<code>Object</code>
+						</td>
+						<td>
+							'<code>object</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>Array</code>
+						</td>
+						<td>
+							'<code>object</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>Function </code>
+						</td>
+						<td>
+							'<code>function</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>String </code>
+						</td>
+						<td>
+							'<code>string</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>Number </code>
+						</td>
+						<td>
+							'<code>number</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>Boolean </code>
+						</td>
+						<td>
+							'<code>boolean</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>null </code>
+						</td>
+						<td>
+							'<code>object</code>'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>undefined </code>
+						</td>
+						<td>
+							'<code>undefined</code>'
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				But by combining the existing types, we can create JavaScript objects similar to
+				C#. For example:</p>
+			<table class="ArticleTable" width="640">
+				<thead>
+					<tr>
+						<td>
+							C# Type
+						</td>
+						<td>
+							JavaScript Type
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<code>public </code>
+						</td>
+						<td>
+							property declared with "<code>this.</code>" prefix: <code>this.Name = "";</code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>private </code>
+						</td>
+						<td>
+							property declared with "<code>var</code>" prefix: <code>var name = ""; </code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>class </code>
+						</td>
+						<td>
+							<code>this.[ClassName] = function(){... </code>without "return value;" at the end
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>void </code>
+						</td>
+						<td>
+							function which has no "return value;" at the end
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>short</code>/<code>Int16 </code>
+						</td>
+						<td>
+							whole Number from [-2^15, 2^15-1] range
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>int</code>/<code>Int32 </code>
+						</td>
+						<td>
+							whole Number from [-2^31, 2^31-1] range
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>long</code>/<code>Int64 </code>
+						</td>
+						<td>
+							whole Number from [-2^63, 2^63-1] range (Requires <code>BigInteger </code>class)
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>byte </code>
+						</td>
+						<td>
+							whole Number from [0, 255] range: <code>var b = 14; </code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>sbyte </code>
+						</td>
+						<td>
+							whole Number from [-128, 127] range: <code>var sb = -14;</code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>bytes[]</code>
+						</td>
+						<td>
+							<code>Array() </code>filled with integers from [0-255] range.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>bit </code>
+						</td>
+						<td>
+							Number: 0 or 1
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>bit[]</code>
+						</td>
+						<td>
+							<code>Array() </code>filled with integers from [0-1] range.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>char </code>
+						</td>
+						<td>
+							<code>String </code>which contains a single character. Declared with single quotes:
+							<code>var c = 's' </code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>char[] </code>
+						</td>
+						<td>
+							<code>Array()</code> filled single characters:
+							<br />
+							<code>var chars = new Array(1); chars[0] = 's';</code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>object </code>
+						</td>
+						<td>
+							parameter which was declared with "<code>{ }</code>": <code>var o = {}; </code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>enum </code>
+						</td>
+						<td>
+							Object with "<code>Enum</code>" sufix and comma separated values: <code>this.TriStateEnum
+								= { Unknown: -2, False: 0, True: 1 } </code>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>EventHandler </code>
+						</td>
+						<td>
+							function with parameters "<code>sender</code>" and "<code>e</code>": <code>function(sender,
+								e)</code> or <code>this.Click(sender, e)</code>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				NUMBERS: All numbers in JavaScript are 64-bit (8 bytes) floating point numbers (double:
+				1-bit sign, 11-bits exponent, 52-bits mantissa). There is no <code>Double</code>,
+				<code>Single</code>/<code>Float</code>, <code>Boolean</code>, <code>Int16</code>,
+				<code>UInt16</code>, <code>Int32 </code>or <code>UInt32</code>. But you can use
+				<code>public static </code>methods of <code>System.BitConverter JavaScript </code>
+				class in order to treat the same JavaScript number as a different type:</p>
+			<pre lang="jscript">// Convert number to [0x00, 0x00, 0xCC, 0xCC] array.
+var bytes = System.BitConverter.GetBytes(-859045888, System.TypeCode.Int32);
+// Convert bytes back to -859045888.
+var n = System.BitConverter.ToInt32(bytes, 0);  </pre>
+			<code>System.BitConverter</code> JavaScript class supports little-endian (default),
+			big-endian byte orders and numeric arrays. <code>System.BitConverter </code>class
+			is very useful in encoding/decoding/encryption/decryption classes. Please note that
+			you need to specify number type when using <code>GetBytes(value, typeCode) </code>
+			method by using <code>System.TypeCode </code>enumeration values (this enumeration
+			is located inside <em>System.js</em> file).<br />
+			<p>
+				I've added <code><em>System.BigInt </em></code>class (same as .NET internal <code>System.Security.Cryptography.BigInt
+				</code>class). It represents an arbitrarily large signed integer whose value in
+				theory has no upper or lower bounds. It means you can add, subtract, multiply, divide
+				numbers of Godzilla proportions in JavaScript which can be useful with client side
+				encryption:&nbsp;</p>
+			<pre lang="jscript">// Increase global System.BigInt size to 512 bytes.
+// BigInt will act like System.Int4096 (default is System.Int1024).
+System.BigInt.MaxBytes = 512;
+// Create big integer from hexadecimal number.
+var n1 = new System.BigInt("0x010203040506");
+// Create big integer from decimal number.
+var n2 = new System.BigInt("-280422911905295");
+// Multiply them.
+var n3 = System.BigInt.Multiply(n2, n1);
+// Store result in various forms.
+var h = n3.ToHex()     // -0x01010C234779B3FAEED09F5A
+var d = n3.ToDecimal() // -310751254825142252681076570
+var bytes = n3.Elements // A6602F11054C86B8DCF3FEFEFFFFFF...  &nbsp;
+</pre>
+			<p>
+				<strong>NOTE</strong>: You can use <code>&lt;param type="byte[]" name="data"&gt;...&lt;/param&gt;</code>
+				inside JavaScript XML Comments in order to specify type of input data and <code>&lt;returns
+					type="double"&gt;...&lt;/returns&gt; </code>- for output.
+			</p>
+			<p>
+				Files from this JavaScript library can be included on the client and server side,
+				thanks to special header and footer:</p>
+			<pre id="pre2" lang="jscript">&lt;!--//--&gt;&lt;%
+//=============================================================================
+// Jocys.com JavaScript.NET Classes (In C# Object Oriented Style)
+// Created by Evaldas Jocys &lt;evaldas@jocys.com&gt;
+//-----------------------------------------------------------------------------
+// You can include this script on both sides - server and client:
+// Server: &lt;!-- #INCLUDE FILE="ScriptFile.js" --&gt;
+// Client: &lt;script type="text/javascript" src="ScriptFile.js"&gt;&lt;/script&gt;
+//=============================================================================
+        
+JavaScript Code Here...
+
+//==============================================================================
+// END
+//------------------------------------------------------------------------------
+//%&gt;</pre>
+			<p>
+				... and by avoiding <code>Response.Write() </code>or <code>alert() </code>use directly:
+				for example: I can detect if the script is running on the server side or client
+				side and show the message accordingly with this code:
+			</p>
+			<pre id="pre3" lang="cs">this.IsServerSide = (typeof(Response) == "object");
+// If we are on server side then...
+if (this.IsServerSide){
+    // Write text to output.
+    Response.Write(text);
+}else{
+    // Show popup message.
+    alert(text);
+}</pre>
+			<h2>
+				JavaScript IntelliSense
+			</h2>
+			<p>
+				Visual Studio 2010 has built-in support for JavaScript IntelliSense. This means
+				that if you open file, place cursor at the end of file and type "<code>System.</code>"
+				then straight after the dot, Visual Studio will bring up a menu containing all available
+				methods and properties of <code>System</code> class:</p>
+			<img alt="Screenshot - JocysComJavaScriptIntelliSense.png" src="JocysComJavaScriptClasses/JocysComJavaScriptIntelliSense.png"
+				width="540" height="400" /><br />
+			<br />
+			<p>
+				<code>System.Type.Inherits</code> method allows to use IntelliSense from inside of inherited
+				class:</p>
+			<img alt="Screenshot - JocysComJavaScriptInherits.png" src="JocysComJavaScriptClasses/JocysComJavaScriptInherits.png"
+				width="540" height="400" /><br />
+			<p>
+				The good news here is that Microsoft is moving in the right direction. The bad news
+				is that JavaScript IntelliSense works only with specific JavaScript coding style
+				and sometimes needs workarounds. In other words, it works in mysterious ways or
+				doesn't work at all :). Some upgrades are needed on my code too.</p>
+			<h2>
+				Installation
+			</h2>
+			<p>
+				Extract source archive into <em>webroot</em> (/) folder of your website.</p>
+			<h2>
+				Example: System.Security.Password</h2>
+			<p>
+				Inside the source code, you can find examples (<em>Examples/</em>) including password
+				generator example. You can run it:&nbsp;</p>
+			<ul>
+				<li>inside your web browser with: <em>Examples/System.Security.Password.htm</em>
+				</li>
+				<li>as Windows HTML application: <em>Examples/System.Security.Password.hta</em>
+				</li>
+				<li>or on-line: <a href="http://www.jocys.com/Common/JsClasses/Examples/System.Security.Password.htm">
+					<em>http://www.jocys.com/Common/JsClasses/Examples/System.Security.Password.htm</em></a>
+				</li>
+			</ul>
+			<p>
+				<img alt="Screenshot - SystemSecurityPasswordGeneratorGui.gif" src="JocysComJavaScriptClasses/SystemSecurityPasswordGeneratorGui_small.gif"
+					width="640" border="0" height="521" hspace="0" />
+			</p>
+			<p>
+				To make a suggestion or report bugs, please write to <a id="maiLink" href="mailto:evaldas@jocys.com">
+					evaldas@jocys.com</a>.</p>
+			<h2>
+				History</h2>
+			<ul>
+				<li>2011-07-26 - Intellise RSA encryption bug fix. JavaScript IntelliSense "type icon"
+					support added. Other various changes. Project file updated to Visual Studio 2010.
+					<ul>
+						<li>New Classes:
+							<ul>
+								<li><code>System.IO.Stream</code></li>
+								<li><code>System.Diagnostics.TraceListener</code></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>2010-02-24 - RSA encryption and Unit Testing classes were added:
+					<ul>
+						<li>New Classes:
+							<ul>
+								<li><code>System.Security.Cryptography.RSAParameters</code></li>
+								<li><code>System.Security.Cryptography.RSACryptoServiceProvider</code></li>
+								<li><code>System.Security.Cryptography.PKCS1Padding</code></li>
+								<li><code>System.Security.Cryptography.PKCS1MaskGenerationMethod</code></li>
+								<li><code>System.Security.Cryptography.HashAlgorithm</code></li>
+								<li><code>System.TestTools.UnitTesting.Assert</code></li>
+							</ul>
+						</li>
+						<li>New Examples:
+							<ul>
+								<li><em>System.Security.Cryptography.RSA.aspx</em></li>
+								<li><em>System.Security.Cryptography.RSA.htm</em></li>
+								<li><em>System.TestTools.UnitTesting.htm</em></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>2009-06-21 - New <code>System.BigInt</code>(<em>.js</em> file) class with examples:
+					<ul>
+						<li><em>Examples/System.BigInt.htm</em></li>
+						<li><em>Examples/System.BigInt.aspx</em></li>
+					</ul>
+				</li>
+				<li>2009-03-14 - PassGen now works in Internet Explorer again. Some cross-domain security
+					issues with FX fixed. Adjusted to work better with "Microsoft AJAX Framework" scripts
+					(Resource of <em>System.Web.Extensions.dll</em>/<em>MicrosoftAjax.debug.js</em>).
+					Microsoft has some cool JavaScript classes there.</li>
+				<li>2009-02-04 - New fixes and new bugs. Moved everything to <em>/Common/JsClasses</em>
+					folder. Latest source available from SVN server (see above).</li>
+				<li>2008-03-14 - Some bug fixes:
+					<ul>
+						<li>New Classes:
+							<ul>
+								<li><code>System.Web.UI.HtmlControls.TextBox.CommandLine </code>- Converts input to
+									command line. Will be used later to create plain JavaScript console and in chat
+									applications.</li>
+							</ul>
+						</li>
+						<li>Examples Updated (<em>Examples/</em> folder):
+							<ul>
+								<li><em>System.Web.UI.HtmlControls.TextBox.CommandLine.htm</em> </li>
+								<li><em>System.Web.UI.ShortKeys/System.Web.UI.ShortKeys.htm</em> - Shows how to override
+									and use custom windows keyboard layout on the web page. Can also capture keys and
+									perform non-default custom actions.&nbsp; </li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>2008-01-27
+					<ul>
+						<li>New enumerations:
+							<ul>
+								<li><code>System.TypeCode</code> </li>
+							</ul>
+						</li>
+						<li>New classes:
+							<ul>
+								<li><code>System.Collections.BitArray</code> </li>
+								<li><code>System.BitConverter </code>(<em>System.BitConverter.js</em>) class was updated
+									with methods: </li>
+								<li><code>System.BitConverter.GetByte(value, typeCode)</code> - get bytes from <code>
+									Double</code>, <code>Single</code>, <code>Boolean</code>, <code>Int16</code>, <code>
+										UInt16</code>, <code>Int32</code>, <code>UInt32</code>. You need to use values
+									of <code>System.TypeCode </code>to specify how JavaScript must treat a number.<br />
+									You also can convert <code>byte[] </code>back to numbers by using methods
+									<ul>
+										<li><code>System.BitConverter.ToDouble(bytes, startIndex)</code> </li>
+										<li><code>System.BitConverter.ToSingle(bytes, startIndex)</code> </li>
+										<li><code>System.BitConverter.ToBoolean(bytes, startIndex) </code></li>
+										<li><code>System.BitConverter.ToInt16(bytes, startIndex)</code> </li>
+										<li><code>System.BitConverter.ToUInt16(bytes, startIndex) </code></li>
+										<li><code>System.BitConverter.ToInt32(bytes, startIndex) </code></li>
+										<li><code>System.BitConverter.ToUInt32(bytes, startIndex)</code> </li>
+									</ul>
+								</li>
+								<li><code>Int64 </code>and <code>UInt64 </code>types are not available yet because JavaScript
+									64-bit (8 bytes) float point numbers have only 52-bit mantissa which means that
+									it is not possible to work with 64-bit whole numbers properly (possible by reusing
+									<code>BigInt </code>class). </li>
+							</ul>
+						</li>
+						<li>Updated Examples:
+							<ul>
+								<li><em>System.BitConverter.htm</em> </li>
+								<li><em>System.BitConverter.aspx</em> </li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>2008-01-13 - Some bugs were fixed and new JavaScript classes were added:
+					<ul>
+						<li><em>System.Security.Cryptography.js</em> file:
+							<ul>
+								<li><code>System.Security.Cryptography.Rfc2898DeriveBytes</code> </li>
+								<li><code>System.Security.Cryptography.ICryptoTransform</code> </li>
+								<li><code>System.Security.Cryptography.RNGCryptoServiceProvider</code> </li>
+								<li><code>System.Security.Cryptography.CryptoStrea</code> </li>
+							</ul>
+						</li>
+						<li><em>System.Security.Cryptography.RijndaelManaged.js</em> file (AES encryption):
+							<ul>
+								<li><code>System.Security.Cryptography.RijndaelManaged</code> </li>
+							</ul>
+						</li>
+						<li><em>System.js</em> file (new methods):
+							<ul>
+								<li><code>System.Buffer.BlockCopy</code> </li>
+								<li><code>System.Array.Reverse</code> </li>
+								<li><code>System.Array.Clear</code> </li>
+								<li><code>System.Array.GetMultiDimensional</code> </li>
+								<li><code>System.Array.FillMultiDimensiona</code> </li>
+							</ul>
+						</li>
+						<li>Examples Created (Examples/ folder):
+							<ul>
+								<li><em>System.Security.Cryptography.AES.htm</em> </li>
+								<li><em>System.Security.Cryptography.AES.aspx</em> </li>
+								<li><em>System.Security.Cryptography.htm</em> </li>
+								<li><em>System.Security.Cryptography.aspx</em> </li>
+							</ul>
+						</li>
+						<li>Some interface parts/classes/examples were updated to Office 2007 style:
+							<ul>
+								<li><em>System.Web.UI.Interface.ToolBar.htm</em> </li>
+								<li><em>System.Web.UI.Interface.TabStrip.htm</em> </li>
+							</ul>
+						</li>
+						<li>Methods <code>System.BitConverter static </code>class was updated. </li>
+					</ul>
+				</li>
+				<li>2007-12-15 - New '<code>System.IO.MemoryStream</code>' class. I will use it later
+					with symmetric encryption algorithms so encryption can be done between two web browser
+					clients without any ActiveX.
+					<br />
+					Now you can get <code>byte[] </code>arrays filled with 0 numbers in JavaScript easier:<br />
+					<code>var bytes = new System.Byte(10);</code><br />
+					It's the same as '<code>byte[] bytes = new System.Byte[10];</code>' or '<code>byte[]
+						bytes = new byte[10];</code>' in C#. You can define multi-dimensional arrays
+					filled with zeroes too:<br />
+					<code>var bytes = new System.Byte(16,16); bytes[4][5] = 10;</code> </li>
+				<li>2007-12-12 - Created. Some links inside examples were fixed. New source code was
+					uploaded. Alex's Code Syntax Highlighter was updated to 1.5.1 version. </li>
+			</ul>
+		</div>
+		<!-- End Article -->
+	</div>
+</body>
+</html>

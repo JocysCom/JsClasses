@@ -1,0 +1,54 @@
+﻿/*p 
+{
+	font-family: 'Verdana';
+	font-size: 9pt;
+}
+td
+{
+	font-family: 'Verdana';
+	font-size: 9pt;
+}
+input[type=text]
+{
+	font-family: 'Courier New';
+	font-size: 9pt;
+}
+textarea
+{
+	font-family: 'Courier New';
+	font-size: 9pt;
+}
+select
+{
+	font-family: 'Courier New';
+	font-size: 9pt;
+}*/
+.DebugTable 
+{
+	width: 100%;
+}
+
+.DebugTable tr
+{
+}
+
+.DebugTable tr td 
+{
+}
+
+
+.DebugTable tr td textarea
+{
+	width: 100%;
+}
+
+
+td.DataTableHighlight { background-color: whitesmoke !important; cursor: pointer; }
+
+.SQUI_DataTables thead tr th { font-size: small; }
+.SQUI_DataTables tbody tr td { cursor: pointer; font-size: small; padding: 2px 4px 2px 2px; }
+.SQUI_DataTables { width: 100%; }
+
+/* jQuery-UI DataTables */
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover { background-color: #95d0ff !important; }
+	table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected { background-color: #95d0ff !important; }

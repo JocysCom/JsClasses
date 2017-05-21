@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Convert.Base64Array</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Convert.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.debug.js"></script>
+
+	<script type="text/javascript" language="javascript">
+
+		function Window_Load(){
+			var text = "abcė新闻网";
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			Trace.Write("----------------------------");
+			Trace.Write("// text = '"+text+"'");
+			Trace.Write("CharCodes:");
+			for (var i = 0; i < text.length; i++){
+				var c = text.charAt(i);
+				Trace.Write("char: "+c+" - "+c.charCodeAt(0)+" - "+c.charCodeAt(0).toString(2));
+			}
+			Trace.Write("----------------------------");
+			Trace.Write("var bytes = System.Text.Encoding.UTF8.GetBytes(text);");
+      var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+			Trace.Write("var base64 =  System.Convert.ToBase64String(bytes);");
+			var base64 =  System.Convert.ToBase64String(bytes);
+			Trace.Write("// base64: "+base64);
+			Trace.Write("----------------------------");
+      Trace.Write("var bytes = System.Convert.FromBase64String(s);");
+      var bytes = System.Convert.FromBase64String(base64);
+      Trace.Write("var s = System.Text.Encoding.UTF8.GetString(bytes);");
+      var s = System.Text.Encoding.UTF8.GetString(bytes);
+			Trace.Write("// s: "+s);
+		}
+		window.onload = Window_Load;
+		
+	</script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+</body>
+</html>

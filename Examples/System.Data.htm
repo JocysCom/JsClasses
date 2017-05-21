@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Data.debug.js"></script>
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+<table id="table1">
+	<tr id="row1">
+	<td id="cell1">
+	
+	</td>
+	</tr>
+</table>
+<script type="text/javascript" language="javascript">
+window.onload = function(){
+	Trace.IsEnabled = true;
+	System.Class.ListProperties(AdoEnums);
+}
+
+//	//System.Text.List
+//	Trace.IsEnabled = true;
+//	//table1.rows(0)
+//	//row1);
+//	//var cell = document.
+//	row1 = document.createElement("TD");
+//	row1.innerHTML = "rowValue1";
+//	//row1.Name = row1.nodeName;
+
+//	row2 = document.createElement("TD");
+//	row2.innerHTML = "row2";
+//	//they can be declared on an object literal
+//	this.o = function(){
+//		this._name = "Start name";
+//		this.writes = 0;
+//		this.reads = 0;
+//		this.name getter = function () {this.reads++; return this._name+"---";};
+//		this.name setter = function (n) {this.writes++; return this._name = n;};
+//	}
+////and can be added to extant objects
+////o.numwrites getter = function() { return this.writes;}
+////o.numwrites setter = function() {throw "no";}
+////then use them
+//o.name ="adsfasdfadsF";
+//var foo = o.name;
+//Trace.Write("foo:"+foo);
+////var list = new System.Collections.SortedList();
+//var table = new System.Data.DataTable();
+//var row = new System.Data.DataRow();
+//table.Add(0,row);
+//row.Add("one","some");
+//row.Add("two","hello");
+//row.Add(4,"four");
+////Trace.Write(list("one"));
+//var x = []; 
+//Trace.Write("list.Items.length: "+row.Cells.length);
+//Trace.Write(": "+row.Cells["one"]);
+//Trace.Write("----------------------------------");
+//for (i in table){ 
+//	Trace.Write("table['"+i+"'] = "+table[i]);
+//} 
+//Trace.Write("----------------------------------");
+//for (i in row.Cells){ 
+//	Trace.Write("x['"+i+"'] = "+row.Cells[i]);
+//} 
+//Trace.Write("----------------------------------");
+//for (i = 0; i < row.Cells.length; i++){
+//	Trace.Write("x["+i+"] = "+row.Cells[i]);
+//} 
+//Trace.Write("----------------------------------");
+//Trace.Write(table.Rows[0].Cells[0]);
+//Trace.Write(document['body'].tagName);
+
+//var xmlDocument = new System.Xml.XmlDocument();
+////var xmlDocument = new ActiveXObject("MSXML2.DOMDocument");
+//xmlDocument.appendChild(xmlDocument.createElement("Test"));
+//alert(xmlDocument.xml);
+</script>
+</body>
+</html>

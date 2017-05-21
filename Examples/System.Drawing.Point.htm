@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Drawing.Point Example</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.Extensions/MicrosoftAjax.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.Extensions/MicrosoftAjaxWebForms.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Drawing.debug.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+
+	<script type="text/javascript" language="javascript">
+		function Window_Load(){
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			var s = new System.Drawing.Size(4, 11);
+			Trace.Write("var s = new System.Drawing.Size(4, 11);");
+			Trace.Write("s.ToString(): " + s.ToString());
+
+			var p = new System.Drawing.Point(8, 10);
+			Trace.Write("var p = new System.Drawing.Point(8, 10);");
+			Trace.Write("p.ToString(): "+p.ToString());
+		}
+		
+		window.onload = Window_Load;
+	</script>
+
+</body>
+</html>

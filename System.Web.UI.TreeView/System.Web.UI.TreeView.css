@@ -1,0 +1,30 @@
+﻿/*
+**
+**   Description : STYLESHEET FOR GENERATION OF THE HTML Treeview
+**
+**   Date : 26/10/2002 - version : 1.0
+**   Author : Jean-Michel Garnier, http://rollerjm.free.fr
+**   Source is free but feel free (!) to send any comment / suggestion to garnierjm@ifrance.com
+**   One of the best tool to customize a css is TopStyle (www.bradsoft.com)
+*/
+
+/*-- Customize the "folder" style here */
+a.SWUITW_Folder:link { text-decoration:none; }
+a.SWUITW_Folder:visited { text-decoration:none; }
+a.SWUITW_Folder:hover {text-decoration:underline; cursor: pointer; }
+a.SWUITW_Folder {
+	font-family: Verdana;
+	font-size: 8pt;                             
+	padding: 0;
+	cursor: pointer;
+}
+/* Customize the "leaf" style here */
+a.SWUITW_Leaf:link { text-decoration:none;}
+a.SWUITW_Leaf:visited { text-decoration:none; }
+a.SWUITW_Leaf:hover {text-decoration:underline; cursor: pointer;}
+a.SWUITW_Leaf {
+	font-family: Verdana;
+	font-size: 8pt;                             
+	padding: 0;
+	cursor: pointer;
+}

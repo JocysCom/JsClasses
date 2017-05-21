@@ -1,0 +1,39 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.GPS</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" src="../System.debug.js"></script>
+	<script type="text/javascript" src="../System.GPS.debug.js"></script>
+</head>
+<body>
+	<iframe id="TraceLog" style="width: 100%; height: 400px;"></iframe>
+	<script type="text/javascript">
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			WriteLog("Start Demo");
+
+			var og = new System.GPS.OsGrid(517300, 177200);
+			WriteLog("OS Grid Reference: " + og.toString() + "<br />");
+			var ll1 = System.GPS.Converter.ToLatLong(og);
+			WriteLog("Converted to Lat/Long: " + ll1.toString() + "<br />");
+
+			var ll = new System.GPS.LatLong(51.480869646045534, -0.31076317686840426);
+			WriteLog("Lat/Long: " + ll.toString() + "<br />");
+			var og1 = System.GPS.Converter.ToOsGrid(ll);
+			WriteLog("Converted to OS Grid Reference: " + og1.toString() + "<br />");
+
+		}
+
+		window.onload = Window_Load;
+
+		function WriteLog(text) {
+			Trace.Write("<code>" + text + "</code>");
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Untitled Page</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+	<input id="btnTestServer" type="button" value="Test Server" />
+	<input id="btnTestTimeServer" type="button" value="Test Time Server" />
+
+	<script type="text/javascript" language="javascript">
+	this.Synchronizer;
+	ShowResults = function(sender,e){
+		alert("Difference="+e.Difference+"; Bias=±"+e.Bias);
+	}
+	window.onload = function(){
+		Trace.IsEnabled = true;
+		this.Synchronizer = new System.Timers.Synchronizer("mainSynchronizer");
+		this.Synchronizer.OnResults = parent.ShowResults;
+		document.getElementById("btnTestServer").onclick = function(){ parent.Synchronizer.Test(); }
+	}
+	</script>
+
+</body>
+</html>

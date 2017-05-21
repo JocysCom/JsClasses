@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Untitled Page</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.TextBox.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.ShortKeys.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Windows.Forms.Keys.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Globalization.KeyboardLayouts.debug.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+	<input id="CommandLineTextBox" type="text" style="width: 100%;"/>
+	<p>
+	Convert input to Command Line. You can use arrow keys to browse commands history and ESC key to clean line.
+	</p>
+
+
+	<script type="text/javascript" language="javascript">
+
+	function CommandLineTextBox_Command(sender, e){
+		Trace.Write("guest$ "+e.Command);
+		switch(e.Command.toLowerCase()){
+			case "cls":
+				Trace.Clear();
+				break;
+			case "help":
+				Trace.Write("CLS - Clears the screen.");
+				break;
+			default:
+				Trace.Write("'"+e.Command+"' is not recognized as an internal or external command,");
+				Trace.Write("operable program or batch file.");
+				break;
+		}
+	}
+
+	window.onload = function(){
+		Trace.IsEnabled = true;
+	    Trace.SetStyle("matrix");
+		Trace.Write("Start Demo");
+		var cmdTextBox = document.getElementById("CommandLineTextBox");
+		var commandLine = new System.Web.UI.HtmlControls.TextBox.CommandLine(cmdTextBox);
+		commandLine.Command = CommandLineTextBox_Command;
+		cmdTextBox.focus();
+	}
+	</script>
+	
+</body>
+</html>

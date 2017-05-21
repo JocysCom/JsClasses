@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Untitled Page</title>
+	<link href="../System.Web.UI.Interface.debug.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+	<script type="text/javascript" language="javascript">
+
+		var ar = [];
+		window.onload = function(){
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			var sel = document.getElementById("Select1");
+			var htmlSelect = new System.Web.UI.HtmlControls.DataBinder();
+			htmlSelect.OnDataBound = a1;
+			htmlSelect.DataBind();
+			Trace.Write(sel.tagName);
+			Trace.Write(htmlSelect.tagName);
+		}
+
+		function a1(){
+			Trace.Write("a1");
+		}
+
+		function a2(){
+			Trace.Write("a2");
+		}
+
+
+	</script>
+</head>
+<body>
+<select id="Select1" class="One"></select>
+<select id="Select2" class="Two"></select>
+<select id="Select3" class="One"></select>
+<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+
+
+</body>
+</html>

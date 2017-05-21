@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.IO.MemoryStream Example</title>
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.BitConverter.debug.js"></script>
+	
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+	
+	<script type="text/javascript" language="JavaScript" src="../System.IO.debug.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+
+	<script type="text/javascript" language="javascript">
+		
+		function Window_Load(){
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			var stream = new System.IO.MemoryStream();
+			var b1 = System.Text.Encoding.UTF8.GetBytes("12345678");
+			Trace.Write("b1["+b1.length+"] = " + System.BitConverter.ToString(b1));
+			var b2 = new System.Byte(4);
+			Trace.Write("// Write 'b1' buffer bytes into stream.");
+			Trace.Write("stream.Write(b1, 0, b1.length)");
+			stream.Write(b1, 0, b1.length);
+			stream.Position = 0;
+			stream.Read(b2, 1, 3);
+			Trace.Write("// Read stream bytes into 'b2' buffer.");
+			Trace.Write("stream.Read(b2, 1, 3)");
+			Trace.Write("b2["+b2.length+"] = " + System.BitConverter.ToString(b2));
+		}
+		
+		window.onload = Window_Load;
+		
+	</script>
+
+</body>
+</html>

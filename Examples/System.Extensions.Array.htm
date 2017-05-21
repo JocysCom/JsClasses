@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>System.Extensions</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Extensions.Array.debug.js"></script>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 600px;"></div>
+<script type="text/javascript" language="javascript">
+	Trace.IsEnabled = true;
+
+	function arrayToString(a) {
+		return "[" + a.map(function (o) { return o.toString(); }).join(", ") + "]";
+	}
+
+	window.onload = function(){
+		var a = [0,1,2,3,4,5,6,7,8,9];
+		Trace.Write("<code>var a = " + arrayToString(a) + "</code><br>");
+		Trace.Write("------------------------");
+		for (var i = -10; i < 20; i++) {
+			Trace.Write("<code>indexOf(3, " + i + "): " + a.indexOf(3, i) + "</code><br>");
+		}
+		Trace.Write("------------------------");
+		for (var i = -10; i < 20; i++) {
+			Trace.Write("<code>lastIndexOf(3, " + i + "): " + a.lastIndexOf(3, i) + "</code><br>");
+		}
+		/*
+		Trace.Write("------------------------");
+		Trace.Write("<code>forEach(function (x) { return x * x; }): " + a.forEach(function (x) { return x * x; }) + "</code><br>");
+		*/
+		Trace.Write("------------------------");
+		Trace.Write("<code>map(function (x) { return x * x; }): " + arrayToString(a.map(function (x) { return x * x; })) + "</code><br>");
+		Trace.Write("------------------------");
+		Trace.Write("<code>filter(function (x) { return x > 4; }): " + arrayToString(a.filter(function (x) { return x > 4; })) + "</code><br>");
+		Trace.Write("------------------------");
+		Trace.Write("<code>some(function (x) { return x > 4; }): " + a.some(function (x) { return x > 4; }) + "</code><br>");
+		Trace.Write("------------------------");
+		Trace.Write("<code>every(function (x) { return x > 4; }): " + a.every(function (x) { return x > 4; }) + "</code><br>");
+		Trace.Write("<code>every(function (x) { return x < 100; }): " + a.every(function (x) { return x < 100; }) + "</code><br>");
+
+	}
+</script>
+
+
+</body>
+</html>

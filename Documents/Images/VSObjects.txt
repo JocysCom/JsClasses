@@ -1,0 +1,23 @@
+// Images are available from:
+// C:\Program Files\Microsoft Visual Studio 8\Common7\VS2005ImageLibrary\VS2005ImageLibrary.zip
+//
+// Class View and Object Browser Icons
+// http://msdn2.microsoft.com/en-us/library/y47ychfe(VS.90).aspx
+// http://msdn2.microsoft.com/en-us/library/y47ychfe(VS.80).aspx
+
+
+// Convert Microosft BMPs to PNGs.
+
+string[] files = System.IO.Directory.GetFiles(@"d:\temp\img", "*.bmp");
+System.Drawing.Bitmap bmp;
+System.Drawing.Color transparentColor = System.Drawing.Color.FromArgb(255, 255, 0, 255);
+int length = files.Length;
+for (int i = 0; i < length; i++)
+{
+	System.IO.FileInfo file = new System.IO.FileInfo(files[i]);
+	bmp = new System.Drawing.Bitmap(file.FullName);
+	bmp.MakeTransparent(transparentColor);
+	string newName = System.IO.Path.GetFileNameWithoutExtension(file.FullName).Replace("VSObject_", "");
+	bmp.Save(file.DirectoryName + "\\VSObject\\" + newName + ".png", System.Drawing.Imaging.ImageFormat.Png);
+	bmp.Dispose();
+}

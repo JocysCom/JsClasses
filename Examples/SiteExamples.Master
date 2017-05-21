@@ -1,0 +1,40 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="SiteExamples.Master.cs" Inherits="JocysCom.WebSites.WebApp.Scripts.Classes.Examples.SiteExamples" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+	<title></title>
+	<asp:PlaceHolder runat="server">
+		<link href="<%= Page.ResolveUrl("../System.Web.UI.Interface.debug.css") %>" rel="stylesheet" />
+		<link href="<%= Page.ResolveUrl("Styles/System.Layout.css") %>" rel="stylesheet" />
+		<link href="<%= Page.ResolveUrl("Styles/Default.css") %>" rel="stylesheet" />
+	</asp:PlaceHolder>
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server" />
+</head>
+<body>
+	<noscript>
+		<div class="noscript">
+			<div class="noscript-inner">
+				<p>
+					<strong>We detected that Javascript is disabled in your Web browser.</strong>
+				</p>
+				<p>
+					You must enable Javascript to utilize the functionality of this Website.
+				</p>
+			</div>
+		</div>
+	</noscript>
+	<form id="form1" runat="server">
+		<asp:ScriptManager ID="MainScriptManager" runat="server" />
+		<div class="HeaderLayout HeaderStyle" id="header" runat="server">
+		</div>
+		<div class="ContentLayout ContentStyle" id="content" runat="server">
+			<div class="ContentBodyLayout ContentBodyStyle">
+				<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server" />
+			</div>
+		</div>
+		<div class="FooterLayout FooterStyle" id="footer" runat="server">
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Untitled Page</title>
+
+	<link href="../System.Web.UI.Interface.debug.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.Interface.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+	<input id="btnStart" type="button" value="Start" />
+	<input id="btnResume" type="button" value="Resume" />
+	<input id="btnStop" type="button" value="Stop" />
+	<input id="btnReset" type="button" value="Reset" />
+	<input id="btnProgress" type="button" value="Progress++" />
+
+	<script type="text/javascript" language="javascript">
+	this.Timer;
+	this.Action = function(sender,e){
+		Trace.Write("--------------- Hellow World!");
+	}
+	this.ProgressTimer;
+	this.ProgressValue = 0;
+	this.ProgressTimerTask = function(value){
+		Trace.Write(this.id+": "+value);
+	}
+
+	window.onload = function(){
+		parent.Timer = new System.Timers.Timer("demoTimer");
+		parent.Timer.Action = parent.Action;
+		Trace.IsEnabled = true;
+		Trace.Write("Start Demo");
+		document.getElementById("btnStart").onclick = function(){ parent.Timer.Start(); }
+		document.getElementById("btnStop").onclick = function(){ parent.Timer.Stop(); }
+		document.getElementById("btnResume").onclick = function(){ parent.Timer.Resume(); }
+		document.getElementById("btnReset").onclick = function(){ parent.Timer.Reset(true); }
+
+		parent.ProgressTimer = new System.Timers.Timer("progressTimer",this.ProgressTimerTask,500);
+		document.getElementById("btnProgress").onclick = function(){ parent.ProgressTimer.Execute(parent.ProgressValue++); }
+	}
+	</script>
+
+</body>
+</html>

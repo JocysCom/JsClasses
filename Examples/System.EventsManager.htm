@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>System.Extensions</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Globalization.KeyboardLayouts.debug.js"></script>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+<script type="text/javascript" language="javascript">
+	
+	Window_Load = function(){
+		Trace.IsEnabled = true;
+		Trace.Write("DemoStart");
+		// will return "object" inside IE.
+		Trace.Write("typeof(attachEvent) = "+typeof(attachEvent));
+		// will return "function" inside FX.
+		Trace.Write("typeof(addEventListener) = "+typeof(addEventListener)); 
+		// Attach SomeButton_Click to event "click" of "SomeButton" button.
+		Events.Add("SomeButton", "click", new System.EventHandler(this, SomeButton_Click), false);
+		// run funtion in same context but thru System.EventHandler
+		//var handler = new System.EventHandler(Button2_Click, this, 2000);
+		//Events.Add("ButtonWithDelay", "click", handler, true);
+		// Attach ButtonWithDelay_Click function to event "click" of "ButtonWithDelay" button.
+		Events.Add("ButtonWithDelay", "click", new System.EventHandler(this, ButtonWithDelay_Click, 2000), false);
+		// Attach DisposeButton_Click to event "click" of "DisposeButton" button.
+		Events.Add("DisposeButton", "click", new System.EventHandler(this, DisposeButton_Click), false);
+	}
+
+	SomeButton_Click = function(){
+		Trace.Write("Click");
+	}
+
+	DisposeButton_Click = function(){
+		Events.Dispose();
+	}
+
+	ButtonWithDelay_Click = function(sender, e){
+		Trace.Write("Click from '"+sender.id+"'"); 
+		//for (var i = 0; i < Events.Items.length; i++){
+		//	var item = Events.Items[i];
+		//	Trace.Write(item[0]+"; "+item[1]+"; "+item[2]+"; "+item[3]);
+		//}
+	}
+
+	Events.Add(window, "load", new System.EventHandler(this, Window_Load), false);
+	
+
+</script>
+
+<button id="SomeButton">Button</button>
+<button id="ButtonWithDelay">Button with Delay</button>
+<button id="DisposeButton">Dispose</button>
+
+
+
+</body>
+</html>

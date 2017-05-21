@@ -1,0 +1,358 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.TestTools.UnitTesting</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.IO.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Convert.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.BitConverter.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.BigInt.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.MD5.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.HMACMD5.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.SHA1.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.HMACSHA1.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.RijndaelManaged.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.RSA.debug.js"></script>
+
+	<!-- Include QUnit -->
+	<link href="Styles/qunit.css" rel="stylesheet" type="text/css" />
+
+	<script src="Scripts/qunit.js" type="text/javascript"></script>
+
+	<script src="Scripts/LogFunctions.js" type="text/javascript"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.TestTools.UnitTesting.debug.js"></script>
+
+</head>
+<body style="padding: 0; margin: 0;">
+	<h1 id="qunit-header">
+		System.TestTools.UnitTesting (QUnit)</h1>
+	<h2 id="qunit-banner">
+	</h2>
+	<h2 id="qunit-userAgent">
+	</h2>
+	<ol id="qunit-tests">
+	</ol>
+
+	<script type="text/javascript" language="javascript">
+
+		Test = QUnit.asyncTest;
+
+		QUnit.testDone = function(name, failures, total) {
+			QUnit.start();
+		}
+
+
+		function Window_Load() {
+			BeginTest()
+			QUnit.start();
+		}
+
+		window.onload = Window_Load;
+
+		function BeginTest() {
+
+			Module("System");
+
+			Test("BigInt", function() {
+				//var bi = new System.BigInt();
+				//Assert.AreEqual(0, bi.BitCount(), "default BitCount");
+
+				// based on bugzilla entry #68452
+				//System.BigInt bi = new System.BigInt ();
+				//Assert.AreEqual (0, bi.BitCount (), "before randomize");
+				//bi.Randomize ();
+
+				// Randomize returns a random number of BitCount length
+				// so in this case it will ALWAYS return 0
+				//Assert.AreEqual (0, bi.BitCount (), "after randomize");
+				//Assert.AreEqual (new BigInteger (0), bi, "Zero");
+
+
+				// Reduce Max Bytes for demo purposes.
+				//System.BigInt.MaxBytes = 0x20;
+				var r;
+				var n1 = new System.BigInt("0x010203040506");
+				var n2 = new System.BigInt("-280422911905295");
+				Assert.AreEqual(n1.ToHex(), "10203040506", "n1 (H)");
+				Assert.AreEqual(n2.ToHex(), "-FF0B0C0D0E0F", "n2 (H)");
+				Assert.AreEqual(n1.ToDecimal(), "1108152157446", "n1 (D)");
+				Assert.AreEqual(n2.ToDecimal(), "-280422911905295", "n2 (D)");
+				var n1b = System.BitConverter.ToString(n1.ToByteArray());
+				var n2b = System.BitConverter.ToString(n2.ToByteArray());
+				Assert.AreEqual(n1b, "06-05-04-03-02-01", "n1 (B)");
+				Assert.AreEqual(n2b, "F1-F1-F2-F3-F4-00-FF", "n2 (B)");
+				var nn1 = new System.BigInt();
+				var nn2 = new System.BigInt();
+				nn1.CopyFrom(n1);
+				nn2.CopyFrom(n2);
+				System.BigInt.Negate(nn1);
+				System.BigInt.Negate(nn2);
+				Assert.AreEqual(nn1.ToHex(), "-10203040506", "n1 * -1 (Hex)");
+				Assert.AreEqual(nn2.ToHex(), "FF0B0C0D0E0F", "n2 * -1 (Hex)");
+				Assert.AreEqual(nn1.ToDecimal(), "-1108152157446", "n1 * -1 (Dec)");
+				Assert.AreEqual(nn2.ToDecimal(), "280422911905295", "n2 * -1 (Dec)");
+				// Add and subtract.
+				r = System.BigInt.Add(n1, n2);
+				Assert.AreEqual(r.ToHex(), "-FE0909090909", "n1 + n2");
+				Assert.AreEqual(r.ToDecimal(), "-279314759747849", "n1 + n2");
+				Assert.AreEqual(System.BigInt.Subtract(r, n1).ToHex(), "-FF0B0C0D0E0F", "- n1 (Hex)");
+				Assert.AreEqual(System.BigInt.Subtract(r, n2).ToHex(), "10203040506", "- n2 (Hex)");
+				Assert.AreEqual(System.BigInt.Subtract(r, n1).ToDecimal(), "-280422911905295", "- n1 (Dec)");
+				Assert.AreEqual(System.BigInt.Subtract(r, n2).ToDecimal(), "1108152157446", "- n2 (Dec)");
+//				// Multiply and divide.
+//				r = System.BigInt.Multiply(n2, n1);
+//				Assert.AreEqual(r.ToHex(), "-1010C234779B3FAEED09F5A", "n1 * n2 (Hex)");
+//				Assert.AreEqual(r.ToDecimal(), "-310751254825142252681076570", "n1 * n2 (Dec)");
+//				var qBi = new System.BigInt();
+//				var rBi = new System.BigInt();
+//				System.BigInt.Divide(r, n1, qBi, rBi);
+//				Assert.AreEqual(qBi.ToHex(), "FF0B0C0D0E0F", "- n1 (Hex)");
+//				Assert.AreEqual(qBi.ToDecimal(), "280422911905295", "- n1 (Dec)");
+//				System.BigInt.Divide(r, n2, qBi, rBi);
+//				Assert.AreEqual(qBi.ToHex(), "10203040506", "- n2 (Hex)");
+//				Assert.AreEqual(qBi.ToDecimal(), "1108152157446", "- n2 (Dec)");
+			});
+
+
+			Module("System.Security.Cryptography");
+
+			Test("SHA1", function() {
+				var hash = new System.Security.Cryptography.SHA1()
+				var input1 = "abc";
+				var input2 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
+				function AssertEquals(testName, result, output) {
+					var aHex = System.BitConverter.ToString(output, "");
+					var eHex = System.BitConverter.ToString(result, "");
+					Assert.AreEqual(aHex, eHex, testName);
+				}
+				function FIPS186(testName, hash, input, result, add) {
+					var output;
+					var enable1 = true;
+					switch (add) {
+						case "a": output = hash.ComputeHash(input); break;
+						case "b": output = hash.ComputeHash(input, 0, input.length); break;
+						case "c":
+							var ms = new System.IO.MemoryStream(input);
+							output = hash.ComputeHash(ms);
+							break;
+						case "d":
+							output = hash.TransformFinalBlock(input, 0, input.length);
+							enable1 = false;
+							break;
+						case "e":
+							var copy = new System.Byte(input.length);
+							for (var i = 0; i < input.length - 1; i++)
+								hash.TransformBlock(input, i, 1, copy, i);
+							output = hash.TransformFinalBlock(input, input.length - 1, 1);
+							enable1 = false;
+							break;
+						default:
+					}
+					if (enable1) AssertEquals(testName + "." + add + ".1", result, output);
+					AssertEquals(testName + "." + add + ".2", result, hash.Hash());
+					// required or next operation will still return old hash
+					hash.Initialize();
+				}
+
+				function Test(testName, hash, input, result) {
+					FIPS186(testName, hash, input, result, "a");
+					FIPS186(testName, hash, input, result, "b");
+					//FIPS186(testName, hash, input, result, "c");
+					FIPS186(testName, hash, input, result, "d");
+					FIPS186(testName, hash, input, result, "e");
+				}
+				var testName, input, result;
+				// Test 1
+				testName = "SHA1" + " 1";
+				input = System.Text.Encoding.UTF8.GetBytes(input1);
+				result = [0xa9, 0x99, 0x3e, 0x36, 0x47, 0x06, 0x81, 0x6a, 0xba, 0x3e, 0x25, 0x71, 0x78, 0x50, 0xc2, 0x6c, 0x9c, 0xd0, 0xd8, 0x9d];
+				Test(testName, hash, input, result);
+				// Test 2
+				testName = "SHA1" + " 2";
+				result = [0x84, 0x98, 0x3e, 0x44, 0x1c, 0x3b, 0xd2, 0x6e, 0xba, 0xae, 0x4a, 0xa1, 0xf9, 0x51, 0x29, 0xe5, 0xe5, 0x46, 0x70, 0xf1];
+				input = System.Text.Encoding.UTF8.GetBytes(input2);
+				Test(testName, hash, input, result);
+			});
+
+			Test("HMACSHA1", function() {
+				function Check(testName, key, text, result) {
+					var hash = new System.Security.Cryptography.HMACSHA1();
+					var data = System.Text.Encoding.UTF8.GetBytes(text);
+					var a = hash.ComputeHash(key, data);
+					var aHex = System.BitConverter.ToString(a, "");
+					var eHex = System.BitConverter.ToString(fips, "");
+					Assert.AreEqual(aHex, eHex, "ComputeHash('key[{0}]', '{1}')", key.length, text);
+				}
+				var key, fips, text;
+				// Exact 64 bytes key (no hashing - no padding).
+				key = new System.Byte(64);
+				for (var i = 0; i < key.length; i++) key[i] = i;
+				fips = [
+					0x4f, 0x4c, 0xa3, 0xd5, 0xd6, 0x8b, 0xa7, 0xcc, 0x0a, 0x12,
+					0x08, 0xc9, 0xc6, 0x1e, 0x9c, 0x5d, 0xa0, 0x40, 0x3c, 0x0a];
+				Check("FIPS198-A1", key, "Sample #1", fips);
+				// Key < 64 bytes -> requires padding.
+				key = new System.Byte(20);
+				for (var i = 0; i < key.length; i++) key[i] = i + 0x30;
+				fips = [
+					0x09, 0x22, 0xd3, 0x40, 0x5f, 0xaa, 0x3d, 0x19, 0x4f, 0x82,
+					0xa4, 0x58, 0x30, 0x73, 0x7d, 0x5c, 0xc6, 0xc7, 0x5d, 0x24];
+				Check("FIPS198-A2", key, "Sample #2", fips);
+				// Key < 64 bytes -> requires padding.
+				key = new System.Byte(100);
+				for (var i = 0; i < key.length; i++) key[i] = i + 0x50;
+				fips = [
+					0xbc, 0xf4, 0x1e, 0xab, 0x8b, 0xb2, 0xd8, 0x02, 0xf3, 0xd0,
+					0x5c, 0xaf, 0x7c, 0xb0, 0x92, 0xec, 0xf8, 0xd1, 0xa3, 0xaa];
+				Check("FIPS198-A3", key, "Sample #3", fips);
+			});
+
+			Test("MD5", function() {
+				var hash = new System.Security.Cryptography.MD5()
+				var m = "abc";
+				var v = hash.ComputeHashAsHex("abc");
+				var e = "900150983CD24FB0D6963F7D28E17F72";
+				Assert.AreEqual(v, e, "ComputeHash('{0}')", m);
+			});
+
+			Test("HMACMD5", function() {
+				var hash = new System.Security.Cryptography.HMACMD5();
+				var m = "abc";
+				var k = "key";
+				var v = hash.ComputeHashAsHex(k, m);
+				var e = "D2FE98063F876B03193AFB49B4979591";
+				Assert.AreEqual(v, e, "ComputeHash('{0}', '{1}')", m, k);
+			});
+
+
+			Test("AES", function() {
+
+				function SaltFromPassword(password) {
+					var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
+					var hmac = new System.Security.Cryptography.HMACSHA1(passwordBytes);
+					var salt = hmac.ComputeHash(passwordBytes);
+					return salt;
+				}
+
+				function GetTransform(password, encrypt) {
+					// Create an instance of the Rihndael class. 
+					var cipher = new System.Security.Cryptography.RijndaelManaged();
+					// Calculate salt to make it harder to guess key by using a dictionary attack.
+					var salt = SaltFromPassword(password);
+					WriteLog("// salt = " + System.BitConverter.ToString(salt, ''));
+					// Generate Secret Key from the password and salt.
+					// Note: Set number of iterations to 10 in order for JavaScript example to work faster.
+					var secretKey = new System.Security.Cryptography.Rfc2898DeriveBytes(password, salt, 10);
+					// Create a encryptor from the existing SecretKey bytes by using
+					// 32 bytes (256 bits) for the secret key and
+					// 16 bytes (128 bits) for the initialization vector (IV).
+					var key = secretKey.GetBytes(32);
+					var iv = secretKey.GetBytes(16);
+					WriteLog("// key = " + System.BitConverter.ToString(key, ''));
+					WriteLog("// iv = " + System.BitConverter.ToString(iv, ''));
+					var cryptor = null;
+					if (encrypt) {
+						cryptor = cipher.CreateEncryptor(key, iv);
+					} else {
+						cryptor = cipher.CreateDecryptor(key, iv);
+					}
+					return cryptor;
+				}
+
+				function CipherStreamWrite(cryptor, input) {
+					var inputBuffer = new System.Byte(input.length);
+					// Copy data bytes to input buffer.
+					System.Buffer.BlockCopy(input, 0, inputBuffer, 0, inputBuffer.length);
+					// Create a MemoryStream to hold the output bytes.
+					var stream = new System.IO.MemoryStream();
+					// Create a CryptoStream through which we are going to be processing our data.
+					var mode = System.Security.Cryptography.CryptoStreamMode.Write;
+					var cryptoStream = new System.Security.Cryptography.CryptoStream(stream, cryptor, mode);
+					// Start the crypting process.
+					cryptoStream.Write(inputBuffer, 0, inputBuffer.length);
+					// Finish crypting.
+					cryptoStream.FlushFinalBlock();
+					// Convert data from a memoryStream into a byte array.
+					var outputBuffer = stream.ToArray();
+					// Close both streams.
+					stream.Close();
+					cryptoStream.Close();
+					return outputBuffer;
+				}
+
+				function Test(password, text) {
+					var bytes = System.Text.Encoding.Unicode.GetBytes(text);
+					// Get encrypted bytes.
+					var encryptor = GetTransform(password, true);
+					// Return encrypted bytes.
+					var encryptedBytes = CipherStreamWrite(encryptor, bytes);
+					var decryptor = GetTransform(password, false);
+					// Return encrypted bytes.
+					var decryptedBytes = CipherStreamWrite(decryptor, encryptedBytes);
+					var dataText = System.Text.Encoding.Unicode.GetString(decryptedBytes);
+					Assert.AreEqual(text, dataText);
+				}
+
+				var password = "password";
+				var input1 = "abc";
+				var input2 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
+
+				Test(password, input1);
+				Test(password, input2);
+
+			});
+
+			// This test will take some time on IE.
+			Test("RSA", function() {
+
+				// RSA 512 bit key.
+				var xmlParams =
+				"<RSAKeyValue>" +
+					"<Modulus>pxtmFnrGI6Sb8ziyY+NRUDuQ4b/ETw5WabQ4daFQqzsCEr/6J/LLBU/2D5mO5/Wu5U/Rya1E55aYFZeaZMNqAw==</Modulus>" +
+					"<Exponent>AQAB</Exponent>" +
+					"<P>2TsVXWPEvDIJv/gd2rX9k0UOyXuaYgoAchIH6vUicis=</P>" +
+					"<Q>xO4+OYREQfqYRQK7y73+RaUG0IxobT0OQ0c+Ok2hc4k=</Q>" +
+					"<DP>K7/xgpiIU9rECeyfnp/OjS14V+3T3vDivBaTj6eFI3c=</DP>" +
+					"<DQ>K4N9ClZ4gp+tn6oP9t//XEIvtEsiE+kmyqTmUhmvMAk=</DQ>" +
+					"<InverseQ>p7o4BOlKZQZ693R1ViZ66y5gTjUkNNTd2za7/1YGBCs=</InverseQ>" +
+					"<D>XZqFVrYy4qhECruJgVZFp/GVuD5Y0gev88nVjl5r911QT+I8vgJSklTso7jTlpMtf2oe7UZ0WRWEtgPS3tZn4Q==</D>" +
+				"</RSAKeyValue>";
+				function Test(doOaepPadding) {
+					var rsa = new System.Security.Cryptography.RSACryptoServiceProvider();
+					rsa.FromXmlString(xmlParams);
+					var text = "Sample #1";
+					var decryptedBytes = System.Text.Encoding.UTF8.GetBytes(text);
+					var encryptedBytes = rsa.Encrypt(decryptedBytes, doOaepPadding);
+					var decryptedBytes = rsa.Decrypt(encryptedBytes, doOaepPadding);
+					var dataText = System.Text.Encoding.UTF8.GetString(decryptedBytes);
+					Assert.AreEqual(text, dataText, "doOaepPadding = {0}", doOaepPadding);
+				}
+				Test(false);
+				Test(true);
+			});
+
+		}
+
+
+	
+	</script>
+
+</body>
+</html>

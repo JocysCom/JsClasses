@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Web.Mobile</title>
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.IO.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Convert.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.IO.Compression.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.BitConverter.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.BigInt.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.SHA1.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.RSA.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.HMACSHA1.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Security.Cryptography.RijndaelManaged.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.Mobile.debug.js"></script>
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+	<style type="text/css">
+		.Unprotected { color: #800000; }
+		.Protected { color: #008000; }
+	</style>
+	<script type="text/javascript" language="javascript">
+
+		//#region Init Example
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			WriteLog("Start Demo");
+			System.EventsManager.Current.Add("ResetDataButton", "click", ResetDataButton_Click, true);
+			System.EventsManager.Current.Add("SaveDataButton", "click", SaveDataButton_Click, true);
+			System.EventsManager.Current.Add("SendToServer", "click", SendToServer_Click, true);
+			System.EventsManager.Current.Add("ClearCardButton", "click", ClearCardButton_Click, true);
+			// Load data from localStorage or cookie.
+			System.Web.Mobile.Data.Load();
+			if (System.Web.Mobile.Data.Local.Profile == null) {
+				ResetDataButton_Click(null, null);
+			} else {
+				// Fill form.
+				ProfileProperty(System.Web.Mobile.Data.Local.Profile);
+				CardProperty(System.Web.Mobile.Data.Local.Card);
+			}
+		}
+
+		function ResetDataButton_Click(sender, e) {
+			var profile = new System.Web.Mobile.UserProfile();
+			profile.Username = "JSmith";
+			profile.Password = "password123";
+			profile.FirstName = "John";
+			profile.LastName = "Smith";
+			profile.Email = "john@smith.com";
+			profile.Phone = "01234567890";
+			var notes = "";
+			for (var i = 0; i < 100; i++) {
+				if (i > 0) notes += " ";
+				notes += "Notes text.";
+			}
+			profile.Notes = notes;
+			ProfileProperty(profile);
+			var card = new System.Web.Mobile.Card();
+			card.Type = "Visa";
+			card.Name = "MR J SMITH";
+			card.Number = "1234-2345-3456-4567";
+			card.ValidFrom = "12/09";
+			card.ExpiresEnd = "12/14";
+			card.EncryptedData = "";
+			card.EncryptedPass = "";
+			CardProperty(card);
+		}
+
+		function ClearCardButton_Click(sender, e) {
+			var card = new System.Web.Mobile.Card();
+			card.Type = "";
+			card.Name = "";
+			card.Number = "";
+			card.ValidFrom = "";
+			card.ExpiresEnd = "";
+			card.EncryptedData = "";
+			card.EncryptedPass = "";
+			CardProperty(card);
+		}
+
+		function ProfileProperty(value) {
+			/// <summary>Create 'UserProfile' from form or load property values into it.</summary>
+			var names = ["Username", "Password", "FirstName", "LastName", "Email", "Phone", "Notes"];
+			var i;
+			if (value) {
+				for (i = 0; i < names.length; i++) document.getElementById("Profile" + names[i] + "Text").value = value[names[i]];
+			} else {
+				var o = new System.Web.Mobile.UserProfile()
+				for (i = 0; i < names.length; i++) o[names[i]] = document.getElementById("Profile" + names[i] + "Text").value;
+				return o;
+			}
+		}
+
+		function CardProperty(value) {
+			/// <summary>Create 'Card' from form or load property values into it.</summary>
+			var names = ["Type", "Name", "Number", "ValidFrom", "ExpiresEnd", "EncryptedData", "EncryptedPass"];
+			var i;
+			if (value) {
+				var isProtected = (value.EncryptedData.length > 0);
+				for (i = 0; i < names.length; i++) {
+					var control = document.getElementById("Card" + names[i] + "Text");
+					control.value = value[names[i]];
+					control.disabled = isProtected ? "disabled" : null;
+				}
+				document.getElementById("CardDetailsSpan").innerHTML = (isProtected) ? "Protected" : "Unprotected";
+				document.getElementById("CardDetailsSpan").className = (isProtected) ? "Protected" : "Unprotected";
+			} else {
+				var o = new System.Web.Mobile.Card()
+				for (i = 0; i < names.length; i++) o[names[i]] = document.getElementById("Card" + names[i] + "Text").value;
+				return o;
+			}
+		}
+
+		function SaveDataButton_Click(sender, e) {
+			System.Web.Mobile.Url = document.getElementById("WebServiceUrlText").value;
+			Save_Step_1();
+		}
+
+		function Save_Step_1() {
+			Trace.Write("Create 'UserProfile' JavaScript object")
+			System.Web.Mobile.Data.Local.Profile = ProfileProperty();
+			Trace.Write("Create 'Card' JavaScript object")
+			System.Web.Mobile.Data.Local.Card = CardProperty();
+			Trace.Write("1) Request RSA Public Key from Server", 1);
+			System.Web.Mobile.Helper.PostData("GetRsaKey");
+		}
+
+		function Save_Step_2() {
+			var card = CardProperty();
+			var isProtected = (card.EncryptedData.length > 0);
+			if (isProtected) {
+				Trace.Write("2) Card is already protected.");
+			} else {
+				Trace.Write("2) Generate random password...", 1);
+				var password = System.Guid.NewGuid().ToString("N");
+				Trace.Write("Random Password = " + password, -1);
+				//----
+				Trace.Write("3) Encrypt random password with RSA Public Key...", 1);
+				var encryptedPassword = System.Web.Mobile.Helper.RsaEncrypt(password, System.Web.Mobile.Data.Local.RsaPublicKey);
+				Trace.Write("Encrypted Password = " + encryptedPassword, -1);
+				Trace.Write("4) Serialize 'Card' object to JSON string...", 1);
+				var ser = new System.Web.Script.Serialization.JavaScriptSerializer()
+				var cardJson = ser.Serialize(card);
+				Trace.Write("JSON String = " + cardJson, -1);
+				//----
+				Trace.Write("5) Encrypt JSON string by using AES-256 encryption...", 1);
+				var cardAes = System.Web.Mobile.Helper.AesEncrypt(cardJson, password);
+				Trace.Write("Encrypted Card = " + cardAes, -1);
+				//----
+				Trace.Write("6) Store Encrypted Card data and wipe plain data...");
+				card.Type = "";
+				card.Name = "";
+				card.Number = System.Web.Mobile.Helper.GetMasked(System.Web.Mobile.Data.Local.Card.Number); ;
+				card.ValidFrom = "";
+				card.EncryptedData = cardAes;
+				card.EncryptedPass = encryptedPassword;
+				CardProperty(card);
+				System.Web.Mobile.Data.Local.Card = null;
+			}
+			Trace.Write("Save 'UserProfile' and encrypted card into localStorage (HTML5) or cookie.")
+			System.Web.Mobile.Data.Local.Profile = ProfileProperty();
+			System.Web.Mobile.Data.Local.Card = CardProperty();
+			System.Web.Mobile.Data.Save();
+		}
+
+		function SendToServer_Click(sender, e) {
+			System.Web.Mobile.Url = document.getElementById("WebServiceUrlText").value;
+			Send_Step_1();
+		}
+
+		function Send_Step_1() {
+			Trace.Write("1) Create 'UserProfile' JavaScript object")
+			System.Web.Mobile.Data.Local.Profile = ProfileProperty();
+			Trace.Write("2) Create 'Card' JavaScript object")
+			System.Web.Mobile.Data.Local.Card = CardProperty();
+			Trace.Write("3) Create string array.", 1);
+			Trace.Write("Append serialized 'UserProfile'.");
+			Trace.Write("Append serialized 'Card'.", -1);
+			// Create array of serialized objects.
+			var ser = new System.Web.Script.Serialization.JavaScriptSerializer();
+			var list = new System.Web.Mobile.KeyValueList();
+			list.SetValue("UserProfile", System.Web.Mobile.Data.Local.Profile);
+			list.SetValue("Card", System.Web.Mobile.Data.Local.Card);
+			Trace.Write("3) Post data to server.");
+			System.Web.Mobile.Helper.PostData("SendProfile", list);
+		}
+
+		System.Web.Mobile.DataLoaded = function (sender, e) {
+			Trace.Write("Got value from Server.");
+			var r = new System.Web.Mobile.KeyValueList();
+			r.Load(e, true)
+			if (r.GetValue("ErrorCode")  > 0) {
+				Trace.Write(r.GetValue("ErrorMessage"));
+				return;
+			}
+			switch (r.GetValue("DataType")) {
+				case System.Web.Mobile.DataType.GetRsaKey:
+					System.Web.Mobile.Data.Local.RsaPublicKey = r.GetValue("RsaPublicKey");
+					Trace.Write("RSA Public key received.", -1);
+					Save_Step_2();
+					break;
+				case System.Web.Mobile.DataType.SendProfile:
+					var message = r.GetValue("Message");
+					Trace.Write("Message from Server: " + message);
+					break;
+				default:
+			}
+		}
+
+		System.EventsManager.Current.Add(window, "load", Window_Load, true);
+
+		//#endregion
+
+		//#region Log Function
+
+		function WriteLog(text) {
+			Trace.Write("<code>" + text + "</code>");
+		}
+
+		function WriteEnc(input, output) {
+			WriteLog("Transform: " + System.BitConverter.ToString(input, '') +
+			" -> " + System.BitConverter.ToString(output, ''));
+		}
+
+		//#endregion
+
+	</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td colspan="2">RSA encryption is very usefull for mobile devices (jQuey Mobile). You
+				can store sensitive information which belongs to the client (credit cards, addresses,
+				passwords, etc) in encryted state on device itself. Data can be decrypted only by
+				submitting it to your server where RSA private decryption key is stored. Data is
+				safe even if client device or server disk is lost. Client can't decrypt the data
+				and no sensitive inforamtion is stored on the server.<br />
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				<input id="SaveDataButton" type="button" value="Save" class="SWUI_Prg SWUI_Prg_Button" />
+			</td>
+			<td>Get RSA Key from server, encrypt and save protected card data localy. </td>
+		</tr>
+		<tr>
+			<td align="right">
+				<input id="SendToServer" type="button" value="Send" class="SWUI_Prg SWUI_Prg_Button" />
+			</td>
+			<td>Send profile and encrypted card data to the server. </td>
+		</tr>
+		<tr>
+			<td align="right">
+				<input id="ResetDataButton" type="button" value="Reset" class="SWUI_Prg SWUI_Prg_Button" />
+			</td>
+			<td>Reset demo form. </td>
+		</tr>
+		<tr>
+			<td colspan="2"><span style="font-weight: bold;">
+				<br />
+				Web Service (script works cross-domain):<br />
+				&nbsp;</span><input id="WebServiceUrlText" type="text" value="http://www.jocys.com/Common/JsClasses/Examples/System.Web.Mobile.asmx"
+					style="width: 544px;" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<table border="0" cellpadding="0" cellspacing="4" class="DebugTable">
+					<tr>
+						<td colspan="2" style="font-weight: bold;">Login </td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Username: </td>
+						<td style="width: 100%;">
+							<input id="ProfileUsernameText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Password: </td>
+						<td>
+							<input id="ProfilePasswordText" type="password" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="font-weight: bold;">Contact Details </td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">First Name: </td>
+						<td>
+							<input id="ProfileFirstNameText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Last Name: </td>
+						<td>
+							<input id="ProfileLastNameText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">E-mail: </td>
+						<td>
+							<input id="ProfileEmailText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Phone: </td>
+						<td>
+							<input id="ProfilePhoneText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Notes: </td>
+						<td>
+							<textarea id="ProfileNotesText" cols="32" rows="6"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="font-weight: bold;">Card Details (<span id="CardDetailsSpan"></span>)
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Type: </td>
+						<td>
+							<input id="CardTypeText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Name: </td>
+						<td>
+							<input id="CardNameText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Number: </td>
+						<td>
+							<input id="CardNumberText" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Valid From: </td>
+						<td>
+							<input id="CardValidFromText" type="text" maxlength="5" size="5" />
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap;">Expires End: </td>
+						<td>
+							<input id="CardExpiresEndText" type="text" maxlength="5" size="5" />
+							<input id="ClearCardButton" type="button" value="Clear" class="SWUI_Prg SWUI_Prg_Button" />
+						</td>
+					</tr>
+					<tr style="display: none;">
+						<td>EncryptedData: </td>
+						<td>
+							<input id="CardEncryptedDataText" type="text" />
+							<input id="CardEncryptedPassText" type="text" />
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="width: 100%;" valign="top">
+				<div id="TraceLog" style="width: 100%; height: 600px;"></div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

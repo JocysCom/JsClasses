@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.EventArgs</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+	<script type="text/javascript" language="javascript">
+
+		//this._timer.TimeOutEvent.Add(EventHandler(this, this.TimeOutHandler));
+
+		//ClientWindow.prototype.Initialize = function(domWindow)
+		//{
+		//    this.domWindow = domWindow;
+		//    this._userAgent = new UserAgent();
+		//	//alert("Ready to sign in");
+		//	this._userAgent.Initialize(this.domWindow, this);
+		//	this._userAgent._signIn.SignInFailedEvent.Add(EventHandler(this, this.OnSignedOut));
+
+
+		//		// 1. Declare a public event EventHandler - "publish" event.
+		//		public event EventHandler Updated;
+
+		//		// Define a protected method in your class that raises the event. Name the method OnEventName. Raise the event within the method.
+		//		protected virtual void RiseUpdated(EventArgs e)
+		//		{
+		//			// 3. If event was attached then fire it.
+		//			if (Updated != null) Updated(this, e);
+		//		}
+
+		// "subscribe" to event.
+		// 2. Page.Load += new EventHandler(Page_Load);
+		//Load - Event (Event Handler)
+		//new EventHandler -  with link to Page_Load method inside
+
+		//}
+		this.GetType = function () {
+			return new System.Type("Window");
+		}
+
+		Class1 = function () {
+			this.OnDone = new System.Event(); // EventHandler
+			this.Do = function () {
+				Trace.Write("this.Do");
+				var e = new System.EventArgs("OnDone");
+				this.OnDone.Fire(this, e);
+			}
+		}
+
+		Class2 = function () {
+			this.c1 = new Class1();
+			this.c1.OnDone.Add(System.EventHandler(this, this.OnSignedOut));
+			this.OnDone = new System.Event();
+			this.OnSignedOut = function (sender, e) {
+				Trace.Write("on this.OnSignedOut(sender[Type='" + sender.Type + "'], e) // sender.GetType().Name = '" + sender.GetType().Name + "'");
+			}
+		}
+
+		this.C1 = null;
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			this.GetType().Name = "Window_Load";
+			document.getElementById("ClickButton").onclick = ClickButton_Click;
+			this.C1 = new Class1();
+			this.C1.OnDone.Add(new System.EventHandler(this, this.C1_Done));
+			var C2 = new Class2();
+			this.C1.OnDone.Add(new System.EventHandler(C2, C2.OnSignedOut));
+
+			Events.Add("Button2", "click", new System.EventHandler(C2, Button2_Click), true);
+			//document.getElementById("Button2").addEventListener("click", new System.EventHandler(this, Button2_Click).InvokeNative, true);
+		}
+
+		function C1_Done(sender, e) {
+			Trace.Write("on C1_Done(sender[Type='" + sender.Type + "'], e)");
+			Trace.Write("this.GetType().Name='" + this.GetType().Name + "'");
+		}
+
+		function ClickButton_Click(sender, e) {
+			Trace.Write("on ClickButton_Click(sender, e)");
+			C1.Do();
+		}
+
+		function Button2_Click(sender, e) {
+			Trace.Write("on Button2_Click(sender[Type='" + sender.Type + "'], e) // sender.GetType().Name = '" + sender.GetType().Name + "'");
+			Trace.Write("on Button2_Click(sender[id='" + sender.id + "'], e)");
+		}
+
+
+		window.onload = Window_Load;
+
+	//System.EventHandler = function(target, method){
+	//	this.Method = method;
+	//	this.Target = target;
+	//}
+
+	</script>
+	<button id="ClickButton">Click</button>
+	<button id="Button2">Button2</button>
+
+</body>
+</html>

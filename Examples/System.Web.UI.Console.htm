@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Web.UI.Console</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.TextBox.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.ShortKeys.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Windows.Forms.Keys.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Globalization.KeyboardLayouts.debug.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+
+	<script type="text/javascript" language="javascript">
+
+		//=============================================================================
+		// CLASS: System.Web.UI.Console
+		//-----------------------------------------------------------------------------
+
+		var console1;
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			Trace.Write("Hello");
+			Trace.Write("Hello2");
+			// declare new console with id.
+			console1 = new System.Web.UI.Console("Console1");
+			console1.IsEnabled = true;
+			console1.CreateInterface();
+			//console1.Write("Hello World1!");
+			var cph = document.getElementById("consolePlaceHolder");
+			//cph.appendChild(console1.NodeBody);
+			cph.appendChild(console1.Node);
+			console1.Write("Hello World2!");
+		}
+
+		window.onload = Window_Load;
+
+	</script>
+
+</head>
+<body>
+	<form id="form1">
+		<div>
+			<div id="consolePlaceHolder" style="width: 600px; height: 200px;"></div>
+			<br />
+		</div>
+		<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+	</form>
+</body>
+</html>

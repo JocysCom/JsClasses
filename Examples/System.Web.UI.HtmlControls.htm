@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Untitled Page</title>
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.HtmlControls.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.UI.Interface.debug.js"></script>
+</head>
+<body>
+<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+<div id="div1" style="width: 100px; height: 100px; background-color: Green; border: solid 1px blue; position: absolute; top: 500px; left: 100px"></div>
+<div id="div2" style="width: 100px; height: 100px; background-color: gray; border: solid 1px blue; position: absolute; top: 200px; left: 200px"><div style=" background-color: Blue; width: 100%;" id="div2head">header</div></div>
+<script type="text/javascript" language="javascript">
+window.onload = function(){
+	Trace.IsEnabled = true;
+	Trace.Write("Start Demo");
+	var div1 = document.getElementById("div1");
+	var sizer1 = new System.Web.UI.HtmlControls.Sizer("",document,div1);
+	var div2 = document.getElementById("div2");
+	var sizer2 = new System.Web.UI.HtmlControls.Sizer("",document,div2);
+	var div2h = document.getElementById("div2head");
+	var mover = new System.Web.UI.HtmlControls.Mover("",document,div2h,div2);
+}
+</script>
+
+
+</body>
+</html>

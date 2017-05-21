@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Web.Storage</title>
+	<meta charset="UTF-8" />
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+	<link type="text/css" rel="stylesheet" href="Styles/Default.css" />
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" language="JavaScript" src="../System.Web.debug.js"></script>
+	<script type="text/javascript" language="javascript">
+
+		//=============================================================================
+		// CLASS: System.Web.Storage
+		//-----------------------------------------------------------------------------
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			var s = new Date();
+			Trace.Write("Storage:");
+			var usedSpace = System.Web.Storage.GetUsedSpace();
+			Trace.Write("Used Space: " + usedSpace);
+			var max = 0 // 5 * 1024 * 1024;
+			var freeSpace = System.Web.Storage.TestFreeSpace(max);
+			Trace.Write("Test Free Space: " + freeSpace);
+			var totalSpace = freeSpace + usedSpace;
+			var e = new Date();
+			var ts = totalSpace / 1024 / 1024;
+			Trace.Write("Total Space: " + totalSpace + " = " + ts + " x 1024 x 1024");
+			var t = e - s;
+			Trace.Write("Time: " + t);
+		}
+
+		window.onload = Window_Load;
+
+	</script>
+
+</head>
+<body>
+	<form id="form1">
+		<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+	</form>
+</body>
+</html>

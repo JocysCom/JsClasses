@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>System.Text.Encoding</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+
+	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+
+	<script type="text/javascript" language="JavaScript" src="../System.Text.debug.js"></script>
+
+	<script type="text/javascript" language="javascript">
+	function showByte(value){
+	}
+	
+		window.onload = function(){
+			var text = "abcė新闻网";
+			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			Trace.Write("----------------------------");
+			Trace.Write("text = '"+text+"'");
+			Trace.Write("escape(text) = '"+escape(text)+"'");
+			Trace.Write("CharCodes:");
+			for (var i = 0; i < text.length; i++){
+				var c = text.charAt(i);
+				Trace.Write("char: "+c+" - "+c.charCodeAt(0)+" - "+c.charCodeAt(0).toString(2));
+			}
+			Trace.Write("----------------------------");
+			Trace.Write("System.Text.Encoding.UTF8.GetBytes(text):");
+			var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+			for (var i = 0; i < bytes.length; i++){
+				var b = bytes[i]
+				Trace.Write("byte: "+b.toString(16)+" - "+String.fromCharCode(bytes[i])+" - "+b);
+			}
+			Trace.Write(System.Text.Encoding.UTF8.GetString(bytes)+" from "+text);
+			Trace.Write("----------------------------");
+			Trace.Write("System.Text.Encoding.Unicode.GetBytes(text):");
+			bytes = System.Text.Encoding.Unicode.GetBytes(text);
+			for (var i = 0; i < bytes.length; i++){
+				var b = bytes[i]
+				Trace.Write("byte: "+b.toString(16)+" - "+String.fromCharCode(bytes[i])+" - "+b);
+			}
+			Trace.Write(System.Text.Encoding.Unicode.GetString(bytes)+" from "+text);
+			Trace.Write("----------------------------");
+			Trace.Write("System.Text.Encoding.ASCII.GetBytes(text):");
+			bytes = System.Text.Encoding.ASCII.GetBytes(text);
+			for (var i = 0; i < bytes.length; i++){
+				var b = bytes[i]
+				Trace.Write("byte: "+b.toString(16)+" - "+String.fromCharCode(bytes[i])+" - "+b);
+			}
+			Trace.Write(System.Text.Encoding.ASCII.GetString(bytes)+" from "+text);
+		}
+	</script>
+
+</head>
+<body>
+	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+</body>
+</html>

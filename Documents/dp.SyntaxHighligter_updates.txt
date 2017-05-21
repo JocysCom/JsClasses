@@ -1,0 +1,80 @@
+===============================================================
+Updated: shCore.uncompressed.js
+Updated: "SingleLineCSpecialComments" was added
+Updated: Double and Single quote RegEx was updated to support escaped code better.
+---------------------------------------------------------------
+
+//dp.sh.RegexLib = {
+//	MultiLineCComments : new RegExp('/\\*[\\s\\S]*?\\*/', 'gm'),
+//	SingleLineCSpecialComments : new RegExp('[/]{3}[^/].*$', 'gm'),
+//	SingleLineCComments : new RegExp('[/]{2}[^/].*$|////.*$', 'gm'),
+//	SingleLinePerlComments : new RegExp('#.*$', 'gm'),
+//	DoubleQuotedString : new RegExp('"(?:(?!(!|%)[\s\S]*?--[ %\t\n\r]*>).)*"','g'),
+//	SingleQuotedString : new RegExp("(\w+)='([^'\\]*(\\.[^'\\]*)*)'",'g')
+//};
+
+===============================================================
+Updated: shBrushJScript.js
+Updated: to support special comments (///)
+---------------------------------------------------------------
+
+{ regex: new RegExp('[/]{3}[^/].*$', 'gm'),					css: 'color1' }, 		// Special comments.
+
+===============================================================
+Updated: shThemeDefault.css
+Updated: to reduce margin borders and make colors look like in Visual Studio 2005
+---------------------------------------------------------------
+
+.syntaxhighlighter
+{
+  background-color: white !important;
+	border: solid 1px #eeeeee !important;
+	width: 99% !important; /* 99% fixes IE8 horizontal scrollbar */
+	margin: 1em 0 1em 0 !important;
+	padding: 1px !important; /* adds a little border on top and bottom */
+	position: relative !important;
+}
+
+.syntaxhighlighter .line.alt2 {
+  background-color: #fafafa !important;
+}
+
+.syntaxhighlighter .gutter .line {
+  border-right: 1px solid #eeeeee !important;
+}
+
+.syntaxhighlighter .comments { color: #008200; !important; }
+.syntaxhighlighter .string, .syntaxhighlighter .string a { color: #990000 !important; }
+.syntaxhighlighter .keyword {  	color: #0000ff; !important; }
+.syntaxhighlighter .preprocessor { color: #000080; !important; }
+.syntaxhighlighter .color1 { color: #999999; !important; } // white comment
+
+At the end:
+.syntaxhighlighter .keyword { font-weight: normal !important; }
+
+===============================================================
+Updated: shBrushCSharp.js
+Updated: New keywords
+---------------------------------------------------------------
+
+	var keywords =	...
+					+
+					' var';
+
+===============================================================
+Updated: shBrushSql.js
+Updated: New keywords
+---------------------------------------------------------------
+
+
+	var keywords =	...
+					+
+					' abstract backup base bool break byte catch checked class ' +
+					'const delegate differential disk do enum event explicit extern ' +
+					'file filelistonly finally fixed foreach get if implicit init ' +
+					'instanceof interface internal lock log long master namespace ' +
+					'noinit norecovery object operator override params private ' +
+					'protected readonly recovery ref restore sbyte sealed short ' +
+					'sizeof stackalloc stats string struct super switch this throw ' +
+					'try typeof uint ulong unchecked unsafe use ushort using var  ' +
+					'virtual void while';
