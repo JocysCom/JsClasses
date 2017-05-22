@@ -20,44 +20,23 @@
 // <PropertyGroup>
 //-----------------------------------------------------------------------------
 System.Type.RegisterNamespace("System.Web.UI.WebControls");
-//-----------------------------------------------------------------------------
-// CLASS: System.Type
-//-----------------------------------------------------------------------------
 
-//$(function () {
-//	GetCustomers(1);
-//});
-//$(".Pager .page").live("click", function () {
-//	GetCustomers(parseInt($(this).attr('page')));
-//});
-
+//-----------------------------------------------------------------------------
+// CLASS: System.Web.UI.WebControls.ListView
+//-----------------------------------------------------------------------------
 
 System.Web.UI.WebControls.ListView = function () {
-
+	/* use jQuery-UI DataTables */
 };
+System.Type.RegisterClass("System.Web.UI.WebControls.ListView");
 
-System.Web.UI.WebControls.ListView.GetCustomers = function (sender, e) {
-	$.ajax({
-		type: "POST",
-		url: e.Url,
-		//data: { carrier: '', flight: 0, date: '2017-05-10T00:00:00', departure_city: '', startRowIndex: 0, maximumRows: 20 },
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: function (response) {
-			System.Web.UI.WebControls.ListView.OnSuccess(response, e);
-		},
-		failure: function (response) {
-			alert(response.d);
-		},
-		error: function (response) {
-			alert(response.d);
-		}
-	});
-	return false;
-};
 
 System.Web.UI.WebControls.ListView.FixTable = function (id) {
-	//var items = xml.find("Results");
+	/// <summary>
+	/// Browsers will screw tables, by moving TH nodes under 'TBODY TR' and removing 'THEAD' node.
+	/// It happnes when brower copies table under different HTML nodes (jQuery-UI DataTables).
+	/// This function will fix table structure by moving TH nodes back under THEAD TR node.
+	/// </summary>
 	var grid = $("#" + id);
 	var head = $(grid).children("thead");
 	// If header is missing then...
@@ -68,66 +47,6 @@ System.Web.UI.WebControls.ListView.FixTable = function (id) {
 		head = $(grid).children("thead");
 		head.append(headRow);
 	}
-};
-
-System.Web.UI.WebControls.ListView.OnSuccess = function (response, e) {
-	var gridId = e.ListViewId;
-
-	// XML processing.
-	var xmlDoc = $.parseXML(response.d);
-	var xml = $(xmlDoc);
-	var xmlDataSet = xml.context.firstChild;
-	// Node.ELEMENT_NODE == 1
-	var xmlRows = $(xmlDataSet).contents().filter(function () { return this.nodeType === 1; });
-
-	//var items = xml.find("Results");
-	var grid = $("[id*=" + gridId + "]");
-	var head = $(grid).children("thead");
-	var body = $(grid).children("tbody");
-	var headRow;
-	// If header is missing then...
-	if (!head.length) {
-		var headRows = $(grid).find("tbody tr th");
-		headRow = headRows.parent();
-		grid[0].createTHead();
-		head = $(grid).children("thead");
-		head.append(headRow);
-	}
-	headRow = $("[id*=" + gridId + "] thead tr:first-child");
-	var bodyRow = $("[id*=" + gridId + "] tbody tr:first-child");
-	//var bodyRowAlt = $("[id*=" + gridId + "] tbody tr:nth-child(2)");
-	var bodyRows = $("[id*=" + gridId + "] tbody tr");
-	var columns = headRow.children();
-	body.hide();
-	bodyRow.hide();
-	bodyRows.not(headRow).not(bodyRow).remove();
-	$.each(xmlRows, function () {
-		var xmlRow = $(this);
-		// Clone last row in the table.
-		var row = bodyRow.clone(true);
-		var columnIndex = -1;
-		$.each(columns, function () {
-			var column = $(this);
-			var dataField = column.attr("data-datafield");
-			columnIndex++;
-			if (dataField) {
-				var value = xmlRow.find(dataField).text();
-				$("td", row).eq(columnIndex).html(value);
-			}
-		});
-		row.show();
-		$("[id*=" + gridId + "]").append(row);
-	});
-	body.show();
-	$("[id*=" + gridId + "]").DataTable();
-	//var pager = xml.find("Pager");
-	//$(".Pager").ASPSnippets_Pager({
-	//	ActiveCssClass: "current",
-	//	PagerCssClass: "pager",
-	//	PageIndex: parseInt(pager.find("PageIndex").text()),
-	//	PageSize: parseInt(pager.find("PageSize").text()),
-	//	RecordCount: parseInt(pager.find("RecordCount").text())
-	//});
 };
 
 //==============================================================================

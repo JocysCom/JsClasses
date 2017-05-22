@@ -19,7 +19,7 @@
 //		<RootNamespace>System.Web.UI.WebControls</RootNamespace>
 // <PropertyGroup>
 //-----------------------------------------------------------------------------
-Type.registerNamespace("System.Web.UI.WebControls");
+System.Type.RegisterNamespace("System.Web.UI.WebControls");
 //=============================================================================
 
 //=============================================================================
@@ -27,8 +27,9 @@ Type.registerNamespace("System.Web.UI.WebControls");
 //-----------------------------------------------------------------------------
 
 System.Web.UI.WebControls.DialogBox = function (prefix, waitMessage, autoOpen) {
-
+	/* use jQuery-UI DialogBox */
 };
+System.Type.RegisterClass("System.Web.UI.WebControls.DialogBox");
 
 System.Web.UI.WebControls.DialogBox.OnClick = function (sender, e) {
 	var prefixEnd = sender.id.lastIndexOf("_") + 1 + e.Prefix.length;

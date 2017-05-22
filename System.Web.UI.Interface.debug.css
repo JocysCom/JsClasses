@@ -58,7 +58,7 @@ Windows program look
 	.SWUI_Btn:active { border: 1px solid #003eff; background: #57b4ff; font-weight: normal; color: #fff; }
 	.SWUI_Btn:disabled { color: #BBBBBB; background-image: none; cursor: default; }
 
-fieldset.SWUI_Prg { -moz-border-radius: 8px; }
+fieldset.SWUI_Prg { -moz-border-radius: 8px; border-radius: 8px; }
 legend.SWUI_Prg { font: menu; color: #335ea8; }
 input.SWUI_Prg { font: menu; }
 select.SWUI_Prg { font: menu; }
@@ -73,9 +73,9 @@ AjaxControlToolkit.Rating
 .SWUI_StarRating_Empty { background-image: url(Images/Icons/Star_Gray_16x16.png); }
 .SWUI_StarRating_Waiting { background-image: url(Images/Icons/Star_Red_16x16.png); cursor: pointer; }
 .SWUI_StarRating_Meta { font-family: Segoe UI, Verdana; font-size: 9pt; }
-.SWUI_StarRating_Meta_Description { }
+/* .SWUI_StarRating_Meta_Description { } */
 .SWUI_StarRating_Meta_Average { width: 40px; text-align: right; padding-right: 8px; }
-.SWUI_StarRating_Meta_Other { }
+/* .SWUI_StarRating_Meta_Other { } */
 .SWUI_StarRating_Outer { background-image: url(Images/Icons/Star_Gray_16x16.png); height: 16px; width: 80px; }
 .SWUI_StarRating_Inner { background-image: url(Images/Icons/Star_Yellow_16x16.png); height: 16px; width: 0; }
 .SWUI_StarRating_Rating_Users { position: absolute; margin-top: -16px; }
@@ -93,7 +93,7 @@ TreeView
 
 td.SWUI_TreeView_Node { padding: 1px 0 0 0; margin: 0; }
 a.SWUI_TreeView_Node { font-family: 'Segoe UI', 'Verdana'; font-size: 9pt; padding: 2px 4px 2px 4px; margin: 0; }
-td.SWUI_TreeView_SelectedNode { }
+/* td.SWUI_TreeView_SelectedNode { } */
 a.SWUI_TreeView_SelectedNode { background-color: #3a6ea5; color: #ffffff; }
 .SWUI_TreeView a[tabindex="-1"] img { margin: 2px 0 0 0; }
 
@@ -102,15 +102,15 @@ a.SWUI_TreeView_SelectedNode { background-color: #3a6ea5; color: #ffffff; }
 Table
 -----------------------------------------------------------------------------*/
 
-.SWUI_Table { }
-	.SWUI_Table tr td { }
+/* .SWUI_Table { } */
+/* .SWUI_Table tr td { } */
 .SWUI_Table_Label { white-space: nowrap; text-align: left; padding-top: 2px; padding-left: 8px; }
 .SWUI_Table_Value { text-align: left; padding-right: 2px; }
 	.SWUI_Table_Value input[type="text"] { width: 100%; }
 	.SWUI_Table_Value input[type="password"] { width: 100%; }
 	.SWUI_Table_Value input[type="checkbox"] { width: 13px; height: 13px; margin: 0; padding: 0; }
 .SWUI_Table_CheckBox { width: 13px; margin: 0; padding: 0; }
-.SWUI_Table_Check { }
+/* .SWUI_Table_Check { } */
 .SWUI_Table_ResultRequired { background: url(Images/Icons/ArrowRed_16x16.png) no-repeat; width: 16px; height: 16px; }
 .SWUI_Table_Result1 { background: url(Images/Icons/Checkbox_16x16.png) no-repeat; width: 16px; height: 16px; }
 .SWUI_Table_Result0 { width: 16px; height: 16px; }
@@ -132,23 +132,23 @@ GridViewTable
 	.SWUI_GridViewTable tbody tr { background-color: #F7F6F3; }
 	.SWUI_GridViewTable thead tr th { font-family: Verdana; font-size: 8pt; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
 		.SWUI_GridViewTable thead tr th a:link { color: #ffffff; text-decoration: none; }
-		.SWUI_GridViewTable thead tr th a:visited { }
-		.SWUI_GridViewTable thead tr th a:active { }
+		/* .SWUI_GridViewTable thead tr th a:visited { } */
+		/* .SWUI_GridViewTable thead tr th a:active { } */
 		.SWUI_GridViewTable thead tr th a:hover { text-decoration: underline; }
 	.SWUI_GridViewTable tbody tr th { font-family: Verdana; font-size: 8pt; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
 		.SWUI_GridViewTable tbody tr th a:link { color: #ffffff; text-decoration: none; }
-		.SWUI_GridViewTable tbody tr th a:visited { }
-		.SWUI_GridViewTable tbody tr th a:active { }
+		/* .SWUI_GridViewTable tbody tr th a:visited { } */
+		/* .SWUI_GridViewTable tbody tr th a:active { } */
 		.SWUI_GridViewTable tbody tr th a:hover { text-decoration: underline; }
 	.SWUI_GridViewTable tbody tr td { font-family: Verdana; font-size: 8pt; color: #000040; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
 		.SWUI_GridViewTable tbody tr td a:link { color: #0000E0; text-decoration: none; }
-		.SWUI_GridViewTable tbody tr td a:visited { }
-		.SWUI_GridViewTable tbody tr td a:active { }
+		/* .SWUI_GridViewTable tbody tr td a:visited { } */
+		/* .SWUI_GridViewTable tbody tr td a:active { } */
 		.SWUI_GridViewTable tbody tr td a:hover { text-decoration: underline; }
-		.SWUI_GridViewTable tbody tr td span input[type="checkbox"] { width: 13px; height: 13px; padding: 0px; margin: 0px; }
-		.SWUI_GridViewTable tbody tr td input[type="checkbox"] { width: 13px; height: 13px; padding: 0px; margin: 0px; }
+		.SWUI_GridViewTable tbody tr td span input[type="checkbox"] { width: 13px; height: 13px; padding: 0; margin: 0; }
+		.SWUI_GridViewTable tbody tr td input[type="checkbox"] { width: 13px; height: 13px; padding: 0; margin: 0; }
 .SWUI_GridViewTableAltRow td { background-color: #e0e0e0 !Important; }
-.SWUI_GridViewTableAltRow { }
+/* .SWUI_GridViewTableAltRow { } */
 .SWUI_GridViewTablePager { background-color: #5D7B9D !Important; }
 	.SWUI_GridViewTablePager td { background-color: #5D7B9D !Important; color: #ffffff !Important; }
 .SWUI_GridViewTablePager { background-color: #5D7B9D !Important; }
@@ -179,10 +179,10 @@ GridViewTable
 /*=============================================================================
 Help Studio
 -----------------------------------------------------------------------------*/
-.SWUI_Help { }
+/* .SWUI_Help { } */
 .SWUI_Help_Header { background-color: #ccccff; padding: 4px 8px 4px 8px; color: #003399; }
 .SWUI_Help_Header_Text { font-weight: bold; font-size: small; }
-.SWUI_Help_Header_Title { }
+/* .SWUI_Help_Header_Title { } */
 
 /*=============================================================================
 Panel, Window, Form, MessageBox
@@ -202,7 +202,7 @@ Help Header
 .SWUI_HelpHeader_Category { font-family: Tahoma; font-size: 8pt; font-weight: bold; padding-right: 4px; }
 .SWUI_HelpHeader_Subject { font-family: Tahoma; font-size: 8pt; font-weight: bold; }
 .SWUI_HelpHeader_Body { font-family: Verdana; font-size: 8pt; margin-left: 8px; margin-top: 4px; color: #606060; }
-.SWUI_HelpHeader_Icon { }
+/* .SWUI_HelpHeader_Icon { } */
 
 /*=============================================================================
 Interface.Menu
@@ -239,9 +239,7 @@ Bar
 
 .SWUI_Bar_Node { margin-bottom: 1px; margin-right: 2px; float: left; /* border-bottom: solid 1px red; */ }
 	.SWUI_Bar_Node table tbody tr td { white-space: nowrap; /*border: solid 1px black;*/ }
-
-	.SWUI_Bar_Node table { /*border: solid 1px black;*/ }
-
+	/* .SWUI_Bar_Node table { border: solid 1px black; } */
 .SWUI_Bar_ButtonCell { white-space: nowrap; background-image: url(Images/Interface/Office2007/Bar_MC-1x65.png); }
 
 .SWUI_Bar_TL { width: 4px; height: 4px; background-image: url(Images/Interface/Office2007/Bar_TL-4x4.png); }
@@ -277,7 +275,7 @@ TabStrip
 Strip
 -----------------------------------------------------------------------------*/
 
-.SWUI_Strip_Table TR TD { }
+/* .SWUI_Strip_Table tr td { } */
 .SWUI_Strip_Left_Off_Out { width: 1px; background-image: url(Images/Interface/Office2007/StripLeft_Off_Out.1x22.png); }
 .SWUI_Strip_Left_Off_Over { width: 1px; background-image: url(Images/Interface/Office2007/StripLeft_Off_Over.1x22.png); }
 

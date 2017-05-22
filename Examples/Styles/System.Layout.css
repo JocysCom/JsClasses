@@ -1,26 +1,35 @@
 ﻿
 /* Page Layout. Do not Change! */
-html, body, form { height: 100%; width: 100%; padding: 0; margin: 0; background-color: #000000; background-image: url("Images/footer-bg.png"); }
-.BodyStyle {
+html, body, form { height: 100%; width: 100%; padding: 0; margin: 0; }
+.BodyStyle { 
+	background-image: url("Images/BodyBackground.gif"); 
 /*
 background-color: #000000;
 background-attachment: scroll;
-background-image: url("Images/Dac/mainpage-lg.jpg");
 background-origin: padding-box;
 background-position-x: left;
 background-position-y: bottom;
 background-repeat: no-repeat;
 background-size: cover;
 */ }
-.HeaderLayout { height: 60px; top: 0; left: 0; right: 0; z-index: 1; }
-.HeaderStyle { background: rgba(0, 0, 40, 0.40); }
-.ContentLayout { margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
-.ContentStyle { background: grey; }
-.ContentBodyLayout { width: 960px; margin: 0 auto; background-color: #f3f3f3;
-min-height: -webkit-calc(100vh - 95px - 60px); /* Chrome 19-> */
-min-height: -moz-calc(100vh - 95px - 60px); /* Firefox */
-min-height: calc(100vh - 95px - 60px); /* ie9 -> */ }
-.FooterLayout { position: relative; z-index: 1; height: 95px; }
-.FooterStyle { background: rgba(0, 0, 0, 0.40); color: #ffffff; }
+.HeaderLayout { top: 0; left: 0; height: 32px; overflow: hidden; }
+.HeaderStyle { background: rgba(0, 0, 0, 0.40);  }
+.HeaderBodyLayout { width: 960px; margin: 0 auto; height: 32px; }
+.HeaderBodyStyle { background: rgba(0, 0, 0, 0.40); color: #ffffff; }
+.ContentLayout {  }
+.ContentStyle {  }
+.ContentBodyLayout { width: 960px; margin: 0 auto;
+	min-height: -webkit-calc(100vh - 32px - 30px ); /* Chrome 19+ */
+	min-height: -moz-calc(100vh - 32px - 30px); /* Firefox */
+	min-height: -o-calc(100vh - 32px - 30px); /* Opera */
+	min-height: calc(100vh - 32px - 30px); /* IE9+ */
+}
+.ContentBodyStyle { background-color: aliceblue; }
+.FooterLayout { height: 30px; overflow:hidden; }
+.FooterStyle { background: rgba(0, 0, 0, 0.40); }
+.FooterBodyLayout { width: 960px; margin: 0 auto; height: 30px; }
+.FooterBodyStyle { background: rgba(0, 0, 0, 0.40); color: #ffffff; }
 
-.SWUI_ListViewDialog { padding: 0 !important; top: 0 !important; left: 0 !important; } 
+.AlignMiddle { padding-top: 4px; padding-left: 8px; }
+
+.SWUI_ListViewDialog { padding: 0 !important; top: 0 !important; left: 0 !important; }

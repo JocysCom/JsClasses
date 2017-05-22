@@ -11,7 +11,7 @@
 	</asp:PlaceHolder>
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server" />
 </head>
-<body>
+<body class="BodyStyle">
 	<noscript>
 		<div class="noscript">
 			<div class="noscript-inner">
@@ -27,6 +27,12 @@
 	<form id="form1" runat="server">
 		<asp:ScriptManager ID="MainScriptManager" runat="server" />
 		<div class="HeaderLayout HeaderStyle" id="header" runat="server">
+			<div class="HeaderBodyLayout HeaderBodyStyle">
+				<div class="AlignMiddle">
+					
+					Object Oriented JavaScript Class Library in C#/.NET Style
+				</div>
+			</div>
 		</div>
 		<div class="ContentLayout ContentStyle" id="content" runat="server">
 			<div class="ContentBodyLayout ContentBodyStyle">
@@ -34,6 +40,11 @@
 			</div>
 		</div>
 		<div class="FooterLayout FooterStyle" id="footer" runat="server">
+			<div class="FooterBodyLayout FooterBodyStyle">
+				<div class="AlignMiddle">
+					<a href="https://github.com/JocysCom/JsClasses">https://github.com/JocysCom/JsClasses</a>
+				</div>
+			</div>
 		</div>
 	</form>
 </body>

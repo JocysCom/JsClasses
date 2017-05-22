@@ -315,6 +315,7 @@
     <Content Include="Examples\Scripts\LogFunctions.js" />
     <Content Include="Examples\Scripts\qunit.js" />
     <Content Include="Examples\Styles\Default.css" />
+    <Content Include="Examples\Styles\Images\BodyBackground.gif" />
     <Content Include="Examples\Styles\System.Layout.css" />
     <Content Include="Examples\Styles\qunit.css" />
     <Content Include="Examples\System.Audio.htm" />
