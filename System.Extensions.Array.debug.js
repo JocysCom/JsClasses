@@ -176,9 +176,8 @@ System.Extensions.Array.Enable = function () {
 	// Extend 'toString' method of array with format.
 	// For example toString("And") output will be string:
 	// "value1", "value2", "value3" and "value3"
-	if (Array.prototype.toString) {
-		Array.prototype.base_toString = Array.prototype.toString;
-		Array.prototype.toString = function (format) {
+	if (Array.prototype.ToString) {
+		Array.prototype.ToString = function (format) {
 			var results = "";
 			if (format) {
 				var quote = format === "Or" || format === "And" ? "\"" : "'";
@@ -199,7 +198,7 @@ System.Extensions.Array.Enable = function () {
 				}
 			} else {
 				// Use old method;
-				results = this.base_toString();
+				results = this.toString();
 			}
 			return results;
 		};

@@ -2640,7 +2640,7 @@ System.Web.UI.Console = function (id, context) {
 			this.Style = new String(name);
 		}
 		this.returnIdent = function () { return me.CurrentIdent; };
-		this.returnDate = function () { return "<span style=\"color: #A0A0A0;\">" + new Date().toString(me.TimeStamp) + ": </span>"; };
+		this.returnDate = function () { return "<span style=\"color: #A0A0A0;\">" + new Date().ToString(me.TimeStamp) + ": </span>"; };
 		this.Font = "";
 		createLogStyle.call(this);
 		// Switch styles.
@@ -3682,7 +3682,7 @@ System.Timers.Synchronizer = function (id, serviceUrl) {
 			var averageLocalTime = this.TimeArray[bestNo].LocalTimeStart.getTime() + bestTime / 2;
 			var localTime = new Date(averageLocalTime);
 			var serverTime = this.TimeArray[bestNo].ServerUtcTime;
-			Trace.Write("// Local Time: " + localTime.toString("yyyy-MM-dd HH:mm:ss.fff") + " - Server Time: " + serverTime.toString("yyyy-MM-dd HH:mm:ss.fff"));
+			Trace.Write("// Local Time: " + localTime.ToString("yyyy-MM-dd HH:mm:ss.fff") + " - Server Time: " + serverTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 			var difference = localTime.getTime() - serverTime.getTime();
 			Trace.Write(this.TestType + " Time Difference: " + difference / 1000 + " seconds");
 			var e = new System.EventArgs("OnTimeSyncResults");
@@ -3706,7 +3706,7 @@ System.Timers.Synchronizer = function (id, serviceUrl) {
 		me.TimeArray[me.TimeArray.length - 1]["ServerUtcTime"] = serverUtcTime;
 		me.TimeArray[me.TimeArray.length - 1]["LocalTimeEnd"] = new Date();
 		Trace.Write("Server Local Time: " + serverUtcTimeString);
-		Trace.Write("Server Local Time: " + serverUtcTime.toString("yyyy-MM-dd HH:mm:ss.fff"));
+		Trace.Write("Server Local Time: " + serverUtcTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 		me.TestStart();
 	};
 	//---------------------------------------------------------

@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -356,6 +357,8 @@
     <Content Include="Examples\System.Security.Cryptography.RSA.htm" />
     <Content Include="Examples\System.Security.Cryptography.SHA1.aspx" />
     <Content Include="Examples\System.Security.Cryptography.SHA1.htm" />
+    <Content Include="Examples\System.Security.Cryptography.SHA256.aspx" />
+    <Content Include="Examples\System.Security.Cryptography.SHA256.htm" />
     <Content Include="Examples\System.Security.htm" />
     <Content Include="Examples\System.Security.Password.Frameset.htm" />
     <Content Include="Examples\System.Security.Password.hta" />
@@ -824,6 +827,7 @@
     <Content Include="System.Security.Cryptography.RijndaelManaged.debug.js" />
     <Content Include="System.Security.Cryptography.RSA.debug.js" />
     <Content Include="System.Security.Cryptography.SHA1.debug.js" />
+    <Content Include="System.Security.Cryptography.SHA256.debug.js" />
     <Content Include="System.Security.debug.js" />
     <Content Include="System.Security.Password.debug.js" />
     <Content Include="System.Security.Password\Images\Icons\Apply-16x16.png" />
@@ -987,6 +991,13 @@
     </Compile>
     <Compile Include="Examples\System.Security.Cryptography.SHA1.aspx.designer.cs">
       <DependentUpon>System.Security.Cryptography.SHA1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\System.Security.Cryptography.SHA256.aspx.cs">
+      <DependentUpon>System.Security.Cryptography.SHA256.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Examples\System.Security.Cryptography.SHA256.aspx.designer.cs">
+      <DependentUpon>System.Security.Cryptography.SHA256.aspx</DependentUpon>
     </Compile>
     <Compile Include="Examples\System.Web.Mobile.asmx.cs">
       <DependentUpon>System.Web.Mobile.asmx</DependentUpon>

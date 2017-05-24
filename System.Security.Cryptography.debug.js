@@ -1120,12 +1120,47 @@ System.Security.Cryptography.PKCS1Padding = function () {
 };
 System.Type.RegisterClass("System.Security.Cryptography.PKCS1Padding");
 
-System.Security.Cryptography.Utils = {};
+System.Security.Cryptography.Utils = function () { };
+
+System.Type.RegisterClass("System.Security.Cryptography.Utils");
 
 System.Security.Cryptography.Utils.RsaOaepDecrypt = function (rsa, hash, mgf, encryptedData) { };
 
 System.Security.Cryptography.Utils.PKCS1Padding = System.Security.Cryptography.PKCS1Padding.prototype.RsaPkcs1Padding;
 
+System.Security.Cryptography.Utils.RotateLeft = function (num, cnt) {
+	/// <summary>
+	/// Bitwise rotate a 32-bit number to the left.
+	/// </summary>
+	return num << cnt | num >>> 32 - cnt;
+};
+
+System.Security.Cryptography.Utils.RotateRight = function (num, cnt) {
+	/// <summary>
+	/// Bitwise rotate a 32-bit number to the right.
+	/// </summary>
+	return num >>> cnt | num << 32 - cnt;
+};
+
+System.Security.Cryptography.Utils.DWORDToBigEndian = function (block, x, digits) {
+	var index = 0;
+	for (var i = 0; index < digits; i += 4) {
+		block[i] = x[index] >> 0x18 & 0xff;
+		block[i + 1] = x[index] >> 0x10 & 0xff;
+		block[i + 2] = x[index] >> 8 & 0xff;
+		block[i + 3] = x[index] & 0xff;
+		index++;
+	}
+};
+
+System.Security.Cryptography.Utils.DWORDFromBigEndian = function (x, digits, block) {
+	var index = 0;
+	for (var i = 0; index < digits; i += 4) {
+		var n = block[i] << 24 | block[i + 1] << 16 | block[i + 2] << 8 | block[i + 3];
+		x[index] = n >>> 0;
+		index++;
+	}
+};
 
 //-----------------------------------------------------------------------------
 // CipherMode

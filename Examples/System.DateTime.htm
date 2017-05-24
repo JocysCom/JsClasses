@@ -51,13 +51,13 @@
 		ParseDate = function(){
 			var date = document.getElementById("tbxDateTime").value;
 			var pDate = new Date().GetFromString(date);
-			document.getElementById("parsedDate").innerHTML = pDate.toString("yyyy-MM-dd HH:mm:ss.fffzzz");
+			document.getElementById("parsedDate").innerHTML = pDate.ToString("yyyy-MM-dd HH:mm:ss.fffzzz");
 			document.getElementById("parsedUtc").innerHTML = pDate.toUTCString();
 			document.getElementById("parsedAsUtcLocal").innerHTML = new Date().GetFromUtcString(date);
 			document.getElementById("parsedAsUtcUtc").innerHTML = new Date().GetFromUtcString(date).toUTCString();
 			// 24:12
-			document.getElementById("Time24Span").innerHTML = pDate.toString("yyyy-MM-dd HH:mm:ss");
-			document.getElementById("Time12Span").innerHTML = pDate.toString("yyyy-MM-dd hh:mm tt");
+			document.getElementById("Time24Span").innerHTML = pDate.ToString("yyyy-MM-dd HH:mm:ss");
+			document.getElementById("Time12Span").innerHTML = pDate.ToString("yyyy-MM-dd hh:mm tt");
 		}
 
 		function Window_Load(){

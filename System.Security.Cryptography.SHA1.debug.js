@@ -109,7 +109,7 @@ System.Security.Cryptography.SHA1 = function () {
 			n = n >> 0x08;
 		}
 		this._HashData(partIn, 0, partIn.length);
-		this.DWORDToBigEndian(block, this._stateSHA1, 5);
+		DWORDToBigEndian(block, this._stateSHA1, 5);
 		this.HashValue = block;
 		return block;
 	};
@@ -120,7 +120,7 @@ System.Security.Cryptography.SHA1 = function () {
 	//---------------------------------------------------------
 	// block is buffer. all references
 	this.SHATransform = function (expandedBuffer, state, block) {
-		this.DWORDFromBigEndian(expandedBuffer, 0x10, block);
+		DWORDFromBigEndian(expandedBuffer, 0x10, block);
 		this.SHAExpand(expandedBuffer);
 		var v = new Array(5);
 		var i = 0;
@@ -128,19 +128,32 @@ System.Security.Cryptography.SHA1 = function () {
 		for (i = 0; i < 80; i += 5) {
 			for (var j = 0; j < 5; j++) {
 				var x0 = _tf(i, v[(j + 3) % 5], v[(j + 2) % 5], v[(j + 1) % 5]);
-				var x1 = as(_rotate(v[(j + 4) % 5], 5), x0);
+				var x1 = as(rl(v[(j + 4) % 5], 5), x0);
 				var x2 = expandedBuffer[i + (j + 0) % 5];
 				var x3 = as(x1, x2);
 				var x4 = as(x3, _ac(i));
 				var x5 = v[(j + 0) % 5];
 				var x6 = as(x4, x5);
 				v[(j + 0) % 5] = x6;
-				v[(j + 3) % 5] = _rotate(v[(j + 3) % 5], 30);
+				v[(j + 3) % 5] = rl(v[(j + 3) % 5], 30);
 			}
 		}
 		for (i = 0; i < 5; i++) state[i] = as(state[i], v[4 - i]);
 	};
 	//---------------------------------------------------------
+
+	function DWORDToBigEndian(block, x, digits) {
+		return System.Security.Cryptography.Utils.DWORDToBigEndian(block, x, digits);
+	}
+
+	function DWORDFromBigEndian(x, digits, block) {
+		return System.Security.Cryptography.Utils.DWORDFromBigEndian(x, digits, block);
+	}
+
+	function rl(x, y) {
+		return System.Security.Cryptography.Utils.RotateLeft(x, y);
+	}
+
 	function as(x, y) {
 		/// <summary>
 		/// Add integers, wrapping at 2^32. This uses 16-bit operations internally
@@ -151,12 +164,6 @@ System.Security.Cryptography.SHA1 = function () {
 		return msw << 16 | lsw & 0xFFFF;
 	}
 
-	function _rotate(num, cnt) {
-		/// <summary>
-		/// Bitwise rotate a 32-bit number to the left.
-		/// </summary>
-		return num << cnt | num >>> 32 - cnt;
-	}
 	function _tf(i, b, c, d) {
 		/// <summary>
 		/// Perform the appropriate triplet combination function for the current
@@ -178,7 +185,7 @@ System.Security.Cryptography.SHA1 = function () {
 	}
 	this.SHAExpand = function (x) {
 		for (var i = 0x10; i < 80; i++) {
-			x[i] = _rotate(x[i - 3] ^ x[i - 8] ^ x[i - 14] ^ x[i - 16], 1);
+			x[i] = rl(x[i - 3] ^ x[i - 8] ^ x[i - 14] ^ x[i - 16], 1);
 		}
 	};
 	//---------------------------------------------------------
@@ -186,18 +193,7 @@ System.Security.Cryptography.SHA1 = function () {
 		var index = 0;
 		for (var i = 0; index < digits; i += 4) {
 			var n = block[i] << 0x18 | block[i + 1] << 0x10 | block[i + 2] << 8 | block[i + 3];
-			x[index] = n;
-			index++;
-		}
-	};
-	//---------------------------------------------------------
-	this.DWORDToBigEndian = function (block, x, digits) {
-		var index = 0;
-		for (var i = 0; index < digits; i += 4) {
-			block[i] = x[index] >> 0x18 & 0xff;
-			block[i + 1] = x[index] >> 0x10 & 0xff;
-			block[i + 2] = x[index] >> 8 & 0xff;
-			block[i + 3] = x[index] & 0xff;
+			x[index] = n >>> 0;
 			index++;
 		}
 	};
