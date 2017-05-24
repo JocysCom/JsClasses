@@ -433,6 +433,8 @@ System.Web.Mobile.Helper.GetMasked = function (number) {
 	return sb.ToString();
 };
 
+System.Web.Mobile.IsLoaded = true;
+
 //==============================================================================
 // END
 //------------------------------------------------------------------------------
