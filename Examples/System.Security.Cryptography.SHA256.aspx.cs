@@ -53,24 +53,24 @@ namespace Scripts.Classes.Examples
 			var s = "abc新闻网efg新闻网";
 			var kb = System.Text.Encoding.UTF8.GetBytes(k);
 			var sb = System.Text.Encoding.UTF8.GetBytes(s);
+			
 			// Test SHA256.
 			WriteLog("// Create SHA256 Algorithm");
-			var sha1 = new System.Security.Cryptography.SHA256CryptoServiceProvider();
-			var hash = System.BitConverter.ToString(sha1.ComputeHash(sb));
-			WriteLog("sha1.ComputeHash('" + s + "') = " + hash);
+			var sha256 = new System.Security.Cryptography.SHA256CryptoServiceProvider();
+			var hash = System.BitConverter.ToString(sha256.ComputeHash(sb));
+			WriteLog("sha256.ComputeHash('" + s + "') = " + hash);
 
-			WriteLog("// Create SHA256 Algorithm");
-			var sha2 = new SHA256Managed();
-			hash = System.BitConverter.ToString(sha2.ComputeHash(sb));
-			WriteLog("sha2.ComputeHash('" + s + "') = " + hash);
-			WriteLog(sha2.Log.ToString());
+			//WriteLog("// Create SHA256 Algorithm");
+			//var sha2 = new SHA256Managed();
+			//hash = System.BitConverter.ToString(sha2.ComputeHash(sb));
+			//WriteLog("sha2.ComputeHash('" + s + "') = " + hash);
+			//WriteLog(sha2.Log.ToString());
 
-
-			//// Test HMACSHA256.
-			//Trace.Write("// Create HMAC-SHA256 Algorithm");
-			//var hmac = new System.Security.Cryptography.HMACSHA256(kb);
-			//hash = System.BitConverter.ToString(hmac.ComputeHash(sb));
-			//WriteLog("hmac.ComputeHash('" + k + "','" + s + "') = " + hash);
+			// Test HMACSHA256.
+			Trace.Write("// Create HMAC-SHA256 Algorithm");
+			var hmac = new System.Security.Cryptography.HMACSHA256(kb);
+			hash = System.BitConverter.ToString(hmac.ComputeHash(sb));
+			WriteLog("hmac.ComputeHash('" + k + "','" + s + "') = " + hash);
 		}
 	}
 

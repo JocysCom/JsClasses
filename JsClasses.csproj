@@ -821,6 +821,7 @@
     <Content Include="System.Security.Cryptography.debug.js" />
     <Content Include="System.Security.Cryptography.HMACMD5.debug.js" />
     <Content Include="System.Security.Cryptography.HMACSHA1.debug.js" />
+    <Content Include="System.Security.Cryptography.HMACSHA256.debug.js" />
     <Content Include="System.Security.Cryptography.MD5.debug.js" />
     <Content Include="System.Security.Cryptography.RC2.debug.js" />
     <Content Include="System.Security.Cryptography.RC4.debug.js" />
