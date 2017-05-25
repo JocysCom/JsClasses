@@ -5,14 +5,14 @@
 <head runat="server">
 	<title>Jocys.com JavaScript.NET Class Library Browser</title>
 	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
-	<script type="text/javascript" language="javascript" src="../System.debug.js"></script>
+	<script type="text/javascript" src="../System.debug.js"></script>
 	<style type="text/css">
 		head {height: 100%; }
 		img {float: left; }
 		.FileNode {margin-left: 2px; }
 		.ItemNode {margin-left: 3px; }
 	</style>
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
 		function GoToItem(file, item, index){
 			//alert(file+"\\"+item+"\\"+index);
 			parent.NavigateTo(file, item, index);

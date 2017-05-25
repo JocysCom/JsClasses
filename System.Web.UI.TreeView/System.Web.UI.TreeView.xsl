@@ -41,7 +41,7 @@
 		<!-- -->
 		<link rel="stylesheet" href="System.Web.UI.TreeView.css" type="text/css"/>
 		<!-- Warning, if you use-->
-		<script src="treeview.js" language="javascript" type="text/javascript"/>
+		<script src="treeview.js" type="text/javascript"/>
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td>

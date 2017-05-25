@@ -1,9 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
 	<title>Untitled Page</title>
 
-	<script type="text/javascript" language="JavaScript" src="../System.debug.js"></script>
+	<script type="text/javascript" src="../System.debug.js"></script>
 
 </head>
 <body>
@@ -11,10 +14,10 @@
 	<input id="btnTestServer" type="button" value="Test Server" />
 	<input id="btnTestTimeServer" type="button" value="Test Time Server" />
 
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
 	this.Synchronizer;
 	ShowResults = function(sender,e){
-		alert("Difference="+e.Difference+"; Bias=±"+e.Bias);
+		alert("Difference="+e.Difference+"; Bias=ï¿½"+e.Bias);
 	}
 	window.onload = function(){
 		Trace.IsEnabled = true;

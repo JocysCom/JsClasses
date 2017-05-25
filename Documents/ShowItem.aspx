@@ -8,12 +8,12 @@
 	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shCoreDefault.css"/>
 	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shThemeDefault.css" />
 
-	<script type="text/javascript" language="javascript" src="../System.debug.js"></script>
+	<script type="text/javascript" src="../System.debug.js"></script>
 	<script type="text/javascript" src="SyntaxHighlighter/scripts/shCore.js"></script>
 	<script type="text/javascript" src="SyntaxHighlighter/scripts/shBrushJScript.js"></script>
 	<script type="text/javascript" src="SyntaxHighlighter/scripts/shBrushCSharp.js"></script>
 	<script type="text/javascript">SyntaxHighlighter.all();</script>
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
 		SyntaxHighlighter.all();
 		window.onload = function() {
 		}

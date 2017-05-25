@@ -9,18 +9,18 @@
 	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shCore.css" />
 	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shThemeDefault.css" />
 
-	<script type="text/javascript" language="javascript" src="SyntaxHighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="SyntaxHighlighter/scripts/shCore.js"></script>
 
-	<script type="text/javascript" language="javascript" src="../System.debug.js"></script>
+	<script type="text/javascript" src="../System.debug.js"></script>
 
-	<script type="text/javascript" language="javascript" src="../System.Web.debug.js"></script>
+	<script type="text/javascript" src="../System.Web.debug.js"></script>
 
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'scripts/clipboard.swf';
 		SyntaxHighlighter.all();
 	</script>
 
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
 		window.onload = function() {
 			var siFrame = document.getElementById("ShowItemFrame");
 			var ihLink = document.getElementById("ItemHyperLink");
