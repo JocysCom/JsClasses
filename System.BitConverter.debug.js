@@ -295,7 +295,7 @@ System._bitConverter = function () {
 		var smask = cMask[typeCode - 1];
 		// If value is number.
 		if (typeof value === "number") {
-			results = value > smask ? -(-value & umask) : n;
+			results = value > smask ? -(-value & umask) : value;
 		} else {
 			// Value is array of numbers.
 			var length = value.length;

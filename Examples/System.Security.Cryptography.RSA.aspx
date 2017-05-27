@@ -26,7 +26,7 @@
 				<td>Key:
 				</td>
 				<td>
-					<asp:TextBox ID="KeyTextBox" runat="server" Width="500px" TextMode="MultiLine"></asp:TextBox>
+					<asp:TextBox ID="KeyTextBox" runat="server" Width="500px" TextMode="MultiLine" Rows="10"></asp:TextBox>
 				</td>
 				<td>
 					<asp:DropDownList ID="KeySizeDropDownList" runat="server">
@@ -42,8 +42,8 @@
 				<td></td>
 				<td>Padding:
 					<asp:DropDownList ID="PaddingDropDownList" runat="server">
-						<asp:ListItem Text="Direct Encryption (PKCS#1 v1.5)" Value="PKCS" Selected="True" />
-						<asp:ListItem Text="OAEP padding (PKCS#1 v2)" Value="OAEP" />
+						<asp:ListItem Text="OAEP padding (PKCS#1 v2)" Value="OAEP" Selected="True" />
+						<asp:ListItem Text="Direct Encryption (PKCS#1 v1.5)" Value="PKCS" />
 					</asp:DropDownList>
 				</td>
 			</tr>
@@ -63,7 +63,7 @@
 				<td>
 					<asp:TextBox ID="EncryptedTextBox" runat="server" Width="500px" TextMode="MultiLine"></asp:TextBox>
 				</td>
-				<td valign="bottom">
+				<td style="vertical-align: bottom;">
 					<asp:Button ID="DecryptButton" runat="server" Text="Decrypt" OnClick="DecryptButton_Click" />
 					<asp:Button ID="TestButton" runat="server" Text="Test" OnClick="TestButton_Click" Visible="false" />
 				</td>

@@ -22,6 +22,51 @@
 System.Type.RegisterNamespace("System.Security.Cryptography");
 //=============================================================================
 
+// Maximum Message Size for OAEP Padding Scheme:
+//
+// OAEP SHA1 160-bit:
+// 214 bytes = 256 (2048-bit RSA) - 1 prefix - 20 seed - 20 label - 1 separator
+// OAEP SHA256 256-bit
+// 190 bytes = 256 (2048-bit RSA) - 1 prefix - 32 seed - 32 label - 1 separator
+//
+// https://www.codeproject.com/Articles/421656/RSA-Library-with-Private-Key-Encryption-in-Csharp
+//
+//                     +----------+---------+-------+
+//                DB = |  pHash   |    PS   |   M   |
+//                     +----------+---------+-------+
+//                                    |
+//          +----------+              V
+//          |   Seed   |--> MGF ---> XOR
+//          +----------+              |
+//                |                   |
+//       +--+     V                   |
+//       |00|    XOR <----- MGF <-----|
+//       +--+     |                   |
+//         |      |                   |
+//         V      V                   V
+//       +--+----------+----------------------------+
+// EM =  |00|maskedSeed|          maskedDB          |
+//       +--+----------+----------------------------+
+//
+// DB - Data block to be encrypted, consists of pHash, PS and M.
+//
+// pHash - Hash of a predefined parameter list in the form of a byte array. It is used to make sure that the parameters at the encryption side and decryption side are the same, but, in most implementations its ignored and is optional. In that case, the Hash of an empty byte array is used instead.
+//
+// PS - A string of '0's followed by a 1. Used to fill the unused space in case, the message is shorter than the maximum allowed message length.
+//
+// M - Actual message to be encrypted.
+//
+// Seed - A random array of bytes, the length being equal to the length of hash function being used.
+//
+// MGF - Mask Generation Function, it is used to generate a variable length hash from a given input random input.
+//
+// XOR - Bit-wise Ex-OR operation.
+//
+// maskedSeed - The masked seed, which is part of the padded text. It is later (while decoding) used to get the Seed in conjunction with the MGF output of the maskedDB.
+//
+// maskedDB - The masked Data Block. It is later (while decoding) used to feed the MGF function which is used to obtain the Seed. It is also used to obtain the DB, by using the MGF output of the Seed.
+//
+
 System.Security.Cryptography.RSAManaged = function () {
 	/// <summary>
 	/// Initializes a new instance of the System.Security.Cryptography.RSAManaged
@@ -36,6 +81,7 @@ System.Security.Cryptography.RSAManaged = function () {
 	// Private Properties
 	//---------------------------------------------------------
 };
+System.Type.RegisterClass("System.Security.Cryptography.RSAManaged");
 
 System.Security.Cryptography.RSAParameters = function () {
 	/// <summary>
@@ -78,6 +124,7 @@ System.Security.Cryptography.RSAParameters = function () {
 	};
 	this.Initialize.apply(this, arguments);
 };
+System.Type.RegisterClass("System.Security.Cryptography.RSAParameters");
 
 System.Security.Cryptography.RSACryptoServiceProvider = function () {
 	/// <summary>
@@ -401,6 +448,210 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 	};
 	this.Initialize.apply(this, arguments);
 };
+System.Type.RegisterClass("System.Security.Cryptography.RSACryptoServiceProvider");
+
+System.Security.Cryptography.RsaCreateEventArgs = function () {
+	this.UserState = null;
+	this.PublicKey = null;
+	this.PrivateKey = null;
+	this.Error = null;
+}
+System.Type.RegisterClass("System.Security.Cryptography.RsaCreateEventArgs");
+
+System.Security.Cryptography.RSA = function () { }
+System.Type.RegisterClass("System.Security.Cryptography.RSA");
+
+System.Security.Cryptography.RSA.CreateKeyCompleted = function (sender, e) {
+	/// <summary>fires when new key is generated</summary>
+	/// <param name="sender">RSA class</param>
+	/// <param name="e" type="GenerateKeyEventArgs">Results</param>
+}
+
+System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) {
+	/// <summary>Create new RSA provider.</summary>
+	//---------------------------------------------------------
+	function raiseException(message) {
+		var e = new System.Security.Cryptography.RsaCreateEventArgs();
+		e.UserState = userState;
+		e.Error = new System.Exception(message);
+		var ev = System.Security.Cryptography.RSA.CreateKeyCompleted;
+		if (typeof ev === "function") {
+			ev(this, e);
+		}
+	}
+	//---------------------------------------------------------
+	function raiseComplete() {
+		var e = new System.Security.Cryptography.RsaCreateEventArgs();
+		e.UserState = userState;
+		e.PublicKey = _publicKey;
+		e.PrivateKey = _privateKey;
+		var ev = System.Security.Cryptography.RSA.CreateKeyCompleted;
+		if (typeof ev === "function") {
+			ev(this, e);
+		}
+	}
+	//---------------------------------------------------------
+	function ExecPromiseAsync(promise, onComplete, onError) {
+		/// <summary>Helper function to execute JavaScript PromiseLive object</summary>
+		if (window.crypto) {
+			promise.then(onComplete).catch(onError);
+		}
+		else if (window.msCrypto) {
+			promise.oncomplete = onComplete;
+			promise.onerror = onError;
+		}
+	}
+	//---------------------------------------------------------
+	function convertKey(key, includePrivateParameters) {
+		var parameters = new System.Security.Cryptography.RSAParameters();
+		var e = System.Convert.FromBase64String(key.e);
+		var n = System.Convert.FromBase64String(key.n);
+		parameters.Exponent = e;
+		parameters.Modulus = n;
+		if (includePrivateParameters) {
+			var d = System.Convert.FromBase64String(key.d);
+			var dp = System.Convert.FromBase64String(key.dp);
+			var dq = System.Convert.FromBase64String(key.dq);
+			var qi = System.Convert.FromBase64String(key.qi);
+			var p = System.Convert.FromBase64String(key.p);
+			var q = System.Convert.FromBase64String(key.q);
+			// Private parameters.
+			parameters.D = d;
+			parameters.DP = dp;
+			parameters.DQ = dq;
+			parameters.InverseQ = qi;
+			parameters.P = p;
+			parameters.Q = q;
+		}
+		return parameters;
+	}
+	//---------------------------------------------------------
+	var subtle = null;
+
+	// If Microsoft Internet Explorer then...
+	if (window.msCrypto) {
+		subtle = window.msCrypto.subtle;
+	}
+	// If other browsers then...
+	else if (window.crypto) {
+		subtle = window.crypto.subtle || window.crypto.webkitSubtle;
+	}
+	else {
+		raiseException("Web Cryptography API not found.");
+		return;
+	}
+	if (subtle == null) {
+		raiseException("Web Cryptography API Subtle not found.");
+		return;
+	}
+
+	//=================================================
+	// STEP 1: Generate key pair.
+	//-------------------------------------------------
+
+	// Set key options.
+	var rsaHashedKeyGenParams = {
+		// Microsoft use RSA-OAEP (SHA1) for RSA.
+		name: "RSA-OAEP",
+		// Can be: 512, 1024, 2048, 4096.
+		modulusLength: keySize,
+		publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+		// Can be: SHA-1, SHA-256, SHA-384, SHA-512.
+		hash: { name: "SHA-1" },
+	};
+
+	// Mark key as exportable.
+	var generatePromise = subtle.generateKey(rsaHashedKeyGenParams, true, ["encrypt", "decrypt"]);
+
+	// Begin generation of the key pair.
+	ExecPromiseAsync(generatePromise, generateKey_OnComplete, generateKey_OnError);
+
+	function generateKey_OnError(e) {
+		raiseException("generateKey error:" + e);
+	}
+
+	var _publicJwk = null;
+	var _privateJwk = null;
+
+	function generateKey_OnComplete(e) {
+		if (window.crypto) {
+			_publicJwk = e.privateKey;
+			_privateJwk = e.privateKey;
+		} else if (window.msCrypto) {
+			_publicJwk = e.target.result.publicKey;
+			_privateJwk = e.target.result.privateKey;
+		}
+		// Continue to STEP 2.
+		ExportPrivateKey(_privateJwk);
+	}
+
+	//=================================================
+	// STEP 2: Export private key.
+	//-------------------------------------------------
+
+	var _privateKey;
+
+	function ExportPrivateKey(key) {
+		var exportPromise = subtle.exportKey('jwk', key);
+		ExecPromiseAsync(exportPromise, exportPrivateKey_OnComplete, exportPrivateKey_OnError);
+	}
+
+	function exportPrivateKey_OnError(e) {
+		raiseException("exportKey error (private):" + e);
+	}
+
+	function exportPrivateKey_OnComplete(e) {
+		var key;
+		if (window.crypto) {
+			key = e;
+		}
+		else if (window.msCrypto) {
+			var bytes = new Uint8Array(e.target.result);
+			var json = System.Text.Encoding.ASCII.GetString(bytes);
+			key = JSON.parse(json);
+		}
+		_privateKey = convertKey(key, true);
+		// Continue to STEP 3.
+		ExportPublicKey(_publicJwk);
+	}
+
+	//=================================================
+	// STEP 3: Export public key.
+	//-------------------------------------------------
+
+	var _publicKey;
+
+	function ExportPublicKey(key) {
+		var exportPromise = subtle.exportKey('jwk', key);
+		ExecPromiseAsync(exportPromise, exportPublicKey_OnComplete, exportPublicKey_OnError);
+	}
+
+	function exportPublicKey_OnError(e) {
+		raiseException("exportKey error (public):" + e);
+	}
+
+	function exportPublicKey_OnComplete(e) {
+		var key;
+		if (window.crypto) {
+			key = e;
+		}
+		else if (window.msCrypto) {
+			var bytes = new Uint8Array(e.target.result);
+			var json = System.Text.Encoding.ASCII.GetString(bytes);
+			key = JSON.parse(json);
+		}
+		_publicKey = convertKey(key, false);
+		// Complete
+		raiseComplete();
+	}
+
+	//=================================================
+	// COMPLETE
+	//-------------------------------------------------
+
+}
+
+
 
 //==============================================================================
 // END
