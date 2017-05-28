@@ -524,7 +524,7 @@ System.Security.Cryptography.AES.Transform = function (dataBytes, passwordBytes,
 
 System.Security.Cryptography.AES.Encrypt = function (data, password) {
 	/// <summary>
-	/// Encrypt string with AES-256 by using password.
+	/// Encrypt string with AES-256 algorithm by using password.
 	/// </summary>
 	/// <param name="data">String (or bytes) to encrypt.</param>
 	/// <param name="password">Password string (or bytes).</param>
@@ -542,7 +542,7 @@ System.Security.Cryptography.AES.Encrypt = function (data, password) {
 
 System.Security.Cryptography.AES.Decrypt = function (data, password) {
 	/// <summary>
-	/// Decrypt string with AES-256 by using password.
+	/// Decrypt string with AES-256 algorithm by using password.
 	/// </summary>
 	/// <param name="data">Base64 string or bytes to encrypt.</param>
 	/// <param name="password">Password string (or bytes).</param>
