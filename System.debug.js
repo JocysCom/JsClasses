@@ -2433,129 +2433,21 @@ Date.prototype.DefaultFormat = "yyyy-MM-dd HH:mm:ss";
 Date.prototype.ToString = System.DateTime.ToString;
 
 //=============================================================================
-// System.Configuration
-//-----------------------------------------------------------------------------
-// Make sure that the sub namespace exists.
-System.Configuration = System.Configuration ? System.Configuration : {};
-System.Type.RegisterNamespace("System.Configuration");
-
-System.Configuration.ConfigurationManager = function () {
-	/// <summary>
-	/// 
-	/// </summary>
-	// Declare type of this class.
-	this.IsServerSide = new Boolean;
-	this.XmlConfig = null;
-	this.ObjConfig = null;
-	this.FilePath = "";
-	//---------------------------------------------------------
-	// METHOD: ReadConfig
-	//---------------------------------------------------------
-	this.ReadConfig = function () {
-		var results = false;
-		if (this.IsServerSide) {
-			// Get Web configuration XML file. NOTE!!!! Web.config is in subfolder.
-			this.FilePath = Request.ServerVariables("APPL_PHYSICAL_PATH") + "Web.config";
-			//Response.Write(filePath+"<br>");
-			// Try to use ActiveX Object first (supports encryption).
-			try {
-				this.ObjConfig = Server.CreateObject("PinnacleSports.ActiveX.Charset");
-				results = true;
-			} catch (ex) {
-				// Instantiate the MSXML 3.0 Object that will hold the XML file.
-				this.XmlConfig = new ActiveXObject("Msxml2.DOMDocument");
-				// Turn off asyncronous file loading.
-				this.XmlConfig.async = false;
-				// Load the XML document.
-				this.XmlConfig.load(this.FilePath);
-				if (this.XmlConfig.parseError.errorCode !== 0) {
-					// Write out if an error occured.
-					Trace.Write("Error: " + this.XmlConfig.parseError.errorCode + ": " + this.XmlConfig.parseError.reason);
-				} else {
-					results = true;
-				}
-			}
-		}
-		return results;
-	};
-	//---------------------------------------------------------
-	// METHOD: ConnectionStrings
-	//---------------------------------------------------------
-	this.ConnectionStrings = function (key) {
-		var results = "";
-		var IsSuccess = this.ReadConfig();
-		if (IsSuccess) {
-			// If we are using object onfig
-			if (this.ObjConfig) {
-				results = "Provider=MSDASQL; Driver={SQL Server};" + this.ObjConfig.GetConnectionStrings(this.FilePath, key);
-			} else {
-				var selectNodes = "/configuration/connectionStrings/add[@name='" + key + "']";
-				//Trace.Write("Select Nodes: "+selectNodes);
-				var objNodes = this.XmlConfig.selectNodes(selectNodes);
-				//Trace.Write("Found Nodes: "+objNodes.length);
-				for (var i = 0; i < objNodes.length; i++) {
-					// Add additional info to convert dotNET connection string to ASP.
-					//Provider=MSDASQL; Driver={SQL Native Client} SQL Server
-					results = "Provider=MSDASQL; Driver={SQL Server};" + objNodes[i].attributes.getNamedItem("connectionString").text;
-					//Trace.Write(results.replace("yM65tro0p$12","&lt;password&gt;"));
-				}
-			}
-		}
-		// Replace some .NET keys to ASP keys
-		results = results.replace("Data Source", "SERVER");
-		results = results.replace("Initial Catalog", "DATABASE");
-		results = results.replace("User ID", "UID");
-		results = results.replace("Password", "PWD");
-		return results;
-	};
-	//---------------------------------------------------------
-	// METHOD: AppSettings
-	//---------------------------------------------------------
-	// This is server side script to get values from server.
-	this.AppSettings = function (key) {
-		var results = "";
-		var IsSuccess = this.ReadConfig();
-		if (IsSuccess) {
-			// If we are using object onfig
-			if (this.ObjConfig) {
-				results = this.ObjConfig.GetAppSettings(this.FilePath, key);
-			} else {
-				var selectNodes = "/configuration/appSettings/add[@key='" + key + "']";
-				//Trace.Write("Select Nodes: "+selectNodes);
-				var objNodes = this.XmlConfig.selectNodes(selectNodes);
-				//Trace.Write("Found Nodes: "+objNodes.length);
-				for (var i = 0; i < objNodes.length; i++) {
-					results = objNodes[i].attributes.getNamedItem("value").text;
-					//Trace.Write(results.replace("yM65tro0p$12","&lt;password&gt;"));
-				}
-			}
-		}
-		return results;
-	};
-	//---------------------------------------------------------
-	// INIT: Class
-	//---------------------------------------------------------
-	this.InitializeClass = function () {
-		//this.CaseName = "CaseNumber";
-		this.IsServerSide = false;
-		if (typeof Response === "object") this.IsServerSide = true;
-		if (this.IsServerSide) { /* */ }
-	};
-	this.InitializeClass();
-};
-System.Type.RegisterClass("System.Configuration.ConfigurationManager");
-
-System.ConfigurationManager = new System.Configuration.ConfigurationManager();
-
-//=============================================================================
 // System.Web.UI.Console
 //-----------------------------------------------------------------------------
 
-System.Web = System.Web ? System.Web : {};
-System.Type.RegisterNamespace("System.Web");
-
-System.Web.UI = System.Web.UI ? System.Web.UI : {};
 System.Type.RegisterNamespace("System.Web.UI");
+
+System.Web.IsIE = function () {
+	var ua = window.navigator.userAgent;
+	return
+	// IE
+	ua.indexOf('MSIE ') > 0 |
+		// IE 11
+		ua.indexOf('Trident/') > 0 |
+		// IE 12+
+		ua.indexOf('Edge/') > 0;
+}
 
 System.Web.UI.Console = function (id, context) {
 	/// <summary
@@ -3084,14 +2976,14 @@ System.Web.HttpRequest = function () {
 		}
 		Trace.Write(this.UniqueId + ": Send: [" + this.QueryData.length + " bytes] // IsWebService = " + this.IsWebService + "; QueryUrl=" + queryUrl + "?" + queryData);
 		this.HttpRequest.onreadystatechange = this.OnReadyStateChange;
-		if (window.ActiveXObject) { /* */ } else { this.HttpRequest.onprogress = this.OnProgress; }
+		if (System.Web.IsIE()) { /* */ } else { this.HttpRequest.onprogress = this.OnProgress; }
 		if (this.IsWebService) {
 			// Open("method", "URL"[, asyncFlag[, "userName"[, "password"]]])
 			this.HttpRequest.open("GET", this.QueryUrl + "?" + this.QueryData, true);
 			// Firefox has problem with retrieveing XML and parsing it at same time.
 			// It takes 2-3 times longer and it just stucks. So we need to get it as
 			// plain text and parse it later.
-			//if (!window.ActiveXObject) this.HttpRequest.overrideMimeType("text/plain");
+			//if (!System.Web.IsIE()) this.HttpRequest.overrideMimeType("text/plain");
 			// Need to investigate 'close' and 'keep-alive' because maybe 'keep-alive' can improve speed on
 			// time sync (where couple fast coneections made.
 			this.HttpRequest.setRequestHeader("Connection", "close");
@@ -3108,7 +3000,7 @@ System.Web.HttpRequest = function () {
 			this.HttpRequest.setRequestHeader("Content-Length", this.QueryData.length);
 			this.HttpRequest.setRequestHeader("POSTDATA", this.QueryData);
 		}
-		if (window.ActiveXObject) {
+		if (System.Web.IsIE()) {
 			this.HttpRequest.send(this.QueryData);
 		} else {
 			//var stream = Components.classes['@mozilla.org/is/string-input-stream;1'].createInstance(Components.interfaces.nsIStringInputStream);
@@ -3136,7 +3028,7 @@ System.Web.HttpRequest = function () {
 			if (!me.Busy) {
 				me.Busy = true;
 				// If this is IE.
-				if (window.ActiveXObject) {
+				if (System.Web.IsIE()) {
 					me.DownloadSize = -1;
 					me.DownloadTotal = -1;
 				} else {
@@ -3201,7 +3093,7 @@ System.Web.HttpRequest = function () {
 				Trace.Write(id + "Returning Results");
 				var data;
 				if (me.IsWebService) {
-					//if (!window.ActiveXObject){
+					//if (!System.Web.IsIE()){
 					//var xmlDocument = new System.Xml.XslTemplate();
 					//xmlDocument.async = false;
 					//xmlDocument.loadXML(me.HttpRequest.responseText);
@@ -3286,7 +3178,7 @@ System.Type.RegisterClass("System.Web.HttpRequest");
 
 if (typeof Response !== "object") {
 	// If this is not IE.
-	if (!window.ActiveXObject) {
+	if (!System.Web.IsIE()) {
 		//Add METHOD: .SelectNodes(path, node)
 		// Examples:
 		//	xmlDocument.selectNodes("//pro:lists/pro:product[@type='tshirt']/itin:itinerary/itin:sold")

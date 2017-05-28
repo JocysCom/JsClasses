@@ -808,6 +808,7 @@
     <Content Include="System.BigInt.debug.js" />
     <Content Include="System.BitConverter.debug.js" />
     <Content Include="System.Collections.debug.js" />
+    <Content Include="System.Configuration.debug.js" />
     <Content Include="System.Convert.debug.js" />
     <Content Include="System.Data.debug.js" />
     <Content Include="System.debug.js" />

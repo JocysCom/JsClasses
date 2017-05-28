@@ -9,18 +9,18 @@ Custom CheckBox
 .SWUI_BoxShadow { -moz-box-shadow: rgba(0, 0, 0, 0.40) 3px 3px 5px; -webkit-box-shadow: rgba(0, 0, 0, 0.40) 3px 3px 5px; box-shadow: rgba(0, 0, 0, 0.40) 3px 3px 5px; }
 
 .SWUI_NoScroll { border-width: 0; padding: 0; margin: 0; background-color: buttonface; overflow: hidden; font: menu; }
-.SWUI_Scroll { border-width: 0; padding: 0; margin: 0; background-color: buttonface; font-family: MS Sans Serif; font-size: 8pt; }
+.SWUI_Scroll { border-width: 0; padding: 0; margin: 0; background-color: buttonface; font-family: MS Sans Serif; font-size: small; }
 .SWUI_Blue { background-color: #3A6EA5; }
 
-.SWUI_PrgLink a:link { font-size: 8pt; color: #000080; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink a:visited { font-size: 8pt; color: #004080; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink a:active { font-size: 8pt; color: #ff0000; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink a:hover { font-size: 8pt; color: #000080; font-family: tahoma; text-decoration: underline; }
+.SWUI_PrgLink a:link { font-size: small; color: #000080; font-family: tahoma; text-decoration: none; }
+.SWUI_PrgLink a:visited { font-size: small; color: #004080; font-family: tahoma; text-decoration: none; }
+.SWUI_PrgLink a:active { font-size: small; color: #ff0000; font-family: tahoma; text-decoration: none; }
+.SWUI_PrgLink a:hover { font-size: small; color: #000080; font-family: tahoma; text-decoration: underline; }
 
-.SWUI_PrgLink:link { font-size: 8pt; color: #000080; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink:visited { font-size: 8pt; color: #004080; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink:active { font-size: 8pt; color: #ff0000; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink:hover { font-size: 8pt; color: #000080; font-family: tahoma; text-decoration: underline; }
+.SWUI_PrgLink:link { font-size: small; color: #000080; font-family: tahoma; text-decoration: none; }
+.SWUI_PrgLink:visited { font-size: small; color: #004080; font-family: tahoma; text-decoration: none; }
+.SWUI_PrgLink:active { font-size: small; color: #ff0000; font-family: tahoma; text-decoration: none; }
+.SWUI_PrgLink:hover { font-size: small; color: #000080; font-family: tahoma; text-decoration: underline; }
 
 button.SWUI_Prg { padding: 0 4px 0 0; }
 	button.SWUI_Prg img { margin: 0 0 0 4px; padding: 0 0 0 0; border-width: 0; height: 16px; width: 16px; float: left; outline: none; }
@@ -42,10 +42,10 @@ Windows program look
 
 .SWUI_Prg_Button { width: 72px; }
 
-.SWUI_Prg_TbxLeft { font-family: Tahoma; font-size: 8pt; text-align: left; }
+.SWUI_Prg_TbxLeft { font-family: Tahoma; font-size: small; text-align: left; }
 .SWUI_Prg_TbxShade { background-image: url(Images/Interface/Office2003/input_fade.png); border: solid 1px gray; padding: 2px; }
-.SWUI_Prg_TbxRight { font-family: Tahoma; font-size: 8pt; text-align: right; }
-.SWUI_Prg_TbxCenter { font-family: Tahoma; font-size: 8pt; text-align: center; }
+.SWUI_Prg_TbxRight { font-family: Tahoma; font-size: small; text-align: right; }
+.SWUI_Prg_TbxCenter { font-family: Tahoma; font-size: small; text-align: center; }
 .SWUI_Prg_Cbx13 { height: 13px; width: 13px; padding: 0 0 0 0; margin: 0 0 0 0; }
 
 .SWUI_100w { width: 100%; }
@@ -72,7 +72,7 @@ AjaxControlToolkit.Rating
 .SWUI_StarRating_Filled { background-image: url(Images/Icons/Star_Blue_16x16.png); }
 .SWUI_StarRating_Empty { background-image: url(Images/Icons/Star_Gray_16x16.png); }
 .SWUI_StarRating_Waiting { background-image: url(Images/Icons/Star_Red_16x16.png); cursor: pointer; }
-.SWUI_StarRating_Meta { font-family: Segoe UI, Verdana; font-size: 9pt; }
+.SWUI_StarRating_Meta { font-family: Segoe UI, Verdana; font-size: small; }
 /* .SWUI_StarRating_Meta_Description { } */
 .SWUI_StarRating_Meta_Average { width: 40px; text-align: right; padding-right: 8px; }
 /* .SWUI_StarRating_Meta_Other { } */
@@ -92,7 +92,7 @@ TreeView
 -----------------------------------------------------------------------------*/
 
 td.SWUI_TreeView_Node { padding: 1px 0 0 0; margin: 0; }
-a.SWUI_TreeView_Node { font-family: 'Segoe UI', 'Verdana'; font-size: 9pt; padding: 2px 4px 2px 4px; margin: 0; }
+a.SWUI_TreeView_Node { font-family: 'Segoe UI', 'Verdana'; font-size: small; padding: 2px 4px 2px 4px; margin: 0; }
 /* td.SWUI_TreeView_SelectedNode { } */
 a.SWUI_TreeView_SelectedNode { background-color: #3a6ea5; color: #ffffff; }
 .SWUI_TreeView a[tabindex="-1"] img { margin: 2px 0 0 0; }
@@ -130,17 +130,17 @@ GridViewTable
 	.SWUI_GridViewTableAddBorders tr td { border-bottom: solid 1px #b8d9ff; border-right: solid 1px #b8d9ff; border-top: solid 1px #5D7B9D; }
 .SWUI_GridViewTable { border: hidden; border-collapse: collapse; border-width: 0; empty-cells: show; }
 	.SWUI_GridViewTable tbody tr { background-color: #F7F6F3; }
-	.SWUI_GridViewTable thead tr th { font-family: Verdana; font-size: 8pt; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
+	.SWUI_GridViewTable thead tr th { font-family: Verdana; font-size: small; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
 		.SWUI_GridViewTable thead tr th a:link { color: #ffffff; text-decoration: none; }
 		/* .SWUI_GridViewTable thead tr th a:visited { } */
 		/* .SWUI_GridViewTable thead tr th a:active { } */
 		.SWUI_GridViewTable thead tr th a:hover { text-decoration: underline; }
-	.SWUI_GridViewTable tbody tr th { font-family: Verdana; font-size: 8pt; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
+	.SWUI_GridViewTable tbody tr th { font-family: Verdana; font-size: small; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
 		.SWUI_GridViewTable tbody tr th a:link { color: #ffffff; text-decoration: none; }
 		/* .SWUI_GridViewTable tbody tr th a:visited { } */
 		/* .SWUI_GridViewTable tbody tr th a:active { } */
 		.SWUI_GridViewTable tbody tr th a:hover { text-decoration: underline; }
-	.SWUI_GridViewTable tbody tr td { font-family: Verdana; font-size: 8pt; color: #000040; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
+	.SWUI_GridViewTable tbody tr td { font-family: Verdana; font-size: small; color: #000040; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
 		.SWUI_GridViewTable tbody tr td a:link { color: #0000E0; text-decoration: none; }
 		/* .SWUI_GridViewTable tbody tr td a:visited { } */
 		/* .SWUI_GridViewTable tbody tr td a:active { } */
@@ -157,9 +157,9 @@ GridViewTable
 
 .SWUI_GridViewTableCommands { background-color: #5D7B9D !Important; padding: 4px; }
 	.SWUI_GridViewTableCommands td { color: #ffffff; }
-.SWUI_GridViewTable tbody tr td input[type="text"] { font-family: Verdana; font-size: 8pt; width: 100%; }
-.SWUI_GridViewTable tbody tr td textarea { font-family: Verdana; font-size: 8pt; width: 100%; }
-.SWUI_GridViewTable tbody tr td select { font-family: Verdana; font-size: 8pt; }
+.SWUI_GridViewTable tbody tr td input[type="text"] { font-family: Verdana; font-size: small; width: 100%; }
+.SWUI_GridViewTable tbody tr td textarea { font-family: Verdana; font-size: small; width: 100%; }
+.SWUI_GridViewTable tbody tr td select { font-family: Verdana; font-size: small; }
 
 .SWUI_GridViewTable_NoWrap tbody tr td { white-space: nowrap; }
 .SWUI_GridViewTable_NoWrap tbody tr th { white-space: nowrap; }
@@ -168,13 +168,22 @@ GridViewTable
 		Console - Default, Trace, Matrix, DOS
 -----------------------------------------------------------------------------*/
 .SWUI_Console { border: solid 1px #668eaf; width: 100%; height: 100%; background-color: InfoBackground; margin: 4px 0 0 0; padding: 0; }
-.SWUI_Console_Head { height: 24px; background-color: #f0f0f0; background: linear-gradient(to bottom, #f0f0ff, #d0d0ff); }
-.SWUI_Console_HeadContent { padding-left: 8px; height: 24px; font-family: Consolas, Verdana; font-size: 8pt; display: table-cell; vertical-align: middle; }
-.SWUI_Console_Body { border-top: solid 1px #668eaf; border-bottom: solid 1px #668eaf; overflow: auto; height: -webkit-calc(100% - 24px - 15px - 2px); /* Chrome 19-> */ height: -moz-calc(100% - 24px - 15px - 2px); /* Firefox */ height: calc(100% - 24px - 15px - 2px); /* ie9 -> */ }
-.SWUI_Console_BodyContent { font-family: Consolas, Verdana; font-size: 8pt; white-space: nowrap; }
-.SWUI_Console_Foot { height: 15px; background-color: white; padding-right: 2px; }
-.SWUI_Console_FootContent { font-family: Consolas, Verdana; font-size: 8pt; height: 15px; }
-	.SWUI_Console_FootContent input { outline: none; border-width: 0; border: hidden; font-family: Consolas, Verdana; font-size: 8pt; width: 100%; }
+.SWUI_Console_Head { height: 22px; background-color: #f0f0f0; background: linear-gradient(to bottom, #f0f0ff, #b8d9ff); }
+.SWUI_Console_HeadContent { height: 22px; padding-left: 6px; font-family: Consolas, Verdana; font-size: small; display: table-cell; vertical-align: middle; }
+.SWUI_Console_Body { border-top: solid 1px #668eaf; border-bottom: solid 1px #668eaf; overflow: auto;
+height: -webkit-calc(100% - 22px - 16px - 3px); /* Chrome 19-> */
+height: -moz-calc(100% - 22px - 16px - 3px); /* Firefox */
+height: calc(100% - 22px - 16px - 3px); /* ie9 -> */ }
+.SWUI_Console_BodyContent { font-family: Consolas, Verdana; font-size: small; white-space: nowrap; }
+.SWUI_Console_Foot { height: 16px; background-color: white; }
+.SWUI_Console_FootContent { height: 16px; font-family: Consolas, Verdana; font-size: small; }
+	.SWUI_Console_FootContent input { 
+	outline: none; border-width: 0; border: hidden;
+	font-family: Consolas, Verdana; font-size: small;
+	-webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+	-moz-box-sizing: border-box; /* FF1+ */
+	box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+	width: 100%; }
 
 /*=============================================================================
 Help Studio
@@ -199,9 +208,9 @@ Help Header
 .SWUI_HelpHeader { background-color: InfoBackground; width: 100%; }
 .SWUI_HelpHeader_CellLeft { padding: 8px 8px 0 8px; vertical-align: top; }
 .SWUI_HelpHeader_CellRight { text-align: center; height: 58px; width: 58px; vertical-align: middle; }
-.SWUI_HelpHeader_Category { font-family: Tahoma; font-size: 8pt; font-weight: bold; padding-right: 4px; }
-.SWUI_HelpHeader_Subject { font-family: Tahoma; font-size: 8pt; font-weight: bold; }
-.SWUI_HelpHeader_Body { font-family: Verdana; font-size: 8pt; margin-left: 8px; margin-top: 4px; color: #606060; }
+.SWUI_HelpHeader_Category { font-family: Tahoma; font-size: small; font-weight: bold; padding-right: 4px; }
+.SWUI_HelpHeader_Subject { font-family: Tahoma; font-size: small; font-weight: bold; }
+.SWUI_HelpHeader_Body { font-family: Verdana; font-size: small; margin-left: 8px; margin-top: 4px; color: #606060; }
 /* .SWUI_HelpHeader_Icon { } */
 
 /*=============================================================================

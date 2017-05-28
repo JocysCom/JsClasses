@@ -1,32 +1,50 @@
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="System.Security.Cryptography.AES"
-	CodeFile="System.Security.Cryptography.AES.aspx.cs"
+	CodeBehind="System.Security.Cryptography.AES.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Security_Cryptography_AES" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div>
-		<table border="0" cellpadding="0" cellspacing="4">
-			<tr>
-				<td>Data:
-				</td>
-				<td>
-					<asp:TextBox ID="DataTextBox" runat="server" Width="500px">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</asp:TextBox>
-				</td>
-			</tr>
-			<tr>
-				<td>Password:
-				</td>
-				<td>
-					<asp:TextBox ID="PasswordTextBox" runat="server">password</asp:TextBox>
-				</td>
-			</tr>
-		</table>
-		<asp:Button ID="TestAesButton" runat="server" Text="Test AES" OnClick="TestAesButton_Click" />
-		<br />
-		<asp:TextBox ID="LogTextBox" runat="server" Height="200px" TextMode="MultiLine" Width="100%" />
-	</div>
+	<asp:UpdatePanel runat="server" ID="MainUpdatePanel">
+		<ContentTemplate>
+			<table class="SQUI_DataTables">
+				<tbody>
+					<tr>
+						<td>Password:
+						</td>
+						<td style="width: 100%;">
+							<asp:TextBox Text="password" ID="PasswordTextBox" runat="server" />
+						</td>
+					</tr>
+					<tr>
+						<td>Decrypted:</td>
+						<td>
+							<asp:TextBox TextMode="MultiLine" ID="DecryptedTextBox" Columns="64" Rows="5" runat="server" Text="abcdexyzABCDEXYZ0123456789-新闻网" />
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<asp:Button ID="EncryptButton" Text="↓ - Encrypt" runat="server" OnClick="EncryptButton_Click" />
+							<asp:Button ID="DecryptButton" Text="↑ - Decrypt" runat="server" OnClick="DecryptButton_Click" />
+						</td>
+					</tr>
+					<tr>
+						<td>Encrypted:</td>
+						<td>
+							<asp:TextBox TextMode="MultiLine" ID="EncryptedTextBox" Columns="64" Rows="5" runat="server" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+								<asp:TextBox ID="LogTextBox" runat="server" Height="200px" TextMode="MultiLine" Width="100%" class="SWUI_LogTextBox" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</ContentTemplate>
+	</asp:UpdatePanel>
 </asp:Content>
 
 

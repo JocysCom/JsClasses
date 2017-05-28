@@ -171,15 +171,14 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 		// Generate random primary number 'p'.
 		for (; ;) {
 			p = truePrime ? bi.NewPrime(pLen) : bi.NewProbPrime(pLen);
-			// Prime must not be congruent to 1 modulo e: p mod e != 1
+			// Prime must not be congruent to 1 modulo e: (p mod e) != 1.
 			if (!bi.EqualsInt(bi.Mod(p, e), 1)) break;
 		}
 		// Generate a modulus of the required length.
 		for (; ;) {
 			for (; ;) {
 				q = truePrime ? bi.NewPrime(qLen) : bi.NewProbPrime(qLen);
-				// Primes must be distinct and not congruent to 1 modulo e:
-				// (p != q) and ((q mod e) != 1)
+				// Prime must be and distinct and not congruent to 1 modulo e: (q mod e) != 1.
 				if (!bi.Equals(p, q) && !bi.EqualsInt(bi.Mod(q, e), 1)) break;
 			}
 			// Modulus: n = p*q
@@ -189,9 +188,9 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 			// of the two p and try again
 			if (bi.MoreThan(q, p)) p = q;
 		}
-		var t;
 		if (bi.MoreThan(q, p)) {
-			t = p; p = q; q = t;
+			// Swap numbers.
+			var t = p; p = q; q = t;
 		}
 		// phi: phi = (p-1)*(q-1)
 		var p1 = bi.AddInt(p, -1);
@@ -552,7 +551,7 @@ System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) 
 	// Set key options.
 	var rsaHashedKeyGenParams = {
 		// Microsoft use RSA-OAEP (SHA1) for RSA.
-		name: "RSA-OAEP",
+		name: "RSA-OAEP", // "RSAES-PKCS1-v1_5"
 		// Can be: 512, 1024, 2048, 4096.
 		modulusLength: keySize,
 		publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
