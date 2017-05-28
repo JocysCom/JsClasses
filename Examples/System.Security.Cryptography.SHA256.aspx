@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="SiteExamples.Master" AutoEventWireup="true"
+﻿<%@ Page Language="C#" MasterPageFile="SiteExamples.Master" AutoEventWireup="true"
 	Title="System.Security.Cryptography.SHA256"
 	CodeBehind="System.Security.Cryptography.SHA256.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Security_Cryptography_SHA256" %>

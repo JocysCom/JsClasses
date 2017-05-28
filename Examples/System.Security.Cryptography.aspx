@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="System.Security.Cryptography"
 	CodeFile="System.Security.Cryptography.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Security_Cryptography" %>

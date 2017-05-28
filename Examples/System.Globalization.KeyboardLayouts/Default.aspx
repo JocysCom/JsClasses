@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="../SiteExamples.Master"
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="../SiteExamples.Master"
 	Title="System.Globalization.KeyboardLayouts"
 	Inherits="JocysCom.WebSites.WebApp.Scripts.Classes.Examples.System_Globalization_KeyboardLayouts_Default"
 	CodeBehind="Default.aspx.cs" %>
