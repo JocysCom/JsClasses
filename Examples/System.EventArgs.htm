@@ -32,7 +32,12 @@
 		<span style="font-weight: bold;">JavaScript Code</span>
 		<pre id="ExampleCodePanel" class="brush: js;" style="margin: 0 0 0 0;"></pre>
 	</div>
-	<script type="text/javascript">
+	<div style="background-color: #cccccc; padding: 16px 4px 4px 16px; margin-top: 16px;">
+		<span style="font-weight: bold;">JavaScript Code - How C# syntax was achieved on INPUT element.</span>
+		<pre id="HowToPanel" class="brush: js;" style="margin: 0 0 0 0;"></pre>
+	</div>
+
+	<script type="text/javascript" id="HowToScript">
 
 		var DemoTextBox = {
 			control: $("#DemoTextBox"),
@@ -89,6 +94,8 @@
 			// Syntax Highlighter.
 			var html = $("#ExampleScript").html().replace(/\s*$/, "");
 			$("#ExampleCodePanel").html(html);
+			var html = $("#HowToScript").html().replace(/\s*$/, "");
+			$("#HowToPanel").html(html);
 			SyntaxHighlighter.all();
 			// Trigger Page_Load Event.
 			Page_Load(this, {});
