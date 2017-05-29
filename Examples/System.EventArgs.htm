@@ -5,14 +5,72 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<title>System.EventArgs</title>
-
+	<script src="../Includes/jquery-1.12.4.js"></script>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
 	<script type="text/javascript" src="../System.debug.js"></script>
 
 </head>
 <body>
 	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
 
+	<input id="DemoTextBox" type="text" />
+
 	<script type="text/javascript">
+
+		var DemoTextBox = {
+			control: $("#DemoTextBox"),
+			get Text() {
+				Trace.Write("get Text()");
+				return this.control.val();
+			},
+			set Text(value) {
+				Trace.Write("set Text()");
+				this.control.val(value);
+			},
+			get TextChanged() {
+				return 0;
+			},
+			set TextChanged(value) {
+				// propertychange change click keyup input paste
+				if (value > 0) {
+					Trace.Write("Add Event");
+					events[value] = function () { handlers[value]($("#DemoTextBox"), {});	}
+					this.control.on('change', events[value]);
+				} else {
+					Trace.Write("Remove Event");
+					this.control.off('change', events[-value]);
+				}
+
+			},
+			// Object.defineProperty(o, 'b', { get: function () { return this.a + 1; } });
+		}
+
+
+		function DataTextBox_TextChanged(sender, e) {
+			Trace.Write("DataTextBox_TextChanged");
+		}
+
+		var events = new Array();
+		var handlers = new Array();
+
+		var EventHandler = function (handler) {
+			var index = handlers.length + 1;
+			handlers[index] = handler;
+			return index;
+		}
+
+		function Window_Load() {
+			Trace.IsEnabled = true;
+			Trace.Write("Trace");
+			DemoTextBox.Text = "new value";
+			Trace.Write(DemoTextBox.Text);
+			DemoTextBox.TextChanged += EventHandler(DataTextBox_TextChanged);
+			DemoTextBox.Text = "new value1";
+			DemoTextBox.TextChanged -= EventHandler(DataTextBox_TextChanged);
+			DemoTextBox.Text = "new value2";
+		}
+		$(Window_Load);
+
 	</script>
 
 </body>
