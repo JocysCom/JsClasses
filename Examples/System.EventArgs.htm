@@ -6,51 +6,67 @@
 	<meta http-equiv="Expires" content="-1" />
 	<title>System.EventArgs</title>
 	<script src="../Includes/jquery-1.12.4.js"></script>
-	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
+	<link type="text/css" rel="stylesheet" href="Styles/Default.css" />
 	<script type="text/javascript" src="../System.debug.js"></script>
 
 </head>
 <body>
+	<table border="0" cellpadding="0" cellspacing="4">
+		<tbody>
+			<tr>
+				<td>Demo Text Box:</td>
+				<td>
+					<input id="DemoTextBox" type="text" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
-
-	<input id="DemoTextBox" type="text" />
 
 	<script type="text/javascript">
 
 		var DemoTextBox = {
 			control: $("#DemoTextBox"),
 			get Text() {
-				Trace.Write("get Text()");
 				return this.control.val();
 			},
 			set Text(value) {
-				Trace.Write("set Text()");
 				this.control.val(value);
+				for (property in this.TextChangedHandlers) {
+					this.TextChangedHandlers[property](this, {});
+				}
 			},
+			TextChangedWrappers: {},
+			TextChangedHandlers: {},
 			get TextChanged() {
 				return 0;
 			},
-			set TextChanged(value) {
-				// propertychange change click keyup input paste
-				if (value > 0) {
-					Trace.Write("Add Event");
-					events[value] = function () { handlers[value]($("#DemoTextBox"), {});	}
-					this.control.on('change', events[value]);
+			set TextChanged(evIndex) {
+				if (evIndex > 0) {
+					Trace.Write("// Add handler to TextChanged event.");
+					var self = this;
+					var h = handlers[evIndex];
+					var w = function () { h(self, {}); }
+					this.TextChangedHandlers[evIndex] = h;
+					this.TextChangedWrappers[evIndex] = w;
+					this.control.on('change input', w);
 				} else {
-					Trace.Write("Remove Event");
-					this.control.off('change', events[-value]);
+					Trace.Write("// Remove handler from TextChanged event.");
+					var h = handlers[-evIndex];
+					var w;
+					for (property in this.TextChangedHandlers) {
+						if (h === this.TextChangedHandlers[property]) {
+							w = this.TextChangedWrappers[property];
+							delete this.TextChangedWrappers[property];
+							delete this.TextChangedHandlers[property];
+						}
+					}
+					this.control.off('change input', w);
 				}
-
 			},
-			// Object.defineProperty(o, 'b', { get: function () { return this.a + 1; } });
 		}
 
-
-		function DataTextBox_TextChanged(sender, e) {
-			Trace.Write("DataTextBox_TextChanged");
-		}
-
-		var events = new Array();
 		var handlers = new Array();
 
 		var EventHandler = function (handler) {
@@ -61,17 +77,32 @@
 
 		function Window_Load() {
 			Trace.IsEnabled = true;
-			Trace.Write("Trace");
-			DemoTextBox.Text = "new value";
-			Trace.Write(DemoTextBox.Text);
-			DemoTextBox.TextChanged += EventHandler(DataTextBox_TextChanged);
-			DemoTextBox.Text = "new value1";
-			DemoTextBox.TextChanged -= EventHandler(DataTextBox_TextChanged);
-			DemoTextBox.Text = "new value2";
+			Trace.Write("Demo Start");
+			Page_Load(this, {});
 		}
+
 		$(Window_Load);
 
-	</script>
+		// Yes, this is JavaScript.
 
+		function DemoTextBox_TextChanged(sender, e) {
+			// Event will fire when 'input' value is changed and focus is taken away.
+			Trace.Write("DemoTextBox Text Changed: " + sender.Text);
+		}
+
+		function Page_Load(sender, e) {
+			// Attach event to 'input' element.
+			DemoTextBox.TextChanged += EventHandler(DemoTextBox_TextChanged);
+			// Change 'input' value.
+			DemoTextBox.Text = "value 1";
+			// Remove event from 'input' element.
+			DemoTextBox.TextChanged -= EventHandler(DemoTextBox_TextChanged);
+			// Change 'input' value (TextChanged event won't fire).
+			DemoTextBox.Text = "value 2";
+			// Attach event to 'input' element again.
+			DemoTextBox.TextChanged += EventHandler(DemoTextBox_TextChanged);
+		}
+
+	</script>
 </body>
 </html>
