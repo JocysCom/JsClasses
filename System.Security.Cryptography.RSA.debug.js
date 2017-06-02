@@ -454,17 +454,17 @@ System.Security.Cryptography.RsaCreateEventArgs = function () {
 	this.PublicKey = null;
 	this.PrivateKey = null;
 	this.Error = null;
-}
+};
 System.Type.RegisterClass("System.Security.Cryptography.RsaCreateEventArgs");
 
-System.Security.Cryptography.RSA = function () { }
+System.Security.Cryptography.RSA = function () { };
 System.Type.RegisterClass("System.Security.Cryptography.RSA");
 
 System.Security.Cryptography.RSA.CreateKeyCompleted = function (sender, e) {
 	/// <summary>fires when new key is generated</summary>
 	/// <param name="sender">RSA class</param>
 	/// <param name="e" type="GenerateKeyEventArgs">Results</param>
-}
+};
 
 System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) {
 	/// <summary>Create new RSA provider.</summary>
@@ -539,7 +539,7 @@ System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) 
 		raiseException("Web Cryptography API not found.");
 		return;
 	}
-	if (subtle == null) {
+	if (subtle === null) {
 		raiseException("Web Cryptography API Subtle not found.");
 		return;
 	}
@@ -556,7 +556,7 @@ System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) 
 		modulusLength: keySize,
 		publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
 		// Can be: SHA-1, SHA-256, SHA-384, SHA-512.
-		hash: { name: "SHA-1" },
+		hash: { name: "SHA-1" }
 	};
 
 	// Mark key as exportable.
@@ -648,7 +648,7 @@ System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) 
 	// COMPLETE
 	//-------------------------------------------------
 
-}
+};
 
 
 

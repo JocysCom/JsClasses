@@ -43,7 +43,7 @@ System.Type = function () {
 	this.Namespace = "";
 	this.FullName = "";
 	//---------------------------------------------------------
-	this.ToSting = function () {
+	this.ToString = function () {
 		/// <summary>
 		/// Returns a String representing the name of the current Type.
 		/// </summary>
