@@ -31,25 +31,25 @@
 		// Note: 'bytes' is array of 'bytes'. It is same as bytes[] in C#
 		window.onload = function() {
 			Trace.IsEnabled = true;
+			Trace.Write("Start Demo");
+			Trace.Write("// Test PKCS1 mask generation method.")
 			var mgf = new System.Security.Cryptography.PKCS1MaskGenerationMethod();
-			Trace.Write("Mask " + System.BitConverter.ToString(mgf.GenerateMask(new System.Byte(0), 40)));
-
+			var mask = mgf.GenerateMask(new System.Byte(0), 40);
+			Trace.Write("mfg.GenerateMask(new System.Byte(0), 40) = " + System.BitConverter.ToString(mask,""));
 			// Define key and data string.
 			var k = "test key";
-			var s = "abc新闻网efg新闻网";
+			var s = "Encoding-编码-암호화-表現形式";
 			var kb = System.Text.Encoding.UTF8.GetBytes(k);
 			var sb = System.Text.Encoding.UTF8.GetBytes(s);
-
-			Trace.Write("Start Demo");
 			// Test SHA1.
-			Trace.Write("// Create SHA1 Algorithm");
+			Trace.Write("// Create SHA1 Algorithm. Expected HEX: BAF9B4150025B2225DFBB05143F0554B1493C645");
 			var sha1 = new System.Security.Cryptography.SHA1CryptoServiceProvider();
-			var hash = System.BitConverter.ToString(sha1.ComputeHash(sb));
+			var hash = System.BitConverter.ToString(sha1.ComputeHash(sb), "");
 			Trace.Write("sha1.ComputeHash('" + s + "') = " + hash);
-			// Test HMACSHA1.
-			Trace.Write("// Create HMAC-SHA1 Algorithm");
+			// Test HMAC-SHA1.
+			Trace.Write("// Create HMAC-SHA1 Algorithm. Expected HEX: 22FB8BF61E0FE27BCE79B5F7F896C1593DB17C7F");
 			var hmac = new System.Security.Cryptography.HMACSHA1(kb);
-			hash = System.BitConverter.ToString(hmac.ComputeHash(sb));
+			hash = System.BitConverter.ToString(hmac.ComputeHash(sb), "");
 			Trace.Write("hmac.ComputeHash('" + k + "','" + s + "') = " + hash);
 		}
 

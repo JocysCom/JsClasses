@@ -12,7 +12,7 @@
 				<td>Data:
 				</td>
 				<td>
-					<asp:TextBox ID="DataTextBox" runat="server" Width="500px">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</asp:TextBox>
+					<asp:TextBox ID="DataTextBox" runat="server" Width="500px" Text="Encoding-编码-암호화-表現形式" />
 				</td>
 			</tr>
 			<tr>

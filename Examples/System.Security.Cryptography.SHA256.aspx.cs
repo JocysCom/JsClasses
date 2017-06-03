@@ -50,7 +50,7 @@ namespace Scripts.Classes.Examples
 		{
 			// Define key and data string.
 			var k = "test key";
-			var s = "abc新闻网efg新闻网";
+			var s = "Encoding-编码-암호화-表現形式";
 			var kb = System.Text.Encoding.UTF8.GetBytes(k);
 			var sb = System.Text.Encoding.UTF8.GetBytes(s);
 			

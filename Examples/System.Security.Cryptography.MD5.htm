@@ -26,24 +26,22 @@
 		window.onload = function(){
 			// Define key and data string.
 			var k = "test key";
-			var s = "abc新闻网";
+			var s = "Encoding-编码-암호화-表現形式";
 			var kb = System.Text.Encoding.UTF8.GetBytes(k);
 			var sb = System.Text.Encoding.UTF8.GetBytes(s);
 			Trace.IsEnabled = true;
 			Trace.Write("Start Demo");
 			// Test MD5.
-			Trace.Write("// Create MD5 Algorithm. Expected HEX: 96612ADFA677FD7E5CF871F31D4E3832");
+			Trace.Write("// Create MD5 Algorithm. Expected HEX: 97C28DD6229E8C3A236B5A0E91761361");
 			var md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
 			Trace.Write("md5.ComputeHashAsHex('" + s + "') = " + md5.ComputeHashAsHex(sb));
 			Trace.Write("md5.ComputeHashAsGuid('"+s+"') = "+md5.ComputeHashAsGuid(sb).ToString("B"));
-			// Test HMACMD5.
-			Trace.Write("// Create HMAC-MD5 Algorithm. Expected HEX: C1C811638BBC361470B7B1FD60225FDB");
+			// Test HMAC-MD5.
+			Trace.Write("// Create HMAC-MD5 Algorithm. Expected HEX: D7F8EE92DA8163933637AEDB02B8D828");
 			var hmac = new System.Security.Cryptography.HMACMD5();
 			Trace.Write("hmac.ComputeHashAsHex('" + k + "','" + s + "') = " + hmac.ComputeHashAsHex(kb, sb));
 			Trace.Write("hmac.ComputeHashAsGuid('"+k+"','"+s+"') = "+hmac.ComputeHashAsGuid(kb, sb).ToString("B"));
 		}
-		
-		
 
 	</script>
 

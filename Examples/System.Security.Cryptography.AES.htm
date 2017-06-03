@@ -24,20 +24,32 @@
 	<script type="text/javascript" src="../Documents/SyntaxHighlighter/scripts/shBrushJScript.js"></script>
 	<script type="text/javascript" src="../Documents/SyntaxHighlighter/scripts/shBrushCSharp.js"></script>
 	<script type="text/javascript">
+
 		function Window_Load() {
 			Trace.IsEnabled = true;
 			Trace.Write("Start Demo");
-			$("#DecryptedTextBox").val("abcdexyzABCDEXYZ0123456789-新闻网");
+			$("#ResetButton").on('click', ResetButton_Click);
 			$("#EncryptButton").on('click', EncryptButton_Click);
 			$("#DecryptButton").on('click', DecryptButton_Click);
+			$("#EncryptedClearButton").on('click', function () { $("#EncryptedTextBox").val(""); });
+			$("#DecryptedClearButton").on('click', function () { $("#DecryptedTextBox").val(""); });
+			ResetButton_Click();
 			// Syntax Highlighter.
 			var html = $("#ExampleScript").html().replace(/\s*$/, "");
 			$("#ExampleCodePanel").html(html);
 			SyntaxHighlighter.all();
 		}
+
+		function ResetButton_Click(sender, e) {
+			$("#PasswordTextBox").val("password")
+			$("#DecryptedTextBox").val("Encoding-编码-암호화-表現形式");
+		}
+
 		$(Window_Load);
+
 	</script>
 	<script type="text/javascript" id="ExampleScript">
+
 		function EncryptButton_Click(sender, e) {
 			$("EncryptedTextBox").val("");
 			var text = $("#DecryptedTextBox").val();
@@ -61,6 +73,7 @@
 			Trace.Write("// text: " + text);
 			$("#DecryptedTextBox").val(text);
 		}
+
 	</script>
 </head>
 <body>
@@ -71,18 +84,20 @@
 					Password:
 				</td>
 				<td>
-					<input value="password" id="PasswordTextBox" type="text" />
+					<input id="PasswordTextBox" type="text" />
 				</td>
+				<td valign="top"><input id="ResetButton" value="Reset" type="button" /></td>
 			</tr>
 			<tr>
 				<td>Decrypted:</td>
 				<td>
 					<textarea id="DecryptedTextBox" cols="64" rows="5"></textarea>
 				</td>
+				<td valign="top"><input id="DecryptedClearButton" value="Clear" type="button" /></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td>
+				<td colspan="2">
 					<input id="EncryptButton" value="↓ - Encrypt" type="button" />
 					<input id="DecryptButton" value="↑ - Decrypt" type="button" />
 				</td>
@@ -92,6 +107,7 @@
 				<td>
 					<textarea id="EncryptedTextBox" cols="64" rows="5"></textarea>
 				</td>
+				<td valign="top"><input id="EncryptedClearButton" value="Clear" type="button" /></td>
 			</tr>
 		</tbody>
 	</table>

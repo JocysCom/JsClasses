@@ -47,7 +47,7 @@ namespace Scripts.Classes.Examples
 		{
 			// Define key and data string.
 			string k = "test key";
-			string s = "abc新闻网efg新闻网";
+			string s = "Encoding-编码-암호화-表現形式";
 			byte[] kb = System.Text.Encoding.UTF8.GetBytes(k);
 			byte[] sb = System.Text.Encoding.UTF8.GetBytes(s);
 			// Test SHA1.

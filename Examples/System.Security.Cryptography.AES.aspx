@@ -20,7 +20,7 @@
 					<tr>
 						<td>Decrypted:</td>
 						<td>
-							<asp:TextBox TextMode="MultiLine" ID="DecryptedTextBox" Columns="64" Rows="5" runat="server" Text="abcdexyzABCDEXYZ0123456789-新闻网" />
+							<asp:TextBox TextMode="MultiLine" ID="DecryptedTextBox" Columns="64" Rows="5" runat="server" Text="Encoding-编码-암호화-表現形式" />
 						</td>
 					</tr>
 					<tr>
