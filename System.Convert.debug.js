@@ -172,6 +172,51 @@ System.Convert.FromBase64String = function (s, fix) {
 	return bytes;
 };
 
+System.Convert.ToBase64UrlString = function (b, wrap) {
+	/// <summary>
+	/// Converts the value of an array of 8-bit unsigned integers to its equivalent
+	/// System.String representation encoded with Base64URL digits.
+	/// </summary>
+	/// <param type="byte[]" name="b">An array of 8-bit unsigned integers.</param>
+	/// <param type="bool" name="wrap">Wrap base64 string with '\r\n' separator.</param>
+	/// <returns type="string">
+	/// The System.String representation, in Base64URL, of the contents of inArray.
+	/// </returns>
+	//
+	// Use standard base64 encoder.
+	var string = System.Convert.ToBase64String(b, wrap);
+	// Remove trailing '='.
+	s = s.replace(new RegExp("[=]+$", "g"), "");
+	// Replace base64 characters to be URL compatible.
+	s = s.replace(new RegExp("[+]", "g"), "-");
+	s = s.replace(new RegExp("[/]", "g"), "_");
+	return s;
+};
+
+System.Convert.FromBase64UrlString = function (s, fix) {
+	/// <summary>
+	/// Converts the specified System.String, which encodes binary data as Base64URL
+	/// digits, to an equivalent 8-bit unsigned integer array.
+	/// </summary>
+	/// <param type="string" name="s">A string.</param>
+	/// <param type="bool" name="fix">Fix base64 string by removing all ilegal chars.</param>
+	/// <returns type="byte[]">
+	//
+	// Restore base64 characters.
+	s = s.replace(new RegExp("[-]", "g"), "+");
+	s = s.replace(new RegExp("[_]", "g"), "/");
+	// Restore trailing '='.
+	var len = s.length % 4;
+	if (len === 2)
+		s += "==";
+	if (len === 3)
+		s += "=";
+	// Use standard base64 encoder.
+	var b = System.Convert.FromBase64String(s);
+	return b;
+};
+
+
 System.Convert.HexStringToBytes = function (s) {
 	/// <summary>
 	/// Convert hex string to array of bytes.

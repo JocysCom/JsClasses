@@ -501,187 +501,28 @@ System.Security.Cryptography.RSA.CreateKeyAsync = function (keySize, userState) 
 		}
 	}
 	//---------------------------------------------------------
-	function ConvertToMicrosoftCompatible(p, q) {
-		var bi = System.BigInt.Utils;
-
-		var pBits = new Array(p.length * 8);
-		for (var i = 0; i < p.length; i++) {
-			var b = p[i];
-			pBits[i * 8 + 0] = b >>> 0 & 1;
-			pBits[i * 8 + 1] = b >>> 1 & 1;
-			pBits[i * 8 + 2] = b >>> 2 & 1;
-			pBits[i * 8 + 3] = b >>> 3 & 1;
-			pBits[i * 8 + 4] = b >>> 4 & 1;
-			pBits[i * 8 + 5] = b >>> 5 & 1;
-			pBits[i * 8 + 6] = b >>> 6 & 1;
-			pBits[i * 8 + 7] = b >>> 7 & 1;
-		}
-
-		var pBytes = new Array(p.length);
-		for (var i = 0; i < p.length; i++) {
-			pBytes[i] =
-				pBits[i + 0] << 0 |
-				pBits[i + 1] << 1 |
-				pBits[i + 2] << 2 |
-				pBits[i + 3] << 3 |
-				pBits[i + 4] << 4 |
-				pBits[i + 5] << 5 |
-				pBits[i + 6] << 6 |
-				pBits[i + 7] << 7;
-		}
-
-		var p = bi.FromBytes(p);
-		var q = bi.FromBytes(q);
-
-		//System.Array.Reverse(p0);
-		//System.Array.Reverse(q0);
-
-
-		var truePrime = true;
-
-		// Generate RSA parameters.
-		// Note on math:  x^(-1) == 1/x
-		//var p; // p / Primary 1
-		//var q; // q / Primary 2
-		var n; // n / Modulus.
-		var e; // e / Exponent / public exponent / encryption exponent.
-		var d; // d / D / secret exponent / decryption exponent.
-		// Create public exponent first.
-		e = bi.FromString("10001", 16, 0);
-		// p and q values should have a length of half the strength in bits.
-		var pLen = keySize + 1 >> 1;
-		var qLen = keySize - pLen;
-
-		//// Generate random primary number 'p'.
-		//for (; ;) {
-		//	p = truePrime ? bi.NewPrime(pLen) : bi.NewProbPrime(pLen);
-		//	// Prime must not be congruent to 1 modulo e: (p mod e) != 1.
-		//	if (!bi.EqualsInt(bi.Mod(p, e), 1)) break;
-		//}
-		//var px = p;
-		//// Generate a modulus of the required length.
-		//for (; ;) {
-		//	for (; ;) {
-		//		q = truePrime ? bi.NewPrime(qLen) : bi.NewProbPrime(qLen);
-		//		// Prime must be and distinct and not congruent to 1 modulo e: (q mod e) != 1.
-		//		if (!bi.Equals(p, q) && !bi.EqualsInt(bi.Mod(q, e), 1)) break;
-		//	}
-		//	// Modulus: n = p*q
-		//	n = bi.Multiply(p, q);
-		//	if (bi.BitCount(n) === keySize) break;
-		//	// if we get here our primes aren't big enough, make the largest
-		//	// of the two p and try again
-		//	if (bi.MoreThan(q, p)) p = q;
-		//}
-
-		// Prime must not be congruent to 1 modulo e: (p mod e) != 1.
-		if (bi.EqualsInt(bi.Mod(p, e), 1)) {
-			Trace.Write("ERROR: congruent to 1 modulo e: (p mod e) != 1");
-			//return null;
-		}
-		// Generate a modulus of the required length.
-		if (bi.Equals(p, q) || bi.EqualsInt(bi.Mod(q, e), 1)) {
-			Trace.Write("ERROR: Prime must be and distinct and not congruent to 1 modulo e: (q mod e) != 1.");
-			//return null;
-		}
-		// Modulus: n = p*q
-		n = bi.Multiply(p, q);
-		if (bi.BitCount(n) !== keySize) {
-			Trace.Write("ERROR: Primes aren not big enough, make the largest of the two p.");
-			//return null;
-		}
-		if (bi.MoreThan(q, p)) {
-			// Swap numbers.
-			var t = p; p = q; q = t;
-		}
-		// phi: phi = (p-1)*(q-1)
-		var p1 = bi.AddInt(p, -1);
-		var q1 = bi.AddInt(q, -1);
-		var phi = bi.Multiply(p1, q1);
-		// Decryption exponent: (1/e) mod phi
-		d = bi.InverseMod(e, phi);
-		if (!d) {
-			Trace.Write("ERROR: (e, phi) is not invertible. Try a different prime.");
-			//return null;
-		}
-		// -------------------------
-		// Calculate alternative method of representing the private key.
-		// Uses the Chinese Remainder Theorem (CRT).
-		// The private key is represented as a quintuple (P, Q, dP, dQ, and InvQ), where
-		// P and Q are prime factors of n,
-		// dP and dQ are known as the CRT exponents,
-		// and qInv is the CRT coefficient.
-		// The CRT method of decryption is four times faster overall than calculating m = c^d mod n
-		//
-		// qInv = (1/q) mod p  where p > q
-		var qInv = bi.InverseMod(q, p);
-		if (!qInv) {
-			Trace.Write("ERROR: (q, p) is not invertible. Try a different prime.");
-			//return null;
-		}
-		// CRT Exponent: dP = (1/e) mod (p-1)
-		var dP = bi.InverseMod(e, p1);
-		if (!dP) {
-			Trace.Write("ERROR: (e, p1) is not invertible. Try a different prime.");
-			//return null;
-		}
-		// CRT Exponent: dQ = (1/e) mod (q-1)
-		var dQ = bi.InverseMod(e, q1);
-		if (!dQ) {
-			Trace.Write("ERROR: (e, q1) is not invertible. Try a different prime.");
-			//return null;
-		}
-		// Save key.
-		var parameters = new System.Security.Cryptography.RSAParameters();
-		parameters.Exponent = bi.ToBytes(e);
-		parameters.Modulus = bi.ToBytes(n);
-		parameters.D = bi.ToBytes(d);
-		// Primary Numbers
-		parameters.P = bi.ToBytes(p);
-		parameters.Q = bi.ToBytes(q);
-		// CRT
-		parameters.DP = bi.ToBytes(dP);
-		parameters.DQ = bi.ToBytes(dQ);
-		parameters.InverseQ = bi.ToBytes(qInv);
-		// Inverse byte arrays.
-		System.Array.Reverse(parameters.Exponent);
-		System.Array.Reverse(parameters.Modulus);
-		System.Array.Reverse(parameters.D);
-		System.Array.Reverse(parameters.P);
-		System.Array.Reverse(parameters.Q);
-		System.Array.Reverse(parameters.DP);
-		System.Array.Reverse(parameters.DQ);
-		System.Array.Reverse(parameters.InverseQ);
-		return parameters;
-	}
-	//---------------------------------------------------------
 	function convertKey(key, includePrivateParameters) {
-		//var parameters = new System.Security.Cryptography.RSAParameters();
-		//var e = System.Convert.FromBase64String(key.e);
-		//var n = System.Convert.FromBase64String(key.n);
-		//parameters.Exponent = e;
-		//parameters.Modulus = n;
-		//if (includePrivateParameters) {
-		//	var d = System.Convert.FromBase64String(key.d);
-		//	var dp = System.Convert.FromBase64String(key.dp);
-		//	var dq = System.Convert.FromBase64String(key.dq);
-		//	var qi = System.Convert.FromBase64String(key.qi);
-		//	var p = System.Convert.FromBase64String(key.p);
-		//	var q = System.Convert.FromBase64String(key.q);
-		//	// Private parameters.
-		//	parameters.D = d;
-		//	parameters.DP = dp;
-		//	parameters.DQ = dq;
-		//	parameters.InverseQ = qi;
-		//	parameters.P = p;
-		//	parameters.Q = q;
-		//}
-		var bi = System.BigInt.Utils;
-		var bc = System.BitConverter;
-		var p = System.Convert.FromBase64String(key.p);
-		var q = System.Convert.FromBase64String(key.q);
-		var key = ConvertToMicrosoftCompatible(p, q);
-		return key;
+		var parameters = new System.Security.Cryptography.RSAParameters();
+		var e = System.Convert.FromBase64UrlString(key.e);
+		var n = System.Convert.FromBase64UrlString(key.n);
+		parameters.Exponent = e;
+		parameters.Modulus = n;
+		if (includePrivateParameters) {
+			var d = System.Convert.FromBase64UrlString(key.d);
+			var dp = System.Convert.FromBase64UrlString(key.dp);
+			var dq = System.Convert.FromBase64UrlString(key.dq);
+			var qi = System.Convert.FromBase64UrlString(key.qi);
+			var p = System.Convert.FromBase64UrlString(key.p);
+			var q = System.Convert.FromBase64UrlString(key.q);
+			// Private parameters.
+			parameters.D = d;
+			parameters.DP = dp;
+			parameters.DQ = dq;
+			parameters.InverseQ = qi;
+			parameters.P = p;
+			parameters.Q = q;
+		}
+		return parameters;
 	}
 	//---------------------------------------------------------
 	var subtle = null;

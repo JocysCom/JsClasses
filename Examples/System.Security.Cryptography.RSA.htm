@@ -5,6 +5,7 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<title>System.Security.Cryptography.RSA</title>
+	<link type="text/css" rel="stylesheet" href="Styles/Default.css" />
 	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
 	<script type="text/javascript" src="../System.debug.js"></script>
 	<script type="text/javascript" src="../System.IO.debug.js"></script>
@@ -163,7 +164,6 @@
 		function RSA_CreateKeyCompleted(sender, e) {
 			if (e.Error == null) {
 				Trace.Write("Key pair generation was successful.");
-				Trace.Write("Bad news - it is incompatible with Microsoft C#/JavaScript.");
 				var rsa = new System.Security.Cryptography.RSACryptoServiceProvider();
 				//rsa.ImportParameters(e.PublicKey);
 				//var publicKeyXml = rsa.ToXmlString(false);
@@ -187,7 +187,7 @@
 		<tbody>
 			<tr>
 				<td>RSA Key Size:</td>
-				<td>
+				<td colspan="2">
 					<select name="KeySizeDropDownList" id="KeySizeDropDownList">
 						<option value="256">256-bit</option>
 						<option value="384">384-bit</option>
@@ -198,14 +198,22 @@
 						<option value="4096">4096-bit</option>
 					</select>
 				</td>
+				<td style="width: 100%;"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td valign="top">
+					<input id="NewKeyButton" value="Generate New Key (Slow)" type="button" />
+				</td>
+				<td valign="top" class="style1">Use pure JavaScript to generate weak C# compatible RSA keys (up to 1024-bit). Attempt to generate keys, larger than 1024-bit will freeze your browser.</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>
-					<input id="NewKeyButton" value="New Key (Compatible with C#/JavaScript)" type="button" />
-					<input id="NewKeyApiButton" value="New Key (Web Cryptography API)" type="button" />
+					<input id="NewKeyApiButton" value="Generate New Key (Fast)" type="button" />
 				</td>
+				<td  style="border-top: 1px solid #d0d0d0;" class="style1">Use Web Cryptography API, to generate strong and secure C# compatible RSA keys (up to 4096-bit).</td>
 				<td></td>
 
 			</tr>
@@ -213,7 +221,7 @@
 				<td>
 					RSA Key:
 				</td>
-				<td>
+				<td colspan="2">
 					<textarea name="KeyTextBox" id="KeyTextBox" style="width: 500px;" cols="128" rows="10"></textarea>
 					<br />
 					<span class="style1">
@@ -225,7 +233,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td>
+				<td colspan="2">
 					Padding:
 					<select name="PaddingDropDownList" id="PaddingDropDownList">
 						<option selected="selected" value="OAEP">OAEP padding (PKCS#1 v2)</option>
@@ -237,7 +245,7 @@
 				<td>
 					Data:
 				</td>
-				<td>
+				<td colspan="2">
 					<input name="DataTextBox" value="abcdef_01234" id="DataTextBox" style="width: 500px;"
 						   type="text" />
 				</td>
@@ -254,14 +262,14 @@
 				<td>
 					Encrypted:
 				</td>
-				<td>
+				<td colspan="2">
 					<textarea name="EncryptedTextBox" id="EncryptedTextBox" style="width: 500px;" cols="128"
 							  rows="3"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
-				<td>
+				<td colspan="2">
 					<input name="DecryptButton" value="Decrypt" id="DecryptButton" type="button" />
 					<input name="TestButton" value="Test" id="TestButton" type="button" style="display: none" />
 				</td>
@@ -272,7 +280,7 @@
 				<td>
 					Decrypted:
 				</td>
-				<td>
+				<td colspan="2">
 					<textarea name="DecryptedTextBox" id="DecryptedTextBox" style="width: 500px;" cols="128"
 							  rows="3"></textarea>
 				</td>
