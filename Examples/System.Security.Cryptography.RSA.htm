@@ -186,9 +186,9 @@
 	<table border="0" cellpadding="0" cellspacing="4">
 		<tbody>
 			<tr>
-				<td>RSA Key Size:</td>
+				<td style="white-space:nowrap;">RSA Key Size:</td>
 				<td colspan="2">
-					<select name="KeySizeDropDownList" id="KeySizeDropDownList">
+					<select id="KeySizeDropDownList">
 						<option value="256">256-bit</option>
 						<option value="384">384-bit</option>
 						<option selected="selected" value="512">512-bit</option>
@@ -221,20 +221,13 @@
 					RSA Key:
 				</td>
 				<td colspan="2">
-					<textarea name="KeyTextBox" id="KeyTextBox" style="width: 500px;" cols="128" rows="10"></textarea>
-					<br />
-					<span class="style1">
-						Note: You can use larger keys, but generation of keys larger than
-						512-bits on
-					</span><br class="style1" />
-					<span class="style1">JavaScript is very slow.</span>
+					<textarea id="KeyTextBox" style="width: 500px;" cols="128" rows="10"></textarea>
 				</td>
 			</tr>
 			<tr>
-				<td></td>
+				<td>Padding:</td>
 				<td colspan="2">
-					Padding:
-					<select name="PaddingDropDownList" id="PaddingDropDownList">
+					<select id="PaddingDropDownList">
 						<option selected="selected" value="OAEP">OAEP padding (PKCS#1 v2)</option>
 						<option value="PKCS">Direct Encryption (PKCS#1 v1.5)</option>
 					</select>
@@ -245,7 +238,7 @@
 					Data:
 				</td>
 				<td colspan="2">
-					<input name="DataTextBox" value="abcdef_01234" id="DataTextBox" style="width: 500px;"
+					<input value="abcdef_01234" id="DataTextBox" style="width: 500px;"
 						   type="text" />
 				</td>
 				<td></td>
@@ -253,7 +246,7 @@
 			<tr>
 				<td></td>
 				<td>
-					<input name="EncryptButton" value="Encrypt" id="EncryptButton" type="button" />
+					<input value="↓ - Encrypt" id="EncryptButton" type="button" />
 				</td>
 				<td></td>
 			</tr>
@@ -262,15 +255,15 @@
 					Encrypted:
 				</td>
 				<td colspan="2">
-					<textarea name="EncryptedTextBox" id="EncryptedTextBox" style="width: 500px;" cols="128"
+					<textarea id="EncryptedTextBox" style="width: 500px;" cols="128"
 							  rows="3"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td colspan="2">
-					<input name="DecryptButton" value="Decrypt" id="DecryptButton" type="button" />
-					<input name="TestButton" value="Test" id="TestButton" type="button" style="display: none" />
+					<input value="↓ - Decrypt" id="DecryptButton" type="button" />
+					<input value="Test" id="TestButton" type="button" style="display: none" />
 				</td>
 				<td></td>
 			</tr>
