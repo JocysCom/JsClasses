@@ -81,7 +81,7 @@ namespace JocysCom.WebSites.WebApp.Scripts.Classes.Examples
 			// Turn input string into a byte array.
 			var input = System.Convert.FromBase64String(base64);
 			// Create an instance of the Rijndael class.
-			var cipher = new System.Security.Cryptography.RijndaelManaged();
+			var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 			// Calculate salt to make it harder to guess key by using a dictionary attack.
 			var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
 			var hmac = new System.Security.Cryptography.HMACSHA1(passwordBytes);

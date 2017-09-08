@@ -69,7 +69,7 @@ namespace Scripts.Classes.Examples
 		/// </summary>
 		private void CreateCipher()
 		{
-			Cipher = new System.Security.Cryptography.RijndaelManaged();
+			Cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 			//Cipher = new System.Security.Cryptography.RC2CryptoServiceProvider();
 			//Cipher = new System.Security.Cryptography.RC4CryptoServiceProvider();
 			Cipher.Mode = (System.Security.Cryptography.CipherMode)int.Parse(CipherModeDropDownList.SelectedValue);
