@@ -7,3 +7,5 @@ Thumbs.db
 *.svn*
 *\.svn\*
 *.zip
+.svn
+.vs

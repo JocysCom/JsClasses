@@ -473,6 +473,8 @@ System.Web.Storage._TotalSpace = -1;
 
 System.Web.Storage.GetUsedSpace = function () {
 	var ls = window.localStorage;
+	if (typeof ls === "undefined")
+		return 0;
 	var usedSpace = 0;
 	var key = "";
 	var item = "";
@@ -490,6 +492,8 @@ System.Web.Storage.GetUsedSpace = function () {
 System.Web.Storage.CleanUpTemp = function () {
 	try {
 		var ls = window.localStorage;
+		if (typeof ls === "undefined")
+			return;
 		var key = "";
 		for (var i = ls.length - 1; i > -1; i--) {
 			key = ls.key(i);
@@ -514,6 +518,8 @@ System.Web.Storage.CleanUpTemp();
 System.Web.Storage.GetKeys = function () {
 	var ls = window.localStorage;
 	var s = "";
+	if (typeof ls === "undefined")
+		return s;
 	var space = 0;
 	var key = "";
 	var item = "";
@@ -530,11 +536,12 @@ System.Web.Storage.GetKeys = function () {
 	return s;
 };
 
-
 System.Web.Storage.GetTotalSpace = function (max) {
 	// If value is known already then return it.
 	if (System.Web.Storage._TotalSpace > -1) return System.Web.Storage._TotalSpace;
 	var ls = window.localStorage;
+	if (typeof ls === "undefined")
+		return 0;
 	// Try to find used space by using fast method.
 	var usedSpace = System.Web.Storage.GetUsedSpace();
 	// Try to find free space by using fast method.
@@ -553,6 +560,8 @@ System.Web.Storage.TestFreeSpace = function (max) {
 	//  5242880 =  5 * 1024 *1024 - default for mobiles.
 	// 10485760 = 10 * 1024 *1024 - default for desktop.
 	var ls = window.localStorage;
+	if (typeof ls === "undefined")
+		return 0;
 	// Create list to store temp data.
 	var list = [];
 	// One character of a string is 16 bit.
@@ -606,6 +615,8 @@ System.Web.Storage.TestFreeSpace = function (max) {
 
 System.Web.Storage.GetFreeSpace = function (max) {
 	var ls = window.localStorage;
+	if (typeof ls === "undefined")
+		return 0;
 	// Try to find free space by using fast method.
 	var freeSpace = typeof ls.remainingSpace === "number" ? ls.remainingSpace : -1;
 	if (freeSpace > -1) {

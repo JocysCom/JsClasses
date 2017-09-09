@@ -13,6 +13,7 @@ System.Security.Password.debug.js
 System.Web.UI.HtmlControls.debug.js
 System.Web.UI.Interface.debug.js
 System.Windows.Forms.Keys.debug.js
+System.BitConverter.debug.js
 System.Security.Cryptography.MD5.debug.js
 System.Security.Cryptography.HMACMD5.debug.js
 Styles\CodeProject.debug.css
