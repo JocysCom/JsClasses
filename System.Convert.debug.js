@@ -184,7 +184,7 @@ System.Convert.ToBase64UrlString = function (b, wrap) {
 	/// </returns>
 	//
 	// Use standard base64 encoder.
-	var string = System.Convert.ToBase64String(b, wrap);
+	var s = System.Convert.ToBase64String(b, wrap);
 	// Remove trailing '='.
 	s = s.replace(new RegExp("[=]+$", "g"), "");
 	// Replace base64 characters to be URL compatible.

@@ -1,83 +1,152 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="-1" />
-	<title>System.Convert.Base64Array</title>
-	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
-	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <title>System.Convert.Base64Array</title>
+    <link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/Default.css" />
 
-	<script type="text/javascript" src="../System.debug.js"></script>
+    <script src="../Includes/jquery-1.12.4.js"></script>
 
-	<script type="text/javascript" src="../System.Text.debug.js"></script>
+    <script type="text/javascript" src="../System.debug.js"></script>
 
-	<script type="text/javascript" src="../System.Convert.debug.js"></script>
+    <script type="text/javascript" src="../System.Text.debug.js"></script>
 
-	<script type="text/javascript" src="../System.Web.UI.debug.js"></script>
+    <script type="text/javascript" src="../System.Convert.debug.js"></script>
 
-	<script type="text/javascript">
+    <script type="text/javascript" src="../System.Web.UI.debug.js"></script>
 
-		function Window_Load() {
-			Trace.IsEnabled = true;
-			Trace.Write("Start Demo");
-			$("DecryptedTextBox").value = "abcė新闻网";
-			$("EncryptButton").onclick = EncryptButton_Click;
-			$("DecryptButton").onclick = DecryptButton_Click;
-		}
-		window.onload = Window_Load;
+    <script type="text/javascript">
 
-		function EncryptButton_Click(sender, e) {
-			$("EncryptedTextBox").value = "";
-			var text = $("DecryptedTextBox").value;
-			Trace.Write("----------------------------");
-			Trace.Write("var bytes = System.Text.Encoding.UTF8.GetBytes(text);");
-			var bytes = System.Text.Encoding.UTF8.GetBytes(text);
-			Trace.Write("var base64 =  System.Convert.ToBase64String(bytes);");
-			var base64 = System.Convert.ToBase64String(bytes);
-			Trace.Write("// base64: " + base64);
-			$("EncryptedTextBox").value = base64;
-		}
+        function Window_Load() {
+            Trace.IsEnabled = true;
+            Trace.Write("Start Demo");
+            $("#ResetButton").on('click', ResetButton_Click);
+            $("#ClearDecryptedButton").on('click', ClearDecryptedButton_Click);
+            $("#ClearEncryptedButton").on('click', ClearEncryptedButton_Click);
+            $("#EncryptButton").on('click', EncryptButton_Click);
+            $("#DecryptButton").on('click', DecryptButton_Click);
+            $("#EncryptUrlButton").on('click', EncryptUrlButton_Click);
+            $("#DecryptUrlButton").on('click', DecryptUrlButton_Click);
+            ResetButton_Click();
+        }
 
-		function DecryptButton_Click(sender, e) {
-			$("DecryptedTextBox").value = "";
-			var base64 = $("EncryptedTextBox").value;
-			Trace.Write("----------------------------");
-			Trace.Write("var bytes = System.Convert.FromBase64String(base64);");
-			var bytes = System.Convert.FromBase64String(base64);
-			Trace.Write("var text = System.Text.Encoding.UTF8.GetString(bytes);");
-			var text = System.Text.Encoding.UTF8.GetString(bytes);
-			Trace.Write("// text: " + text);
-			$("DecryptedTextBox").value = text;
-		}
+        $(Window_Load);
 
-	</script>
+        function ResetButton_Click(sender, e) {
+            $("#DecryptedTextBox").val("abė新闻网");
+        }
+
+        function ClearDecryptedButton_Click(sender, e) {
+            $("#DecryptedTextBox").val("");
+        }
+
+        function ClearEncryptedButton_Click(sender, e) {
+            $("#EncryptedTextBox").val("");
+        }
+
+        //#region base64
+
+        function EncryptButton_Click(sender, e) {
+            $("#EncryptedTextBox").val("");
+            var text = $("#DecryptedTextBox").val();
+            Trace.Write("----------------------------");
+            Trace.Write("var bytes = System.Text.Encoding.UTF8.GetBytes(text);");
+            var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+            Trace.Write("var base64 =  System.Convert.ToBase64String(bytes);");
+            var base64 = System.Convert.ToBase64String(bytes);
+            Trace.Write("// base64url: " + base64);
+            $("#EncryptedTextBox").val(base64);
+        }
+
+        function DecryptButton_Click(sender, e) {
+            $("#DecryptedTextBox").val("");
+            var base64 = $("#EncryptedTextBox").val();
+            Trace.Write("----------------------------");
+            Trace.Write("var bytes = System.Convert.FromBase64String(base64);");
+            var bytes = System.Convert.FromBase64String(base64);
+            Trace.Write("var text = System.Text.Encoding.UTF8.GetString(bytes);");
+            var text = System.Text.Encoding.UTF8.GetString(bytes);
+            Trace.Write("// text: " + text);
+            $("#DecryptedTextBox").val(text);
+        }
+
+        //#endregion
+
+        //#region base64url
+
+        function EncryptUrlButton_Click(sender, e) {
+            $("#EncryptedTextBox").val("");
+            var text = $("#DecryptedTextBox").val();
+            Trace.Write("----------------------------");
+            Trace.Write("var bytes = System.Text.Encoding.UTF8.GetBytes(text);");
+            var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+            Trace.Write("var base64 =  System.Convert.ToBase64UrlString(bytes);");
+            var base64 = System.Convert.ToBase64UrlString(bytes);
+            Trace.Write("// base64url: " + base64);
+            $("#EncryptedTextBox").val(base64);
+        }
+
+        function DecryptUrlButton_Click(sender, e) {
+            $("#DecryptedTextBox").val("");
+            var base64 = $("#EncryptedTextBox").val();
+            Trace.Write("----------------------------");
+            Trace.Write("var bytes = System.Convert.FromBase64UrlString(base64);");
+            var bytes = System.Convert.FromBase64UrlString(base64);
+            Trace.Write("var text = System.Text.Encoding.UTF8.GetString(bytes);");
+            var text = System.Text.Encoding.UTF8.GetString(bytes);
+            Trace.Write("// text: " + text);
+            $("#DecryptedTextBox").val(text);
+        }
+
+        //#endregion
+
+    </script>
 
 </head>
 <body>
-	<table border="0" cellpadding="0" cellspacing="4">
-		<tbody>
-			<tr>
-				<td>Text:</td>
-				<td>
-					<textarea id="DecryptedTextBox" cols="64" rows="10"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td>
-					<input id="EncryptButton" value="↓ - Encrypt" type="button" />
-					<input id="DecryptButton" value="↑ - Decrypt" type="button" />
-				</td>
-			</tr>
-			<tr>
-				<td>Base64:</td>
-				<td>
-					<textarea id="EncryptedTextBox" cols="64" rows="10"></textarea>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<div id="TraceLog" style="width: 100%; height: 200px;"></div>
+    <table border="0" cellpadding="0" cellspacing="4">
+        <tbody>
+            <tr>
+                <td>Text:</td>
+                <td colspan="2">
+                    <textarea id="DecryptedTextBox" cols="64" rows="10"></textarea>
+                </td>
+                <td valign="top"><input id="ClearDecryptedButton" value="Clear" type="button" /><br /><input id="ResetButton" value="Reset" type="button" style="margin-top: 4px;" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    Base64
+                </td>
+                <td style="float: right;">
+                    Base64URL (UR/filename safe)
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input id="EncryptButton" value="↓ - Encrypt" type="button" />
+                    <input id="DecryptButton" value="↑ - Decrypt" type="button" />
+                </td>
+                <td style="float: right;">
+                    <input id="EncryptUrlButton" value="↓ - Encrypt" type="button" />
+                    <input id="DecryptUrlButton" value="↑ - Decrypt" type="button" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Base64:</td>
+                <td colspan="2">
+                    <textarea id="EncryptedTextBox" cols="64" rows="10"></textarea>
+                </td>
+                <td valign="top"><input id="ClearEncryptedButton" value="Clear" type="button" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="TraceLog" style="width: 100%; height: 200px;"></div>
 </body>
 </html>
