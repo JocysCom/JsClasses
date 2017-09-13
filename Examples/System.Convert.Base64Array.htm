@@ -17,6 +17,12 @@
     <script type="text/javascript" src="../System.Convert.debug.js"></script>
 
     <script type="text/javascript" src="../System.Web.UI.debug.js"></script>
+    <!-- SyntaxHighlighter -->
+    <link type="text/css" rel="stylesheet" href="../Documents/SyntaxHighlighter/styles/shCoreDefault.css" />
+    <link type="text/css" rel="stylesheet" href="../Documents/SyntaxHighlighter/styles/shThemeDefault.css" />
+    <script type="text/javascript" src="../Documents/SyntaxHighlighter/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../Documents/SyntaxHighlighter/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="../Documents/SyntaxHighlighter/scripts/shBrushCSharp.js"></script>
 
     <script type="text/javascript">
 
@@ -31,6 +37,7 @@
             $("#EncryptUrlButton").on('click', EncryptUrlButton_Click);
             $("#DecryptUrlButton").on('click', DecryptUrlButton_Click);
             ResetButton_Click();
+            SyntaxHighlighter.all();
         }
 
         $(Window_Load);
@@ -83,8 +90,8 @@
             Trace.Write("----------------------------");
             Trace.Write("var bytes = System.Text.Encoding.UTF8.GetBytes(text);");
             var bytes = System.Text.Encoding.UTF8.GetBytes(text);
-            Trace.Write("var base64 =  System.Convert.ToBase64UrlString(bytes);");
-            var base64 = System.Convert.ToBase64UrlString(bytes);
+            Trace.Write("var base64 = System.Web.HttpServerUtility.UrlTokenEncode(bytes);");
+            var base64 = System.Web.HttpServerUtility.UrlTokenEncode(bytes);
             Trace.Write("// base64url: " + base64);
             $("#EncryptedTextBox").val(base64);
         }
@@ -93,8 +100,8 @@
             $("#DecryptedTextBox").val("");
             var base64 = $("#EncryptedTextBox").val();
             Trace.Write("----------------------------");
-            Trace.Write("var bytes = System.Convert.FromBase64UrlString(base64);");
-            var bytes = System.Convert.FromBase64UrlString(base64);
+            Trace.Write("var bytes = System.Web.HttpServerUtility.UrlTokenDecode(base64);");
+            var bytes = System.Web.HttpServerUtility.UrlTokenDecode(base64);
             Trace.Write("var text = System.Text.Encoding.UTF8.GetString(bytes);");
             var text = System.Text.Encoding.UTF8.GetString(bytes);
             Trace.Write("// text: " + text);
@@ -148,5 +155,17 @@
         </tbody>
     </table>
     <div id="TraceLog" style="width: 100%; height: 200px;"></div>
+
+
+    <div style="background-color: #cccccc; padding: 16px 4px 4px 16px; margin-top: 16px;">
+        <span style="font-weight: bold;">C# Notes</span>
+        <pre id="ExampleCodePanel" class="brush: csharp;" style="margin: 0 0 0 0;">// C# static methods for Base64 encoding/decoding:
+public static byte[] System.Convert.FromBase64String(string input);
+public static string System.ConvertToBase64String(byte[] input);
+// C# static methods for Base64URL (URL and filename safe) encoding/decoding:
+public static byte[] System.Web.HttpServerUtility.UrlTokenDecode(string input);
+public static string System.Web.HttpServerUtility.UrlTokenEncode(byte[] input);</pre>
+    </div>
+
 </body>
 </html>

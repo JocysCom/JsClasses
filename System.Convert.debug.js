@@ -216,6 +216,9 @@ System.Convert.FromBase64UrlString = function (s, fix) {
 	return b;
 };
 
+System.Type.RegisterNamespace("System.Web.HttpServerUtility");
+System.Web.HttpServerUtility.UrlTokenDecode = System.Convert.FromBase64UrlString;
+System.Web.HttpServerUtility.UrlTokenEncode = System.Convert.ToBase64UrlString;
 
 System.Convert.HexStringToBytes = function (s) {
 	/// <summary>
