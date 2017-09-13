@@ -54,7 +54,8 @@
 					<asp:TextBox ID="DataTextBox" runat="server" Width="500px">ijklmn_56789</asp:TextBox>
 				</td>
 				<td>
-					<asp:Button ID="EncryptButton" runat="server" Text="Encrypt" OnClick="EncryptButton_Click" />
+					<asp:Button ID="EncryptButton" runat="server" Text="↓ - Encrypt" OnClick="EncryptButton_Click" />
+					<asp:Button ID="SignButton" runat="server" Text="↓ - Sign" OnClick="SignButton_Click" />
 				</td>
 			</tr>
 			<tr>
@@ -64,7 +65,8 @@
 					<asp:TextBox ID="EncryptedTextBox" runat="server" Width="500px" TextMode="MultiLine"></asp:TextBox>
 				</td>
 				<td style="vertical-align: bottom;">
-					<asp:Button ID="DecryptButton" runat="server" Text="Decrypt" OnClick="DecryptButton_Click" />
+					<asp:Button ID="DecryptButton" runat="server" Text="↓ - Decrypt" OnClick="DecryptButton_Click" />
+					<asp:Button ID="VerifyButton" runat="server" Text="↓ - Verify" OnClick="VerifyButton_Click" />
 					<asp:Button ID="TestButton" runat="server" Text="Test" OnClick="TestButton_Click" Visible="false" />
 				</td>
 			</tr>

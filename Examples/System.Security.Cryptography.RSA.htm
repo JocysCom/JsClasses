@@ -36,6 +36,8 @@
 			WriteLog("Start Demo");
 			$("EncryptButton").onclick = EncryptButton_Click;
 			$("DecryptButton").onclick = DecryptButton_Click;
+            $("SignButton").onclick = SignButton_Click;
+            $("VerifyButton").onclick = VerifyButton_Click;
 			$("TestButton").onclick = TestButton_Click;
 			$("NewKeyButton").onclick = NewKeyButton_Click;
 			$("NewKeyApiButton").onclick = NewKeyApiButton_Click;
@@ -119,7 +121,46 @@
 			// Display the decrypted data.
 			var decryptedString = System.Text.Encoding.UTF8.GetString(decryptedBytes);
 			$("DecryptedTextBox").value = decryptedString;
-		}
+        }
+
+        function SignButton_Click(sender, e)
+        {
+            $("EncryptedTextBox").value = "";
+            var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
+            // ------------------------------------------------
+            // Sign
+            // ------------------------------------------------
+            var rsa = GetNewRsaProvider();
+            // Import the RSA Key information (include private key).
+            rsa.ImportParameters(GetRsaKey(true));
+            // Sign data.
+            var signatureBytes = rsa.SignData(decryptedBytes, "SHA1");
+            // Encode bytes for display.
+            var encodedSignature = System.Convert.ToBase64String(signatureBytes);
+            // ------------------------------------------------
+            // Display signature.
+            $("EncryptedTextBox").value = encodedSignature;
+        }
+
+        function VerifyButton_Click(sender, e)
+        {
+            $("DecryptedTextBox").value = "";
+            var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
+            var signatureBytes = System.Convert.FromBase64String($("EncryptedTextBox").value);
+            // ------------------------------------------------
+            // Verify
+            // ------------------------------------------------
+            var rsa = GetNewRsaProvider();
+            // Import the RSA Key information (exclude private key).
+            rsa.ImportParameters(GetRsaKey(false));
+            // Verify the hash.
+            var success = rsa.VerifyData(decryptedBytes, "SHA1", signatureBytes);
+            // ------------------------------------------------
+            // Display results.
+            $("DecryptedTextBox").value = success
+                ? "Digital Signature: Valid"
+                : "Digital Signature: Failed";
+        }
 
 		var maxTests = 0;
 
@@ -245,6 +286,7 @@
 				<td></td>
 				<td>
 					<input value="↓ - Encrypt" id="EncryptButton" type="button" />
+                    <input value="↓ - Sign" id="SignButton" type="button" style="display: none;" />
 				</td>
 				<td></td>
 			</tr>
@@ -261,6 +303,7 @@
 				<td></td>
 				<td colspan="2">
 					<input value="↓ - Decrypt" id="DecryptButton" type="button" />
+                    <input value="↓ - Verify" id="VerifyButton" type="button" style="display: none;" />
 					<input value="Test" id="TestButton" type="button" style="display: none" />
 				</td>
 				<td></td>
