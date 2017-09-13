@@ -64,7 +64,7 @@
             var bytes = System.Text.Encoding.UTF8.GetBytes(text);
             Trace.Write("var base64 =  System.Convert.ToBase64String(bytes);");
             var base64 = System.Convert.ToBase64String(bytes);
-            Trace.Write("// base64url: " + base64);
+            Trace.Write("// base64: " + base64);
             $("#EncryptedTextBox").val(base64);
         }
 
