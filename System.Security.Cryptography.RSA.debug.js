@@ -387,14 +387,14 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
     //---------------------------------------------------------
     this.SignHash = function (hash, hashAlgorithmName, fOAEP) {
         // https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
-        // Not implemented.
+        // Not C# compatible.
         var signatureBytes = this.Encrypt(hash, fOAEP, true);
         return signatureBytes;
     }
     //---------------------------------------------------------
     this.VerifyHash = function (hash, hashAlgorithmName, signature, fOAEP) {
         // https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
-        // Not implemented.
+        // Not C# compatible.
         var decryptedHash;
         try {
             decryptedHash = this.Decrypt(signature, fOAEP, true);
