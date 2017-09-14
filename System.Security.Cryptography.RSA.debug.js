@@ -293,10 +293,14 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         return builder.ToString();
     };
     //---------------------------------------------------------
-    function Padding(input, fOAEP, encrypt) {
-        this.Padding = fOAEP
-            ? System.Security.Cryptography.PaddingMode.RsaEsOaep
-            : System.Security.Cryptography.PaddingMode.RsaEsPkcs;
+    function Padding(input, fOAEP, encrypt, signOrVerify) {
+        if (signOrVerify) {
+            this.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+        } else {
+            this.Padding = fOAEP
+                ? System.Security.Cryptography.PaddingMode.RsaEsOaep
+                : System.Security.Cryptography.PaddingMode.RsaEsPkcs;
+        }
         this.Mode = System.Security.Cryptography.CipherMode.ECB;
         var crypto = new System.Security.Cryptography.ICryptoTransform(this, true);
         var output = encrypt
@@ -333,7 +337,7 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
             // Reverse bytes for compatibility with RSACryptoServiceProvider.
             System.Array.Reverse(block);
             // Add padding.
-            var padded = Padding.call(this, block, fOAEP, true);
+            var padded = Padding.call(this, block, fOAEP, true, sign);
             // RSA Encrypt.
             var cBytes = RsaEncryptBlock.call(this, padded, key, sign);
             // Add result to output.
@@ -411,14 +415,21 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
     }
     //---------------------------------------------------------
     this.SignData = function (data, hashAlgorithmName, fOAEP) {
-        var sha1 = new System.Security.Cryptography.SHA1();
-        var hash = sha1.ComputeHash(data);
+        var ha;
+        if (hashAlgorithmName === "SHA256")
+            ha = new System.Security.Cryptography.SHA256();
+        else
+            ha = new System.Security.Cryptography.SHA1();
+        var hash = ha.ComputeHash(data);
         return this.SignHash(hash, hashAlgorithmName, fOAEP);
     }
     //---------------------------------------------------------
     this.VerifyData = function (data, hashAlgorithmName, signature, fOAEP) {
-        var sha1 = new System.Security.Cryptography.SHA1();
-        var hash = sha1.ComputeHash(data);
+        if (hashAlgorithmName === "SHA256")
+            ha = new System.Security.Cryptography.SHA256();
+        else
+            ha = new System.Security.Cryptography.SHA1();
+        var hash = ha.ComputeHash(data);
         return this.VerifyHash(hash, hashAlgorithmName, signature, fOAEP);
     }
     //---------------------------------------------------------
@@ -470,7 +481,7 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
             // RSA Decrypt.
             block = RsaDecryptBlock.call(this, block, key, verify);
             // Remove padding.
-            var unpadded = Padding.call(this, block, fOAEP, false);
+            var unpadded = Padding.call(this, block, fOAEP, false, verify);
             // Reverse bytes for compatibility with RSACryptoServiceProvider.
             System.Array.Reverse(unpadded);
             // Add result to output.
