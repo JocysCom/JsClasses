@@ -127,6 +127,7 @@
         {
             $("EncryptedTextBox").value = "";
             var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
+            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
             // ------------------------------------------------
             // Sign
             // ------------------------------------------------
@@ -134,7 +135,7 @@
             // Import the RSA Key information (include private key).
             rsa.ImportParameters(GetRsaKey(true));
             // Sign data.
-            var signatureBytes = rsa.SignData(decryptedBytes, "SHA1");
+            var signatureBytes = rsa.SignData(decryptedBytes, "SHA1", doOaepPadding);
             // Encode bytes for display.
             var encodedSignature = System.Convert.ToBase64String(signatureBytes);
             // ------------------------------------------------
@@ -147,6 +148,7 @@
             $("DecryptedTextBox").value = "";
             var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
             var signatureBytes = System.Convert.FromBase64String($("EncryptedTextBox").value);
+            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
             // ------------------------------------------------
             // Verify
             // ------------------------------------------------
@@ -154,7 +156,7 @@
             // Import the RSA Key information (exclude private key).
             rsa.ImportParameters(GetRsaKey(false));
             // Verify the hash.
-            var success = rsa.VerifyData(decryptedBytes, "SHA1", signatureBytes);
+            var success = rsa.VerifyData(decryptedBytes, "SHA1", signatureBytes, doOaepPadding);
             // ------------------------------------------------
             // Display results.
             $("DecryptedTextBox").value = success
@@ -284,9 +286,9 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td>
+				<td colspan="2">
 					<input value="↓ - Encrypt" id="EncryptButton" type="button" />
-                    <input value="↓ - Sign" id="SignButton" type="button" style="display: none;" />
+                    <input value="↓ - Sign" id="SignButton" type="button" />
 				</td>
 				<td></td>
 			</tr>
@@ -303,7 +305,7 @@
 				<td></td>
 				<td colspan="2">
 					<input value="↓ - Decrypt" id="DecryptButton" type="button" />
-                    <input value="↓ - Verify" id="VerifyButton" type="button" style="display: none;" />
+                    <input value="↓ - Verify" id="VerifyButton" type="button" />
 					<input value="Test" id="TestButton" type="button" style="display: none" />
 				</td>
 				<td></td>

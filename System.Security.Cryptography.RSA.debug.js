@@ -305,15 +305,17 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         return output;
     }
     //---------------------------------------------------------
-    function RsaEncryptBlock(block, key) {
+    function RsaEncryptBlock(block, key, sign) {
         var mBytes = block.Clone();
         System.Array.Reverse(mBytes);
-        var e = bi.FromBytes(key.Exponent);
         var n = bi.FromBytes(key.Modulus);
-        var d = bi.FromBytes(key.D);
         var m = bi.FromBytes(mBytes);
-        // Encrypt: c = m^e mod n
-        var c = bi.PowMod(m, e, n);
+        // Get encryption key.
+        var k = sign
+            ? bi.FromBytes(key.D) // private exponent
+            : bi.FromBytes(key.Exponent); // public exponent
+        // Encrypt: c = m^k mod n
+        var c = bi.PowMod(m, k, n);
         var cBytes = bi.ToBytes(c);
         // Expand to block size with empty bytes.
         var bpb = this.KeySize / 8; 			// bytes per block
@@ -322,7 +324,7 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         return cBytes;
     }
     //---------------------------------------------------------
-    function EncryptBytes(key, input, fOAEP) {
+    function EncryptBytes(key, input, fOAEP, sign) {
         var bpb = this.KeySize / 8 - (fOAEP ? 41 : 11); // bytes per block
         var output = [];               // plaintext array
         var block;                              // current block number
@@ -333,14 +335,14 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
             // Add padding.
             var padded = Padding.call(this, block, fOAEP, true);
             // RSA Encrypt.
-            var cBytes = RsaEncryptBlock.call(this, padded, key);
+            var cBytes = RsaEncryptBlock.call(this, padded, key, sign);
             // Add result to output.
             output = output.concat(cBytes);
         }
         return output;
     }
     //---------------------------------------------------------
-    this.Encrypt = function (rgb, fOAEP) {
+    this.Encrypt = function (rgb, fOAEP, sign) {
         /// <summary>
         /// Encrypts data with the System.Security.Cryptography.RSA algorithm.
         /// </summary>
@@ -352,6 +354,7 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         /// <returns>The encrypted data.</returns>
         var msg;
         var key = GetKeyPair.call(this);
+        sign = typeof sign === "undefined" ? false : true;
         var digitSize = key.Modulus.length;
         if (!fOAEP && rgb.length > digitSize - 11) {
             msg = "The data to be encrypted exceeds the maximum for this modulus of " + key.digitSize + " bytes. Maximum data size is " + (key.digitSize - 11) + " bytes.";
@@ -364,10 +367,10 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
             Trace.Write(msg);
             throw new System.Security.Cryptography.CryptographicException(msg);
         }
-        return EncryptBytes.call(this, key, rgb, fOAEP);
+        return EncryptBytes.call(this, key, rgb, fOAEP, sign);
     };
     //---------------------------------------------------------
-    this.Decrypt = function (rgb, fOAEP) {
+    this.Decrypt = function (rgb, fOAEP, verify) {
         /// <summary>
         /// Decrypts data with the System.Security.Cryptography.RSA algorithm.
         /// </summary>
@@ -378,27 +381,33 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         /// </param>
         /// <returns>The decrypted data, which is the original plain text before encryption.</returns>
         var key = GetKeyPair.call(this);
-        return DecryptBytes.call(this, key, rgb, fOAEP);
+        verify = typeof verify === "undefined" ? false : true;
+        return DecryptBytes.call(this, key, rgb, fOAEP, verify);
     };
     //---------------------------------------------------------
     this.SignHash = function (hash, hashAlgorithmName, fOAEP) {
         // https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
         // Not implemented.
-        //var signatureBytes = this.Encrypt(hash, fOAEP);
-        //return signatureBytes;
+        var signatureBytes = this.Encrypt(hash, fOAEP, true);
+        return signatureBytes;
     }
     //---------------------------------------------------------
     this.VerifyHash = function (hash, hashAlgorithmName, signature, fOAEP) {
         // https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
         // Not implemented.
-        //var signatureBytes = this.Encrypt(hash, fOAEP);
-        //if (hash.length !== signature.length)
-        //   return false;
-        //for (var i = 0; i < signature; i++) {
-        //    if (signatureBytes[i] !== signature[i])
-        //        return false;
-        //}
-        //return true;
+        var decryptedHash;
+        try {
+            decryptedHash = this.Decrypt(signature, fOAEP, true);
+        } catch (e) {
+            return false;
+        }
+        if (hash.length !== decryptedHash.length)
+            return false;
+        for (var i = 0; i < hash; i++) {
+            if (hash[i] !== decryptedHash[i])
+                return false;
+        }
+        return true;
     }
     //---------------------------------------------------------
     this.SignData = function (data, hashAlgorithmName, fOAEP) {
@@ -413,17 +422,19 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         return this.VerifyHash(hash, hashAlgorithmName, signature, fOAEP);
     }
     //---------------------------------------------------------
-    function RsaDecryptBlock(block, key) {
-        var e = bi.FromBytes(key.Exponent);
+    function RsaDecryptBlock(block, key, verify) {
         var n = bi.FromBytes(key.Modulus);
-        var d = bi.FromBytes(key.D);
         var c = bi.FromBytes(block);
+        // Get decryption key.
+        var k = verify
+            ? bi.FromBytes(key.Exponent) // public exponent
+            : bi.FromBytes(key.D); // private exponent
         var m;
         // The CRT method of decryption is four times faster overall than calculating c^d mod n.
         // Even though there are more steps in this procedure,
         // the modular exponentation to be carried out uses much shorter exponents and
         // so it is less expensive overall. 
-        var CRT = true;
+        var CRT = verify ? false : true;
         if (CRT) {
             var dP = bi.FromBytes(key.DP);
             var dQ = bi.FromBytes(key.DQ);
@@ -439,8 +450,8 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
             // m = m2 + (h*q)
             m = bi.Add(m2, bi.Multiply(h, q));
         } else {
-            // Decrypt: m = c^d mod n
-            m = bi.PowMod(c, d, n);
+            // Decrypt: m = c^k mod n
+            m = bi.PowMod(c, k, n);
         }
         if (!bi.MoreThan(n, m)) Trace.Write('ERROR: The message m must be less than p*q');
         var mBytes = bi.ToBytes(m);
@@ -450,14 +461,14 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         return mBytes;
     }
     //---------------------------------------------------------
-    function DecryptBytes(key, input, fOAEP) {
+    function DecryptBytes(key, input, fOAEP, verify) {
         var bpb = this.KeySize / 8; // bytes per block
         var output = []; // plaintext array
         var block; // current block number
         for (var b = 0; b < input.length / bpb; b++) {
             block = input.slice(b * bpb, (b + 1) * bpb);
             // RSA Decrypt.
-            block = RsaDecryptBlock.call(this, block, key);
+            block = RsaDecryptBlock.call(this, block, key, verify);
             // Remove padding.
             var unpadded = Padding.call(this, block, fOAEP, false);
             // Reverse bytes for compatibility with RSACryptoServiceProvider.
