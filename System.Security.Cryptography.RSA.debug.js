@@ -407,7 +407,7 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         }
         if (hash.length !== decryptedHash.length)
             return false;
-        for (var i = 0; i < hash; i++) {
+        for (var i = 0; i < hash.length; i++) {
             if (hash[i] !== decryptedHash[i])
                 return false;
         }
