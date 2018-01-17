@@ -340,7 +340,7 @@ Color Levels from Green (180°) to Red (0°) on Hue-Saturation-Lightness wheel.
 
 /* Hue: X°, Saturation: 255, Lightness: 127 */
 .SWUI_Level_0  { background-color: #ffffff;}
-.SWUI_Level_1  { background-color: #00fef9;}  /* 180° */
+.SWUI_Level_1  { background-color: #00fef9;} /* 180° */
 .SWUI_Level_2  { background-color: #00fea5;} /* 160° */
 .SWUI_Level_3  { background-color: #00fe51;} /* 140° */
 .SWUI_Level_4  { background-color: #00fe00;} /* 120° */
