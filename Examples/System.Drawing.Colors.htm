@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<title>System.Byte</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+</head>
+<body>
+<canvas id="picker" width="150" height="150"></canvas>
+<br>
+<input id="range" type="range" min="0" max="255" value="255" step="1">
+	<style>
+		.div { width: 200px; text-align: right; padding: 8px; }
+		#picker {  background: black }
+		body { font-family:  Consolas; font-size: small; }
+		
+	</style>
+	<script type="text/javascript">
+	
+var canvas = document.getElementById("picker");
+var context = canvas.getContext("2d");
+var rangeEl = document.getElementById('range');
+var colorWheel = null;
+
+// update the alpha bytes of the color wheel
+function updatePicker() {
+  var bitmap = context.getImageData(0, 0, 150, 150);
+  for (var y = 0; y < 150; y++) {
+    for (var x = 0; x < 150; x++) {
+      var offset = ((y * 150) + x) * 4 + 3;
+      colorWheel.data[offset] = rangeEl.value | 0;
+    }
+  }
+
+  // update the canvas
+  context.putImageData(colorWheel, 0, 0);
+}
+
+// setup
+drawPicker();
+rangeEl.addEventListener("change", updatePicker);
+
+// =========
+
+function hsv2rgb(h, s, v) {
+  var c = v * s;
+  var h1 = h / 60;
+  var x = c * (1 - Math.abs((h1 % 2) - 1));
+  var m = v - c;
+  var rgb;
+
+  if (typeof h == 'undefined') rgb = [0, 0, 0];
+  else if (h1 < 1) rgb = [c, x, 0];
+  else if (h1 < 2) rgb = [x, c, 0];
+  else if (h1 < 3) rgb = [0, c, x];
+  else if (h1 < 4) rgb = [0, x, c];
+  else if (h1 < 5) rgb = [x, 0, c];
+  else if (h1 <= 6) rgb = [c, 0, x];
+
+  var r = 255 * (rgb[0] + m);
+  var g = 255 * (rgb[1] + m);
+  var b = 255 * (rgb[2] + m);
+
+  return [r, g, b];
+}
+
+// create the initial color wheel
+function drawPicker() {
+  colorWheel = context.getImageData(0, 0, 150, 150);
+
+  for (var y = 0; y < 150; y++) {
+    for (var x = 0; x < 150; x++) {
+      var offset = 4 * ((y * 150) + x);
+
+      var hue = 180 + Math.atan2(y - 75, x - 75) * (180 / Math.PI);
+      var saturation = Math.sqrt(Math.pow(y - 75, 2) + Math.pow(x - 75, 2)) / 75;
+
+      saturation = Math.min(1, saturation);
+
+      var hsv = hsv2rgb(hue, saturation, 1); // fixed value
+
+      colorWheel.data[offset + 0] = hsv[0];
+      colorWheel.data[offset + 1] = hsv[1];
+      colorWheel.data[offset + 2] = hsv[2];
+      colorWheel.data[offset + 3] = 255;
+    }
+  }
+  context.putImageData(colorWheel, 0, 0);
+}	
+	</script>
+	<script type="text/javascript">
+
+		function toHex(d) {
+			return ("0" + (Math.round(Number(d)).toString(16))).slice(-2).toUpperCase()
+		}
+
+		var div = document.createElement("div");
+		div.className = "div";
+		var color = "#FFFFFF"
+		div.innerText = "0 - " + color;
+		div.style.setProperty("background-color", color);
+		document.body.appendChild(div);
+
+		var max = 9;
+		for (var i = 0; i <= max; i++) {
+			var h = i * 14;
+			var c = hsv2rgb(h, 0.5, 1);
+			div = document.createElement("div");
+			div.className = "div";
+			color = "#" + toHex(c[0]) + toHex(c[1]) + toHex(c[2]);
+			div.innerText = (i + 1) + " - " + color;
+			div.style.setProperty("background-color", color);
+			document.body.appendChild(div);
+		}
+
+	</script>
+</body>
+</html>
