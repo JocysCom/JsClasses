@@ -333,3 +333,47 @@ Interface.PopupWindow
 .SWUI_PopupWindow_HCell_Close_On_Over { background-image: url(Images/Interface/Office2003/StripClose_Over.16x16.gif); background-repeat: no-repeat; background-position: center center; width: 20px; }
 .SWUI_PopupWindow_HCell_Close_On_Out { background-image: url(Images/Interface/Office2003/StripClose_Out.16x16.gif); background-repeat: no-repeat; background-position: center center; width: 20px; }
 .SWUI_PopupWindow_TBodyDiv { background-color: #ffffff; height: 100%; }
+
+/*=============================================================================
+Color Levels from Green (180°) to Red (0°) on Hue-Saturation-Lightness wheel.
+-----------------------------------------------------------------------------*/
+
+/* Hue: X°, Saturation: 255, Lightness: 127 */
+.SWUI_Level_0  { background-color: #ffffff;}
+.SWUI_Level_1  { background-color: #00fef9;}  /* 180° */
+.SWUI_Level_2  { background-color: #00fea5;} /* 160° */
+.SWUI_Level_3  { background-color: #00fe51;} /* 140° */
+.SWUI_Level_4  { background-color: #00fe00;} /* 120° */
+.SWUI_Level_5  { background-color: #55fe00;} /* 100° */
+.SWUI_Level_6  { background-color: #a9fe00;} /*  80° */
+.SWUI_Level_7  { background-color: #fefb00;} /*  60° */
+.SWUI_Level_8  { background-color: #fea700;} /*  40° */
+.SWUI_Level_9  { background-color: #fe5300;} /*  20° */
+.SWUI_Level_10 { background-color: #fe0000;} /*   0° */
+
+/* Hue: X°, Saturation: 255, Lightness: 191 */
+.SWUI_Level_0  { background-color: #ffffff;}
+.SWUI_Level_1  { background-color: #7ffffc;} /* 180° */
+.SWUI_Level_2  { background-color: #7fffd2;} /* 160° */
+.SWUI_Level_3  { background-color: #7fffa8;} /* 140° */
+.SWUI_Level_4  { background-color: #80ff7f;} /* 120° */
+.SWUI_Level_5  { background-color: #aaff7f;} /* 100° */
+.SWUI_Level_6  { background-color: #d4ff7f;} /*  80° */
+.SWUI_Level_7  { background-color: #fffd7f;} /*  60° */
+.SWUI_Level_8  { background-color: #ffd37f;} /*  40° */
+.SWUI_Level_9  { background-color: #ffa97f;} /*  20° */
+.SWUI_Level_10 { background-color: #ff7f7f;} /*   0° */
+
+/* Hue: X°, Saturation: 255, Lightness: 223 */
+.SWUI_Level_0  { background-color: #ffffff;}
+.SWUI_Level_1  { background-color: #bffffe;} /* 180° */
+.SWUI_Level_2  { background-color: #bfffe9;} /* 160° */
+.SWUI_Level_3  { background-color: #bfffd4;} /* 140° */
+.SWUI_Level_4  { background-color: #c0ffbf;} /* 120° */
+.SWUI_Level_5  { background-color: #d5ffbf;} /* 100° */
+.SWUI_Level_6  { background-color: #eaffbf;} /*  80° */
+.SWUI_Level_7  { background-color: #fffebf;} /*  60° */
+.SWUI_Level_8  { background-color: #ffe9bf;} /*  40° */
+.SWUI_Level_9  { background-color: #ffd4bf;} /*  20° */
+.SWUI_Level_10 { background-color: #ffbfbf;} /*   0° */
+
