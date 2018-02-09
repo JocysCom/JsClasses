@@ -20,13 +20,11 @@ namespace Scripts.Classes.Examples
 
 		#region AES-256 Encryption
 
-		byte[] Transform(byte[] dataBytes, byte[] passwordBytes, bool encrypt, bool fips)
+		byte[] Transform(byte[] dataBytes, byte[] passwordBytes, bool encrypt)
 		{
 			/// <summary>Encrypt by using AES-256 algorithm.</summary>
 			// Create an instance of the Rijndael class.
-			var cipher = fips
-				? new System.Security.Cryptography.AesCryptoServiceProvider() as SymmetricAlgorithm
-				: new System.Security.Cryptography.RijndaelManaged();
+			var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 			// Calculate salt to make it harder to guess key by using a dictionary attack.
 			var hmac = new System.Security.Cryptography.HMACSHA1(passwordBytes);
 			var salt = hmac.ComputeHash(passwordBytes);
@@ -69,11 +67,11 @@ namespace Scripts.Classes.Examples
 		/// <param name="data">String (or bytes) to encrypt.</param>
 		/// <param name="password">Password string (or bytes).</param>
 		/// <returns>Encrypted Base64 string.</returns>
-		string Encrypt(string data, string password, bool fips)
+		string Encrypt(string data, string password)
 		{
 			var dataBytes = System.Text.Encoding.UTF8.GetBytes(data);
 			var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
-			var bytes = Transform(dataBytes, passwordBytes, true, fips);
+			var bytes = Transform(dataBytes, passwordBytes, true);
 			// Convert encrypted data into a Base64 string.
 			var text = System.Convert.ToBase64String(bytes);
 			return text;
@@ -85,12 +83,12 @@ namespace Scripts.Classes.Examples
 		/// <param name="data">Base64 string or bytes to encrypt.</param>
 		/// <param name="password">Password string (or bytes).</param>
 		/// <returns>Decrypted string.</returns>
-		string Decrypt(string data, string password, bool fips)
+		string Decrypt(string data, string password)
 		{
 			// If data is string then turn string into a byte array.
 			var dataBytes = System.Convert.FromBase64String(data);
 			var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
-			var bytes = Transform(dataBytes, passwordBytes, false, fips);
+			var bytes = Transform(dataBytes, passwordBytes, false);
 			// Convert decrypted data into a string.
 			var text = System.Text.Encoding.UTF8.GetString(bytes);
 			return text;
@@ -107,7 +105,7 @@ namespace Scripts.Classes.Examples
 			var base64 = "";
 			try
 			{
-				base64 = Encrypt(text, password, FipsCompliantCheckBox.Checked);
+				base64 = Encrypt(text, password);
 			}
 			catch (Exception ex)
 			{
@@ -125,7 +123,7 @@ namespace Scripts.Classes.Examples
 			var text = "";
 			try
 			{
-				text = Decrypt(base64, password, FipsCompliantCheckBox.Checked);
+				text = Decrypt(base64, password);
 			}
 			catch (Exception ex)
 			{

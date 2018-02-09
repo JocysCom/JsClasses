@@ -30,7 +30,7 @@ CALL:CJS System.Security.Cryptography
 CALL:CJS System.Security.Cryptography.MD5
 CALL:CJS System.Security.Cryptography.RC2
 CALL:CJS System.Security.Cryptography.RC4
-CALL:CJS System.Security.Cryptography.RijndaelManaged
+CALL:CJS System.Security.Cryptography.AES
 CALL:CJS System.Security.Cryptography.RSA
 CALL:CJS System.Security.Cryptography.SHA1
 CALL:CJS System.Security.Password

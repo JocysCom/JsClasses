@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="../System.Security.Cryptography.debug.js"></script>
 	<script type="text/javascript" src="../System.Security.Cryptography.SHA1.debug.js"></script>
 	<script type="text/javascript" src="../System.Security.Cryptography.HMACSHA1.debug.js"></script>
-	<script type="text/javascript" src="../System.Security.Cryptography.RijndaelManaged.debug.js"></script>
+	<script type="text/javascript" src="../System.Security.Cryptography.AES.debug.js"></script>
 	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
 	<script type="text/javascript">
 
@@ -57,7 +57,7 @@
 			/// <summary>
 			/// Create an instance of the symetric algorithm class.
 			/// </summary>
-			Cipher = new System.Security.Cryptography.RijndaelManaged();
+			Cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 			//Cipher = new System.Security.Cryptography.RC2CryptoServiceProvider();
 			//Cipher = new System.Security.Cryptography.RC4CryptoServiceProvider();
 			Cipher.Mode = parseInt($("CipherModeDropDownList").value);

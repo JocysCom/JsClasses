@@ -144,12 +144,12 @@ var guid = new System.Guid(hashBytes);</pre>
 				<li><em>System.Security.Cryptography.js</em> </li>
 				<li><em>System.Security.Cryptography.SHA1.js</em> </li>
 				<li><em>System.Security.Cryptography.HMACSHA1.js</em> </li>
-				<li><em>System.Security.Cryptography.RijndaelManaged.js</em> </li>
+				<li><em>System.Security.Cryptography.AES.js</em> </li>
 			</ul>
 			<pre lang="jscript">// Turn input string into a byte array.
 var input = System.Text.Encoding.Unicode.GetBytes("Plain Text");
 // Create an instance of the Rijndael class.
-var cipher = new System.Security.Cryptography.RijndaelManaged();
+var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 // Calculate salt to make it harder to guess key by using a dictionary attack.
 var password = System.Text.Encoding.UTF8.GetBytes("password");
 var hmac = new System.Security.Cryptography.HMACSHA1(password);
@@ -842,9 +842,9 @@ if (this.IsServerSide){
 								<li><code>System.Security.Cryptography.CryptoStrea</code> </li>
 							</ul>
 						</li>
-						<li><em>System.Security.Cryptography.RijndaelManaged.js</em> file (AES encryption):
+						<li><em>System.Security.Cryptography.AES.js</em> file (AES encryption):
 							<ul>
-								<li><code>System.Security.Cryptography.RijndaelManaged</code> </li>
+								<li><code>System.Security.Cryptography.AesCryptoServiceProvider</code> </li>
 							</ul>
 						</li>
 						<li><em>System.js</em> file (new methods):

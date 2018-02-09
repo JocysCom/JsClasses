@@ -27,9 +27,13 @@
 
 	<script type="text/javascript" src="../System.Security.Cryptography.HMACSHA1.debug.js"></script>
 
+	<script type="text/javascript" src="../System.Security.Cryptography.SHA256.debug.js"></script>
+
+	<script type="text/javascript" src="../System.Security.Cryptography.HMACSHA256.debug.js"></script>
+
 	<script type="text/javascript" src="../System.Security.Cryptography.debug.js"></script>
 
-	<script type="text/javascript" src="../System.Security.Cryptography.RijndaelManaged.debug.js"></script>
+	<script type="text/javascript" src="../System.Security.Cryptography.AES.debug.js"></script>
 
 	<script type="text/javascript" src="../System.Security.Cryptography.RSA.debug.js"></script>
 
@@ -136,6 +140,23 @@
 
 			Module("System.Security.Cryptography");
 
+			Test("MD5", function () {
+				var hash = new System.Security.Cryptography.MD5()
+				var m = "abc";
+				var v = hash.ComputeHashAsHex(m);
+				var e = "900150983CD24FB0D6963F7D28E17F72";
+				Assert.AreEqual(v, e, "ComputeHash('{0}')", m);
+			});
+
+			Test("HMACMD5", function () {
+				var hash = new System.Security.Cryptography.HMACMD5();
+				var m = "abc";
+				var k = "key";
+				var v = hash.ComputeHashAsHex(k, m);
+				var e = "D2FE98063F876B03193AFB49B4979591";
+				Assert.AreEqual(v, e, "ComputeHash('{0}', '{1}')", m, k);
+			});
+
 			Test("SHA1", function() {
 				var hash = new System.Security.Cryptography.SHA1()
 				var input1 = "abc";
@@ -194,7 +215,7 @@
 				Test(testName, hash, input, result);
 			});
 
-			Test("HMACSHA1", function() {
+			Test("HMACSHA1", function () {
 				function Check(testName, key, text, result) {
 					var hash = new System.Security.Cryptography.HMACSHA1();
 					var data = System.Text.Encoding.UTF8.GetBytes(text);
@@ -227,23 +248,24 @@
 				Check("FIPS198-A3", key, "Sample #3", fips);
 			});
 
-			Test("MD5", function() {
-				var hash = new System.Security.Cryptography.MD5()
-				var m = "abc";
-				var v = hash.ComputeHashAsHex("abc");
-				var e = "900150983CD24FB0D6963F7D28E17F72";
+
+			Test("SHA256", function () {
+				var hash = new System.Security.Cryptography.SHA256()
+				var m = "Encoding-编码-암호화-表現形式";
+				var v = hash.ComputeHashAsHex(m);
+				var e = "E1511712DC0E88EAA5D8EA63E8AC21BD652FB2906848C62C6E1548AFFC0BC728";
 				Assert.AreEqual(v, e, "ComputeHash('{0}')", m);
 			});
 
-			Test("HMACMD5", function() {
-				var hash = new System.Security.Cryptography.HMACMD5();
-				var m = "abc";
-				var k = "key";
+
+			Test("HMACSHA256", function () {
+				var hash = new System.Security.Cryptography.HMACSHA256();
+				var m = "Encoding-编码-암호화-表現形式";
+				var k = "test key";
 				var v = hash.ComputeHashAsHex(k, m);
-				var e = "D2FE98063F876B03193AFB49B4979591";
+				var e = "36163A9E1F13B9C58FE55BB40767A9E2C189D76A8B8314A712D4C34D5DD201F8";
 				Assert.AreEqual(v, e, "ComputeHash('{0}', '{1}')", m, k);
 			});
-
 
 			Test("AES", function() {
 
@@ -256,7 +278,7 @@
 
 				function GetTransform(password, encrypt) {
 					// Create an instance of the Rihndael class. 
-					var cipher = new System.Security.Cryptography.RijndaelManaged();
+					var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 					// Calculate salt to make it harder to guess key by using a dictionary attack.
 					var salt = SaltFromPassword(password);
 					WriteLog("// salt = " + System.BitConverter.ToString(salt, ''));

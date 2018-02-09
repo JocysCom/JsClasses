@@ -389,49 +389,49 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
         return DecryptBytes.call(this, key, rgb, fOAEP, verify);
     };
     //---------------------------------------------------------
-    this.SignHash = function (hash, hashAlgorithmName, fOAEP) {
-        // https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
-        // Not C# compatible.
-        var signatureBytes = this.Encrypt(hash, fOAEP, true);
-        return signatureBytes;
-    }
+	this.SignHash = function (hash, hashAlgorithmName, fOAEP) {
+		// https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
+		// Not C# compatible.
+		var signatureBytes = this.Encrypt(hash, fOAEP, true);
+		return signatureBytes;
+	};
     //---------------------------------------------------------
-    this.VerifyHash = function (hash, hashAlgorithmName, signature, fOAEP) {
-        // https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
-        // Not C# compatible.
-        var decryptedHash;
-        try {
-            decryptedHash = this.Decrypt(signature, fOAEP, true);
-        } catch (e) {
-            return false;
-        }
-        if (hash.length !== decryptedHash.length)
-            return false;
-        for (var i = 0; i < hash.length; i++) {
-            if (hash[i] !== decryptedHash[i])
-                return false;
-        }
-        return true;
-    }
+	this.VerifyHash = function (hash, hashAlgorithmName, signature, fOAEP) {
+		// https://www.cs.cornell.edu/courses/cs5430/2015sp/notes/rsa_sign_vs_dec.php
+		// Not C# compatible.
+		var decryptedHash;
+		try {
+			decryptedHash = this.Decrypt(signature, fOAEP, true);
+		} catch (e) {
+			return false;
+		}
+		if (hash.length !== decryptedHash.length)
+			return false;
+		for (var i = 0; i < hash.length; i++) {
+			if (hash[i] !== decryptedHash[i])
+				return false;
+		}
+		return true;
+	};
     //---------------------------------------------------------
-    this.SignData = function (data, hashAlgorithmName, fOAEP) {
-        var ha;
-        if (hashAlgorithmName === "SHA256")
-            ha = new System.Security.Cryptography.SHA256();
-        else
-            ha = new System.Security.Cryptography.SHA1();
-        var hash = ha.ComputeHash(data);
-        return this.SignHash(hash, hashAlgorithmName, fOAEP);
-    }
+	this.SignData = function (data, hashAlgorithmName, fOAEP) {
+		var ha;
+		if (hashAlgorithmName === "SHA256")
+			ha = new System.Security.Cryptography.SHA256();
+		else
+			ha = new System.Security.Cryptography.SHA1();
+		var hash = ha.ComputeHash(data);
+		return this.SignHash(hash, hashAlgorithmName, fOAEP);
+	};
     //---------------------------------------------------------
-    this.VerifyData = function (data, hashAlgorithmName, signature, fOAEP) {
-        if (hashAlgorithmName === "SHA256")
-            ha = new System.Security.Cryptography.SHA256();
-        else
-            ha = new System.Security.Cryptography.SHA1();
-        var hash = ha.ComputeHash(data);
-        return this.VerifyHash(hash, hashAlgorithmName, signature, fOAEP);
-    }
+	this.VerifyData = function (data, hashAlgorithmName, signature, fOAEP) {
+		if (hashAlgorithmName === "SHA256")
+			ha = new System.Security.Cryptography.SHA256();
+		else
+			ha = new System.Security.Cryptography.SHA1();
+		var hash = ha.ComputeHash(data);
+		return this.VerifyHash(hash, hashAlgorithmName, signature, fOAEP);
+	};
     //---------------------------------------------------------
     function RsaDecryptBlock(block, key, verify) {
         var n = bi.FromBytes(key.Modulus);

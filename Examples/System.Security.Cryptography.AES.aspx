@@ -11,13 +11,6 @@
 			<table class="SQUI_DataTables">
 				<tbody>
 					<tr>
-						<td>
-						</td>
-						<td style="width: 100%;">
-							<asp:CheckBox Text="Use FIPS compliant AesCryptoServiceProvider class" ID="FipsCompliantCheckBox" Checked="true" runat="server" CssClass="SWUI_CheckBox" />
-						</td>
-					</tr>
-					<tr>
 						<td>Password:
 						</td>
 						<td style="width: 100%;">

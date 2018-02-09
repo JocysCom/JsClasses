@@ -826,7 +826,7 @@
     <Content Include="System.Security.Cryptography.MD5.debug.js" />
     <Content Include="System.Security.Cryptography.RC2.debug.js" />
     <Content Include="System.Security.Cryptography.RC4.debug.js" />
-    <Content Include="System.Security.Cryptography.RijndaelManaged.debug.js" />
+    <Content Include="System.Security.Cryptography.AES.debug.js" />
     <Content Include="System.Security.Cryptography.RSA.debug.js" />
     <Content Include="System.Security.Cryptography.SHA1.debug.js" />
     <Content Include="System.Security.Cryptography.SHA256.debug.js" />

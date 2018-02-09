@@ -22,7 +22,7 @@
 System.Type.RegisterNamespace("System.Security.Cryptography");
 //=============================================================================
 
-System.Security.Cryptography.RijndaelManaged = function () {
+System.Security.Cryptography.AesCryptoServiceProvider = function () {
 	/// <summary>
 	/// Represents Rijndael symetric cipher algorithm class.
 	/// </summary>
@@ -382,7 +382,7 @@ System.Security.Cryptography.RijndaelManaged = function () {
 		var newIv = new System.Byte(iv.length);
 		System.Buffer.BlockCopy(iv, 0, newIv, 0, iv.length);
 		// Create Copy of algorithm.
-		var algorithm = new System.Security.Cryptography.RijndaelManaged();
+		var algorithm = new System.Security.Cryptography.AesCryptoServiceProvider();
 		algorithm.Key = newKey;
 		algorithm.IV = newIv;
 		algorithm.Mode = this.Mode;
@@ -478,14 +478,16 @@ System.Security.Cryptography.RijndaelManaged = function () {
 	this.Initialize.apply(this, arguments);
 };
 
-System.Security.Cryptography.AES = function () { }
+System.Security.Cryptography.RijndaelManaged = System.Security.Cryptography.AesCryptoServiceProvider;
+
+System.Security.Cryptography.AES = function () { };
 
 System.Type.RegisterClass("System.Security.Cryptography.AES");
 
 System.Security.Cryptography.AES.Transform = function (dataBytes, passwordBytes, encrypt) {
 	/// <summary>Encrypt by using AES-256 algorithm.</summary>
 	// Create an instance of the Rijndael class.
-	var cipher = new System.Security.Cryptography.RijndaelManaged();
+	var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 	// Calculate salt to make it harder to guess key by using a dictionary attack.
 	var hmac = new System.Security.Cryptography.HMACSHA1(passwordBytes);
 	var salt = hmac.ComputeHash(passwordBytes);
@@ -538,7 +540,7 @@ System.Security.Cryptography.AES.Encrypt = function (data, password) {
 	// Convert encrypted data into a Base64 string.
 	var text = System.Convert.ToBase64String(bytes);
 	return text;
-}
+};
 
 System.Security.Cryptography.AES.Decrypt = function (data, password) {
 	/// <summary>
@@ -556,7 +558,7 @@ System.Security.Cryptography.AES.Decrypt = function (data, password) {
 	// Convert decrypted data into a string.
 	var text = System.Text.Encoding.UTF8.GetString(bytes);
 	return text;
-}
+};
 
 //==============================================================================
 // END
