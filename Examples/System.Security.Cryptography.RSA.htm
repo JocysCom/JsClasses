@@ -5,17 +5,17 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<title>System.Security.Cryptography.RSA</title>
-	<link type="text/css" rel="stylesheet" href="Styles/Default.css" />
-	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
-	<script type="text/javascript" src="../System.debug.js"></script>
-	<script type="text/javascript" src="../System.IO.debug.js"></script>
-	<script type="text/javascript" src="../System.Text.debug.js"></script>
-	<script type="text/javascript" src="../System.Convert.debug.js"></script>
-	<script type="text/javascript" src="../System.BitConverter.debug.js"></script>
-	<script type="text/javascript" src="../System.BigInt.debug.js"></script>
-	<script type="text/javascript" src="../System.Security.Cryptography.SHA1.debug.js"></script>
-	<script type="text/javascript" src="../System.Security.Cryptography.debug.js"></script>
-	<script type="text/javascript" src="../System.Security.Cryptography.RSA.debug.js"></script>
+	<link type="text/css" rel="stylesheet" href="System.Security.Cryptography.RSA/Default.css" />
+	<link type="text/css" rel="stylesheet" href="System.Security.Cryptography.RSA/System.Web.UI.Interface.debug.css" />
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.IO.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.Text.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.Convert.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.BitConverter.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.BigInt.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.Security.Cryptography.SHA1.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.Security.Cryptography.debug.js"></script>
+	<script type="text/javascript" src="System.Security.Cryptography.RSA/System.Security.Cryptography.RSA.debug.js"></script>
 	<script type="text/javascript">
 
 		//#region Log Function
@@ -41,6 +41,8 @@
 			$("TestButton").onclick = TestButton_Click;
 			$("NewKeyButton").onclick = NewKeyButton_Click;
 			$("NewKeyApiButton").onclick = NewKeyApiButton_Click;
+			$("ConvertToBasePrivateKeyButton").onclick = ConvertToBasePrivateKeyButton_Click;
+			$("ConvertToBasePublicKeyButton").onclick = ConvertToBasePublicKeyButton_Click;
 			$("KeyTextBox").value = xmlParamsDefault;
 		}
 
@@ -203,6 +205,31 @@
 			System.Security.Cryptography.RSA.CreateKeyCompleted = RSA_CreateKeyCompleted;
 			System.Security.Cryptography.RSA.CreateKeyAsync(keySize);
 		}
+		
+		function ConvertToBasePrivateKeyButton_Click(sender, e) {
+			ConvertKeyToBase64(true)
+		}
+
+		function ConvertToBasePublicKeyButton_Click(sender, e) {
+			ConvertKeyToBase64(false)
+		}
+		
+		function ConvertKeyToBase64(includePrivateKey){
+			var xmlParams = $("KeyTextBox").value;
+			// ------------------------------------------------
+			// RSA Keys
+			// ------------------------------------------------
+			var rsa = GetNewRsaProvider();
+			// Import parameters from xml.
+			rsa.FromXmlString(xmlParams);
+			// Export RSA key to RSAParameters and include:
+			//    false - Only public key required for encryption.
+			//    true  - Private key required for decryption.
+			var xmlString = rsa.ToXmlString(includePrivateKey);
+			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString)
+			var base = System.Convert.ToBase64String(bytes, true);
+			$("KeyTextBox").value = base;
+		}
 
 		function RSA_CreateKeyCompleted(sender, e) {
 			if (e.Error == null) {
@@ -244,7 +271,7 @@
 			<tr>
 				<td></td>
 				<td valign="top">
-					<input id="NewKeyButton" value="Generate New Key (Slow)" type="button" />
+					<input id="NewKeyButton" value="Generate New Key (Slow)" type="button" co />
 				</td>
 				<td valign="top" class="style1">Use pure JavaScript to generate weak C# compatible RSA keys (up to 1024-bit).<br />IMPORTANT: Web browser will freeze during generation of keys larger than 1024-bit.</td>
 				<td></td>
@@ -262,7 +289,16 @@
 					RSA Key:
 				</td>
 				<td colspan="2">
-					<textarea id="KeyTextBox" style="width: 500px;" cols="128" rows="10"></textarea>
+					<textarea id="KeyTextBox" style="width: 600px;" cols="128" rows="10"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Convert Key:
+				</td>
+				<td colspan="2">
+					<input id="ConvertToBasePrivateKeyButton" value="Private Key to Base64" type="button" />
+					<input id="ConvertToBasePublicKeyButton" value="Public Key to Base64" type="button" />
 				</td>
 			</tr>
 			<tr>
@@ -279,7 +315,7 @@
 					Data:
 				</td>
 				<td colspan="2">
-					<input value="abcdef_01234" id="DataTextBox" style="width: 500px;"
+					<input value="abcdef_01234" id="DataTextBox" style="width: 600px;"
 						   type="text" />
 				</td>
 				<td></td>
@@ -297,7 +333,7 @@
 					Encrypted:
 				</td>
 				<td colspan="2">
-					<textarea id="EncryptedTextBox" style="width: 500px;" cols="128"
+					<textarea id="EncryptedTextBox" style="width: 600px;" cols="128"
 							  rows="3"></textarea>
 				</td>
 			</tr>
@@ -316,7 +352,7 @@
 					Decrypted:
 				</td>
 				<td colspan="2">
-					<textarea name="DecryptedTextBox" id="DecryptedTextBox" style="width: 500px;" cols="128"
+					<textarea name="DecryptedTextBox" id="DecryptedTextBox" style="width: 600px;" cols="128"
 							  rows="3"></textarea>
 				</td>
 				<td></td>
