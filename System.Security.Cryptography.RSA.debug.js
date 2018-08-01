@@ -261,9 +261,14 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
     };
     //---------------------------------------------------------
     this.FromXmlString = function (xmlString) {
-        var parameters = new System.Security.Cryptography.RSAParameters();
+		var parameters = new System.Security.Cryptography.RSAParameters();
         var tagSpace = new RegExp("\\s", "gi");
         xmlString = xmlString.replace(tagSpace, "");
+		if (xmlString[0] != "<")
+		{
+			var bytes = System.Convert.FromBase64String(xmlString);
+			xmlString = System.Text.Encoding.UTF8.GetString(bytes)
+		}
         parameters.Exponent = getXmlValue(xmlString, "Exponent");
         parameters.Modulus = getXmlValue(xmlString, "Modulus");
         parameters.D = getXmlValue(xmlString, "D");
