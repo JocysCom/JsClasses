@@ -716,7 +716,7 @@ System.Text.UTF8Encoder = function () {
 					b2 = bytes[i] & 0x3F; i++;
 					b3 = bytes[i] & 0x3F; i++;
 					b4 = bytes[i] & 0x3F;
-					bE = b1 << 18 | (b2 << 12)(b3 << 6) | b4;
+					bE = b1 << 18 | b2 << 12 | b3 << 6 | b4;
 					s += String.fromCharCode(bE);
 				}
 			} else {
