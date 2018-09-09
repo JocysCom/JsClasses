@@ -2,7 +2,7 @@
 
 Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This JavaScript library contains hashing (`MD5`, `HMACMD5`, `SHA1`, `HMACSHA256`, `SHA256`), encryption (`AES`, `RSA`) and some other **JavaScript classes compatible with Microsoft .NET Framework**. Examples for server are (Federal Information Processing Standard) FIPS-compliant. You can use these classes for end-to-end encryption between web clients.
 
-It allows you to write some JavaScript code 100% identical to C#. For example this is JavaScript code which converts unicode text to bytes and then creates Base64 string from it:
+It allows you to write some JavaScript code 100% identical to C#. For example, this is JavaScript code which converts unicode text to bytes and then creates Base64 string from it:
 
 ```cs
 var text = "おはようございます – Good morning!";
@@ -17,11 +17,11 @@ var base64 = System.Convert.ToBase64String(bytes);
 
 ## Background
 
-I like coding with JavaScript in object oriented style. One day, I decided to make my JavaScript code to look like C# as much as possible. So I did the following:
+I like coding with JavaScript in object-oriented style. One day, I decided to make my JavaScript code to look like C# as much as possible. So I did the following:
 
 1. Started to use .NET coding standards on my JavaScripts. You can find them on MSDN - [.NET Framework: Guidelines for Names](http://msdn.microsoft.com/en-us/library/ms229002.aspx).
 2. Ported some useful classes and methods from .NET to JavaScript with the same class and property names. Some code parts were written from scratch, some parts were borrowed from the Internet and some parts were ported from C# directly.
-3. Started to use XML Comments inside JavaScript. They are not supported very well by Visual Studio sa C# but I hope that support will be better in the future.
+3. Started to use XML Comments inside JavaScript. They are not supported very well by Visual Studio as C# but I hope that support will be better in the future.
 
 ## Documents
 
