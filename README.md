@@ -322,24 +322,23 @@ But by combining the existing types, we can create JavaScript objects similar to
 
 |C# Type|JavaScript Type|
 |--- |--- |
-|public|property declared with "this." prefix: this.Name = new String;|
-|private|property declared with "var" prefix: var name = new String;|
-|class|this.[ClassName] = function(){... without "return value;" at the end|
-|void|function which has no "return value;" at the end|
+|public|property declared with `this.` prefix: `this.Name = new String;`|
+|private|property declared with `var` prefix: `var name = new String;`|
+|class|`this.[ClassName] = function(){...` without "return value;" at the end|
+|void|function which has no `return value;` at the end|
 |short/Int16|whole Number from [-2^15, 2^15-1] range|
 |int/Int32|whole Number from [-2^31, 2^31-1] range|
-|long/Int64|whole Number from [-2^63, 2^63-1] range (Requires BigInteger class)|
-|byte|whole Number from [0, 255] range: var b = 14;|
-|sbyte|whole Number from [-128, 127] range: var sb = -14;|
-|bytes[]|Array() filled with integers from [0-255] range.|
+|long/Int64|whole Number from [-2^63, 2^63-1] range (Requires `BigInteger` class)|
+|byte|whole Number from [0, 255] range: `var b = 14;`|
+|sbyte|whole Number from [-128, 127] range: `var sb = -14;`|
+|bytes[]|`Array()` filled with integers from [0-255] range.|
 |bit|Number: 0 or 1|
-|bit[]|Array() filled with integers from [0-1] range.|
-|char|String which contains a single character. Declared with single quotes: var c = 's'|
-|char[]|Array() filled single characters:
-		var chars = new Array(1); chars[0] = 's';|
-|object|parameter which was declared with "{ }": var o = {};|
-|enum|Object with "Enum" suffix and comma separated values: this.TriStateEnum = { Unknown: -2, False: 0, True: 1 }|
-|EventHandler|function with parameters "sender" and "e": function(sender, e) or this.Click(sender, e)|
+|bit[]|`Array()` filled with integers from [0-1] range.|
+|char|`String` which contains a single character. Declared with single quotes: `var c = 's'`|
+|char[]|`Array()` filled single characters: `var chars = new Array(1); chars[0] = 's';`|
+|object|parameter which was declared with `{ }`: `var o = {};`|
+|enum|Object with `Enum` suffix and comma separated values: `this.TriStateEnum = { Unknown: -2, False: 0, True: 1 }`|
+|EventHandler|function with parameters `sender` and `e`: `function(sender, e) or this.Click(sender, e)`|
 
 **NUMBERS**: All numbers in JavaScript are 64-bit (8 bytes) floating point numbers (double: 1-bit sign, 11-bits exponent, 52-bits mantissa). There is no `Double`, `Single`/`Float`, `Boolean`, `Int16`, `UInt16`, `Int32 `or `UInt32`. But you can use `public static `methods of `System.BitConverter JavaScript `class in order to treat the same JavaScript number as a different type:
 
