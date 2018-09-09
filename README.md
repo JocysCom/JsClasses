@@ -1,6 +1,6 @@
 ## Introduction
 
-Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This JavaScript library contains hashing (HMD5, HMACMD5, SHA1, HMACSHA256, SHA256), encryption (AES-256, RSA) and other **JavaScript classes compatible with Microsoft .NET Framework** `System.Security.Cryptography` classes. Server examples are (Federal Information Processing Standard) FIPS-compliant.
+Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This JavaScript library contains hashing (`MD5`, `HMACMD5`, `SHA1`, `HMACSHA256`, `SHA256`), encryption (`AES`, `RSA`) and other **JavaScript classes compatible with Microsoft .NET Framework** `System.Security.Cryptography` classes. Server examples are (Federal Information Processing Standard) FIPS-compliant.
 
 ## Download
 
@@ -351,7 +351,7 @@ var n = System.BitConverter.ToInt32(bytes, 0);
 
 `System.BitConverter` JavaScript class supports little-endian (default), big-endian byte orders and numeric arrays. `System.BitConverter `class is very useful in encoding/decoding/encryption/decryption classes. Please note that you need to specify number type when using `GetBytes(value, typeCode) `method by using `System.TypeCode `enumeration values (this enumeration is located inside *System.js* file).
 
-I&#39;ve added `*System.BigInt *`class (same as .NET internal `System.Security.Cryptography.BigInt `class). It represents an arbitrarily large signed integer whose value in theory has no upper or lower bounds. It means you can add, subtract, multiply, divide numbers of Godzilla proportions in JavaScript which can be useful with client side encryption:
+I&#39;ve added `*System.BigInt*` class (same as .NET internal `System.Security.Cryptography.BigInt `class). It represents an arbitrarily large signed integer whose value in theory has no upper or lower bounds. It means you can add, subtract, multiply, divide numbers of Godzilla proportions in JavaScript which can be useful with client side encryption:
 
 ```cs
 // Increase global System.BigInt size to 512 bytes.
