@@ -5,10 +5,10 @@ Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This Jav
 It allows you to write some JavaScript code 100% identical to C#. For example this is JavaScript code which converts unicode text to bytes and then creates Base64 string from it:
 
 ```cs
-var text = "abė新闻网";
+var text = "おはようございます – Good morning!";
 var bytes = System.Text.Encoding.UTF8.GetBytes(text);
 var base64 = System.Convert.ToBase64String(bytes);
-// base64: YWLEl+aWsOmXu+e9kQ==
+// base64: 44GK44Gv44KI44GG44GU44GW44GE44G+44GZIOKAkyBHb29kIG1vcm5pbmch
 ```
 
 ## Download
