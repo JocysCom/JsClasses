@@ -1,6 +1,6 @@
 ## Introduction
 
-Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This JavaScript library contains hashing (HMD5, HMACMD5, SHA1, HMACSHA256, SHA256), encryption (AES-256, RSA) and other classes compatible with Microsoft .NET Framework `System.Security.Cryptography` classes. Server examples are (Federal Information Processing Standard) FIPS-compliant.
+Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This JavaScript library contains hashing (HMD5, HMACMD5, SHA1, HMACSHA256, SHA256), encryption (AES-256, RSA) and other **JavaScript classes compatible with Microsoft .NET Framework** `System.Security.Cryptography` classes. Server examples are (Federal Information Processing Standard) FIPS-compliant.
 
 ## Download
 
@@ -301,7 +301,7 @@ window.onload = Window_Load;
 
 It will produce this interface on the web page:
 
-![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/jocyscomjavascriptclassestoolbar.png)
+![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComJavaScriptClassesToolBar.png)
 
 ## Requirements
 
