@@ -93,7 +93,7 @@ Include JavaScripts:
 
 - *System.js*
 - *System.IO.js*
-- *System.Text.js *
+- *System.Text.js*
 - *System.Convert.js*
 - *System.BitConverter.js*
 - *System.Security.Cryptography.js*
@@ -165,7 +165,7 @@ Include JavaScripts:
 
 - *System.js*
 - *System.IO.js*
-- *System.Text.js *
+- *System.Text.js*
 - *System.Convert.js*
 - *System.BitConverter.js*
 - *System.Security.Cryptography.js*
@@ -183,17 +183,15 @@ var doOaepPadding = true;
 // RSA 512-bit key: Public (Modulus), Private (D) and CRT (P, Q, DP, DQ, InverseQ).
 var xmlParams =
     "<RSAKeyValue>" +
-        "<Modulus>pxtmFnrGI6Sb8ziyY+NRUDuQ4b/ETw5WabQ4daFQqzsCEr/6J/
-            LLBU/2D5mO5/Wu5U/Rya1E55aYFZeaZMNqAw==</Modulus>" +
-        "<Exponent>AQAB</Exponent>" +
-        "<P>2TsVXWPEvDIJv/gd2rX9k0UOyXuaYgoAchIH6vUicis=</P>" +
-        "<Q>xO4+OYREQfqYRQK7y73+RaUG0IxobT0OQ0c+Ok2hc4k=</Q>" +
-        "<DP>K7/xgpiIU9rECeyfnp/OjS14V+3T3vDivBaTj6eFI3c=</DP>" +
-        "<DQ>K4N9ClZ4gp+tn6oP9t//XEIvtEsiE+kmyqTmUhmvMAk=</DQ>" +
-        "<InverseQ>p7o4BOlKZQZ693R1ViZ66y5gTjUkNNTd2za7/1YGBCs=</InverseQ>" +
-        "<D>XZqFVrYy4qhECruJgVZFp/GVuD5Y0gev88nVjl5r911QT+
-            I8vgJSklTso7jTlpMtf2oe7UZ0WRWEtgPS3tZn4Q==</D>" +
-    "</RSAKeyValue>"; 
+        "<Modulus>pxtmFnrGI6Sb8ziyY+NRUDuQ4b/ETw5WabQ4daFQqzsCEr/6J/LLBU/2D5mO5/Wu5U/Rya1E55aYFZeaZMNqAw==</Modulus>" +
+            "<Exponent>AQAB</Exponent>" +
+            "<P>2TsVXWPEvDIJv/gd2rX9k0UOyXuaYgoAchIH6vUicis=</P>" +
+            "<Q>xO4+OYREQfqYRQK7y73+RaUG0IxobT0OQ0c+Ok2hc4k=</Q>" +
+            "<DP>K7/xgpiIU9rECeyfnp/OjS14V+3T3vDivBaTj6eFI3c=</DP>" +
+            "<DQ>K4N9ClZ4gp+tn6oP9t//XEIvtEsiE+kmyqTmUhmvMAk=</DQ>" +
+            "<InverseQ>p7o4BOlKZQZ693R1ViZ66y5gTjUkNNTd2za7/1YGBCs=</InverseQ>" +
+            "<D>XZqFVrYy4qhECruJgVZFp/GVuD5Y0gev88nVjl5r911QT+I8vgJSklTso7jTlpMtf2oe7UZ0WRWEtgPS3tZn4Q==</D>" +
+        "</RSAKeyValue>";
 // ------------------------------------------------
 // RSA Keys
 // ------------------------------------------------
