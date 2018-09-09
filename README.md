@@ -2,6 +2,15 @@
 
 Welcome to Object Oriented JavaScript class library in *C#/.NET style*. This JavaScript library contains hashing (`MD5`, `HMACMD5`, `SHA1`, `HMACSHA256`, `SHA256`), encryption (`AES`, `RSA`) and other **JavaScript classes compatible with Microsoft .NET Framework** `System.Security.Cryptography` classes. Server examples are (Federal Information Processing Standard) FIPS-compliant. You can use it for end-to-end encryption between web clients.
 
+It allows you to write some JavaScript code 100% identical to C#. For example this is JavaScript code which converts unicode text to bytes and then creates Base64 string from it:
+
+```cs
+var text = "abė新闻网";
+var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+var base64 = System.Convert.ToBase64String(bytes);
+// base64: YWLEl+aWsOmXu+e9kQ==
+```
+
 ## Download
 
 [https://github.com/JocysCom/JsClasses/archive/master.zip](https://github.com/JocysCom/JsClasses/archive/master.zip) - 3.2 MB
@@ -73,7 +82,7 @@ var hex = System.BitConverter.ToString(hashBytes);
 var guid = new System.Guid(hashBytes);
 ```
 
-As you can see, the code is 100% identical. SHA-1 and SHA-256 hash algorithm class is also available:
+As you can see, the code is 100% identical.:
 
 - [System.Security.Cryptography.SHA1.htm](https://www.jocys.com/Common/JsClasses/Examples/System.Security.Cryptography.SHA1.htm)
 - [System.Security.Cryptography.SHA1.aspx](https://www.jocys.com/Common/JsClasses/Examples/System.Security.Cryptography.SHA1.aspx)
