@@ -394,5 +394,3 @@ Inside the source code, you can find examples (*Examples/*) including password g
 - or on-line: [*https://www.jocys.com/Common/JsClasses/Examples/System.Security.Password.htm*](https://www.jocys.com/Common/JsClasses/Examples/System.Security.Password.htm)
 
 ![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComJavaScriptPasswordGenerator.png)
-
-To make a suggestion or report bugs, please write to [evaldas@jocys.com](evaldas@jocys.com).
