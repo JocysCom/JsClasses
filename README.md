@@ -27,7 +27,7 @@ I like coding with JavaScript in object-oriented style. One day, I decided to ma
 
 [https://www.jocys.com/Common/JsClasses/Documents](https://www.jocys.com/Common/JsClasses/Documents):
 
-![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComClassBrowser.jpg)
+![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/JocysComJavaScriptClasses/JocysComClassBrowser.jpg)
 
 ## Benefits
 
@@ -308,7 +308,7 @@ window.onload = Window_Load;
 
 It will produce this interface on the web page:
 
-![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComJavaScriptClassesToolBar.png)
+![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/JocysComJavaScriptClasses/JocysComJavaScriptClassesToolBar.png)
 
 ## Requirements
 
@@ -382,11 +382,11 @@ var bytes = n3.Elements // A6602F11054C86B8DCF3FEFEFFFFFF...
 
 Visual Studio 2010 has built-in support for JavaScript IntelliSense. This means that if you open file, place cursor at the end of file and type "`System.`" then straight after the dot, Visual Studio will bring up a menu containing all available properties of `System` namespace:
 
-![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComJavaScriptIntelliSense.png)
+![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/JocysComJavaScriptClasses/JocysComJavaScriptIntelliSense.png)
 
 `System.Type.Inherits` method allows to use IntelliSense from inside of inherited class:
 
-![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComJavaScriptInherits.png)
+![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/JocysComJavaScriptClasses/JocysComJavaScriptInherits.png)
 
 The good news here is that Microsoft is moving in the right direction. The bad news is that JavaScript IntelliSense works only with specific JavaScript coding style and sometimes needs workarounds. In other words, it works in mysterious ways or doesn&#39;t work at all :). Some upgrades are needed on my code too.
 
@@ -402,4 +402,4 @@ Inside the source code, you can find examples (*Examples/*) including password g
 - as Windows HTML application: *Examples/System.Security.Password.hta*
 - or on-line: [*https://www.jocys.com/Common/JsClasses/Examples/System.Security.Password.htm*](https://www.jocys.com/Common/JsClasses/Examples/System.Security.Password.htm)
 
-![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/Images/JocysComJavaScriptPasswordGenerator.png)
+![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/JocysComJavaScriptClasses/JocysComJavaScriptPasswordGenerator.png)
