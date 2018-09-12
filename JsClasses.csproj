@@ -306,6 +306,18 @@
     <Content Include="Documents\Test\TestJScript.aspx" />
     <Content Include="Documents\Test\TestScript.js" />
     <Content Include="Examples\Default.aspx" />
+    <Content Include="Examples\EndToEndEncryption\Client.htm" />
+    <Content Include="Examples\EndToEndEncryption\Default.htm" />
+    <Content Include="Examples\EndToEndEncryption\Images\Arrow_Down_24x24.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Arrow_Left_24x24.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Arrow_Right_24x24.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Arrow_Up_24x_24.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Client_48x48.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Computer_48x48.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Server_48x48.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Spy_48x48.png" />
+    <Content Include="Examples\EndToEndEncryption\Images\Wall_48x48.png" />
+    <Content Include="Examples\EndToEndEncryption\Server.aspx" />
     <Content Include="Examples\Images\Icons\Administration.16x16.png" />
     <Content Include="Examples\Images\Icons\Calendar_16x16.png" />
     <Content Include="Examples\Images\Icons\Delete_Out.16x16.png" />
@@ -922,6 +934,9 @@
     </Compile>
     <Compile Include="Examples\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\EndToEndEncryption\Server.aspx.cs">
+      <DependentUpon>Server.aspx</DependentUpon>
     </Compile>
     <Compile Include="Examples\System.BigInt.aspx.cs">
       <DependentUpon>System.BigInt.aspx</DependentUpon>
