@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<title>End-To-End Encryption Web Messaging Example</title>
+	<link type="text/css" rel="stylesheet" href="../Styles/Default.css" />
+	<link rel="stylesheet" type="text/css" href="../../System.Web.UI.Interface.debug.css" />
+	<style type="text/css">
+		.C24 {
+			width: 24px;
+			height: 24px;
+		}
+
+		.Center {
+			text-align: center;
+		}
+
+		.Left {
+			text-align: Left;
+		}
+
+		.Right {
+			text-align: Right;
+		}
+
+		.ClientCell {
+			width: 240px;
+		}
+
+		.ClientFrame {
+			width: 100%;
+			height: 240px;
+		}
+
+		.ServerCell {
+			vertical-align: bottom;
+		}
+
+		.ServerFrame {
+			width: 100%;
+			height: 96px;
+			background-color: cadetblue;
+		}
+
+		.C48 {
+			width: 48px;
+			height: 48px;
+		}
+
+		.ButtonCell {
+			width: 48px;
+			height: 24px;
+		}
+
+		.Button {
+			width: 48px;
+			height: 24px;
+		}
+
+		table {
+			width: 100%; /*border-collapse: collapse; */
+		}
+
+			table th {
+				
+			}
+
+			table tr td {
+				padding: 4px;
+			}
+
+		.W24 {
+			width: 24px;
+		}
+
+		.W48 {
+			width: 48px;
+		}
+
+		.Header {
+			background-color: darkslategray;
+			color: white;
+			font-weight: bold;
+			text-align: center;
+			padding: 2px 4px 2px 4px;
+		}
+	</style>
+
+</head>
+<body>
+
+	<table>
+			<tr>
+			<td class="Center">&nbsp;</td>
+			<th colspan="7">End-To-End Encryption Web Messaging Example (work in progress)</th>
+			<td class="Center">&nbsp;</td>
+		</tr>
+
+
+		<tr>
+			<td>&nbsp;</td>
+			<td class="ClientCell">
+				<div class="Header">Client 1</div>
+				<iframe id="Client1Frame" frameborder="0" class="ClientFrame" src="Client.htm"></iframe>
+			</td>
+			<td class="W48">&nbsp;</td>
+			<td class="ServerCell" colspan="3">
+				<div class="Header">Server</div>
+				<iframe id="ServerFrame" class="ServerFrame" frameborder="0" name="I1" scrolling="no" src="Server.aspx"></iframe>
+			</td>
+			<td class="W48">&nbsp;</td>
+			<td class="ClientCell">
+				<div class="Header">Client 2</div>
+				<iframe id="Client2Frame" frameborder="0" class="ClientFrame" src="Client.htm"></iframe>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="Center">&nbsp;</td>
+			<td class="Right">
+				<img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /><img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /></td>
+			<td>&nbsp;</td>
+			<td class="Center" colspan="3">
+				<img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /><img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /></td>
+			<td>&nbsp;</td>
+			<td class="Left">
+				<img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /><img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /></td>
+			<td class="Center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="Center">&nbsp;</td>
+			<td class="Right">
+				<img alt="" class="C48" src="Images/Computer_48x48.png" /></td>
+			<td>
+				<img alt="" class="C48" src="Images/Wall_48x48.png" /></td>
+			<td class="W24">
+				<img alt="" class="C24" src="Images/Arrow_Right_24x24.png" /><br />
+				<img alt="" class="C24" src="Images/Arrow_Left_24x24.png" /></td>
+			<td class="W48">
+				<img alt="" class="C48" src="Images/Server_48x48.png" /></td>
+			<td class="W24">
+				<img alt="" class="C24" src="Images/Arrow_Left_24x24.png" /><br />
+				<img alt="" class="C24" src="Images/Arrow_Right_24x24.png" /></td>
+			<td>
+				<img alt="" class="C48" src="Images/Wall_48x48.png" /></td>
+			<td class="Left">
+				<img alt="" class="C48" src="Images/Computer_48x48.png" /></td>
+			<td class="Center">&nbsp;</td>
+		</tr>
+
+	</table>
+
+
+</body>
+</html>
