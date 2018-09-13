@@ -108,13 +108,13 @@ Include JavaScripts:
 - *System.Security.Cryptography.js*
 - *System.Security.Cryptography.SHA1.js*
 - *System.Security.Cryptography.HMACSHA1.js*
-- *System.Security.Cryptography.RijndaelManaged.js*
+- *System.Security.Cryptography.AES.js*
 
 ```cs    
 // Turn input string into a byte array.
 var input = System.Text.Encoding.UTF8.GetBytes("Plain Text");
-// Create an instance of the Rijndael class.
-var cipher = new System.Security.Cryptography.RijndaelManaged();
+// Create an instance of the AES class.
+var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 // Calculate salt to make it harder to guess key by using a dictionary attack.
 var passwordBytes = System.Text.Encoding.UTF8.GetBytes("password");
 var hmac = new System.Security.Cryptography.HMACSHA1(passwordBytes);
