@@ -937,6 +937,7 @@
     </Compile>
     <Compile Include="Examples\EndToEndEncryption\Server.aspx.cs">
       <DependentUpon>Server.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Examples\System.BigInt.aspx.cs">
       <DependentUpon>System.BigInt.aspx</DependentUpon>

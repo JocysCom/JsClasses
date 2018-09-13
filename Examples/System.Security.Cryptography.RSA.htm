@@ -207,11 +207,11 @@
 		}
 		
 		function ConvertToBasePrivateKeyButton_Click(sender, e) {
-			ConvertKeyToBase64(true)
+			ConvertKeyToBase64(true);
 		}
 
 		function ConvertToBasePublicKeyButton_Click(sender, e) {
-			ConvertKeyToBase64(false)
+			ConvertKeyToBase64(false);
 		}
 		
 		function ConvertKeyToBase64(includePrivateKey){
@@ -228,11 +228,11 @@
 			var xmlString = rsa.ToXmlString(includePrivateKey);
 			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString)
 			var base = System.Convert.ToBase64String(bytes, true);
-			$("KeyTextBox").value = base;
+			$("Base64KeyTextBox").value = base;
 		}
 
 		function RSA_CreateKeyCompleted(sender, e) {
-			if (e.Error == null) {
+			if (e.Error === null) {
 				Trace.Write("Key pair generation was successful.");
 				var rsa = new System.Security.Cryptography.RSACryptoServiceProvider();
 				//rsa.ImportParameters(e.PublicKey);
@@ -269,37 +269,27 @@
 				<td style="width: 100%;"></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td valign="top">
-					<input id="NewKeyButton" value="Generate New Key (Slow)" type="button" co />
-				</td>
-				<td valign="top" class="style1">Use pure JavaScript to generate weak C# compatible RSA keys (up to 1024-bit).<br />IMPORTANT: Web browser will freeze during generation of keys larger than 1024-bit.</td>
-				<td></td>
+				<td>&nbsp;</td>
+				<td class="style1">
+					Use pure JavaScript to generate weak C# compatible RSA keys (up to 1024-bit).<br />IMPORTANT: Web browser will freeze during generation of keys larger than 1024-bit.</td>
+				<td class="style1">Use Web Cryptography API, to generate secure and C# compatible RSA keys (up to 4096-bit).<br />IMPORTANT: In Google Chrome, Web Cryptography API is disabled under HTTP protocol and works under secure HTTPS only.</td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>
-					<input id="NewKeyApiButton" value="Generate New Key (Fast)" type="button" />
-				</td>
-				<td  style="border-top: 1px solid #d0d0d0;" class="style1">Use Web Cryptography API, to generate secure and C# compatible RSA keys (up to 4096-bit).<br />IMPORTANT: In Google Chrome, Web Cryptography API is disabled under HTTP protocol and works under secure HTTPS only.</td>
-				<td></td>
+					<input id="NewKeyButton" value="↓ - Generate New Key (Slow)" type="button" /></td>
+				<td class="style1">
+					<input id="NewKeyApiButton" value="↓ - Generate New Key (Fast)" type="button" /></td>
+				<td>Export Key:</td>
 			</tr>
 			<tr>
-				<td>
-					RSA Key:
-				</td>
+				<td>RSA Key:</td>
 				<td colspan="2">
-					<textarea id="KeyTextBox" style="width: 600px;" cols="128" rows="10"></textarea>
-				</td>
-			</tr>
-			<tr>
+					<textarea id="KeyTextBox" style="width: 600px; font-family: Consolas; font-size: 8pt;" cols="128" rows="11" name="S2"></textarea></td>
 				<td>
-					Convert Key:
-				</td>
-				<td colspan="2">
-					<input id="ConvertToBasePrivateKeyButton" value="Private Key to Base64" type="button" />
-					<input id="ConvertToBasePublicKeyButton" value="Public Key to Base64" type="button" />
-				</td>
+					<input id="ConvertToBasePrivateKeyButton" value="↓ - Private Key to Base64" type="button" />
+					<input id="ConvertToBasePublicKeyButton" value="↓ - Public Key to Base64" type="button" /><br /><textarea id="Base64KeyTextBox" style="font-family: Consolas; font-size: 8pt;" cols="77" rows="9" name="S1" readonly="readonly"></textarea></td>
 			</tr>
 			<tr>
 				<td>Padding:</td>
