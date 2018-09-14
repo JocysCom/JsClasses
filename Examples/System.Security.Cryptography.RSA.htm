@@ -226,7 +226,7 @@
 			//    false - Only public key required for encryption.
 			//    true  - Private key required for decryption.
 			var xmlString = rsa.ToXmlString(includePrivateKey);
-			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString)
+			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString);
 			var base = System.Convert.ToBase64String(bytes, true);
 			$("Base64KeyTextBox").value = base;
 		}
