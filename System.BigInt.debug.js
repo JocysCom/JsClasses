@@ -1,15 +1,6 @@
 ﻿//=============================================================================
 // Jocys.com JavaScript.NET Classes               (In C# Object Oriented Style)
 // Created by Evaldas Jocys <evaldas@jocys.com>
-//-----------------------------------------------------------------------------
-// You can include this script on both sides - server and client:
-// Server: <!-- #INCLUDE FILE="ScriptFile.js" -->
-// Client: <script type="text/javascript" src="ScriptFile.js"></script>
-//-----------------------------------------------------------------------------
-// Warning: Be careful about what code you include in such way. Since the  code
-// will be passed to the client side as simple text, your code can be  seen  by
-// anyone who wants. Never do this with  scripts  which  contain  any  kind  of
-// passwords, database connection strings, or SQL queries.
 //=============================================================================
 /// <reference path="System.debug.js" />
 //=============================================================================
@@ -62,40 +53,40 @@ System.BigInt = function () {
 
 	this.Equals = function (obj) {
 		return System.BigInt.Equals(this, obj);
-	}
+	};
 
 	this.GetHashCode = function () {
-	}
+	};
 
 	this.IsNegative = function () {
 		return u.IsNegative(this.digits);
-	}
+	};
 
 	this.IsZero = function () {
 		return true;
-	}
+	};
 
 	//#region Convert
 	// Decimal: (mbs) "..." (lbs) - Big Endian
 	// Hexadecimal (mbs) 0x... (lbs) - Big Endian
 	// HexString (lbs) xx-xx-xx-xx... (mbs) - Little Endian, xx - Big Endian.
 
-	this.FromHex = function (s) { this.FromString(s, 16) }
-	this.ToHex = function () { return this.ToString(16); }
-	this.FromDecimal = function (s) { this.FromString(a, 10) }
-	this.ToDecimal = function () { return this.ToString(10); }
+	this.FromHex = function (s) { this.FromString(s, 16); };
+	this.ToHex = function () { return this.ToString(16); };
+	this.FromDecimal = function (s) { this.FromString(a, 10); };
+	this.ToDecimal = function () { return this.ToString(10); };
 
 	this.FromString = function (s, base) {
 		// if number is negative;
 		var isNegative = false;
-		if (s.indexOf("-") == 0) {
+		if (s.indexOf("-") === 0) {
 			isNegative = true;
 			s = s.substring(1, s.length);
 		}
 		if (s.indexOf("x") > -1) {
 			s = s.substring(s.indexOf("x") + 1, s.length);
 			this.digits = u.FromString(s, 16, 0);
-		} else if (typeof base == "undefined") {
+		} else if (typeof base === "undefined") {
 			this.digits = u.FromString(s, 10, 0);
 		} else {
 			this.digits = u.FromString(s, base, 0);
@@ -103,7 +94,7 @@ System.BigInt = function () {
 		if (isNegative) {
 			u.Negate_(this.digits);
 		}
-	}
+	};
 
 	this.ToString = function (base) {
 		var s;
@@ -112,18 +103,18 @@ System.BigInt = function () {
 		if (isNegative) {
 			d = u.Negate(d);
 		}
-		if (typeof base == "undefined") s = u.ToString(d, base);
+		if (typeof base === "undefined") s = u.ToString(d, base);
 		else s = u.ToString(d, base);
 		if (isNegative) s = "-" + s;
 		return s;
-	}
+	};
 
 	function GetByteArraySize(array, byteValue) {
 		var length = array.length;
 		while (length-- > 0) {
-			if (array[length] != byteValue) break;
+			if (array[length] !== byteValue) break;
 		}
-		return (length + 1);
+		return length + 1;
 	}
 
 	this.ToByteArray = function () {
@@ -135,7 +126,7 @@ System.BigInt = function () {
 		if (isNegative) b[b.length - 1] = 0xFF;
 		var size = GetByteArraySize(b, isNegative ? 0xFF : 0x00);
 		// If last bit of array is negative ( = 1).
-		var bNeg = ((b[size - 1]) & 0x80) != 0;
+		var bNeg = (b[size - 1] & 0x80) !== 0;
 		// If BigInt is negative but byte array is positive then...
 		if (isNegative && !bNeg) {
 			b.push(0xFF);
@@ -152,17 +143,17 @@ System.BigInt = function () {
 			// You can extend array by adding 0x00 bytes.
 		}
 		return b.slice(0, size);
-	}
+	};
 
 	this.FromByteArray = function (bytes) {
 		// If last bit of array is negative (= 1).
-		var bNeg = ((bytes[bytes.length - 1]) & 0x80) != 0;
+		var bNeg = ((bytes[bytes.length - 1]) & 0x80) !== 0;
 		//if (bNeg){
 		// If last byte is all ones.
 		// if (bytes[bytes.length-1] == 0xFF);
 		//}
 		this.digits = u.FromArray(bytes, 256);
-	}
+	};
 
 	//---------------------------------------------------------
 	function initialize0() {
@@ -203,7 +194,7 @@ System.BigInt = function () {
 		//		}
 	}
 	initialize.apply(this, arguments);
-}
+};
 
 //#region Operators
 
@@ -218,14 +209,14 @@ System.BigInt = function () {
 ///  1 (a) is greater than (b). 
 /// </returns>
 System.BigInt.Compare = function (a, b) {
-	if (a == null && b == null) return 0;
-	if (a == null) return -1;
-	if (b == null) return 1;
+	if (a === null && b === null) return 0;
+	if (a === null) return -1;
+	if (b === null) return 1;
 	var size = a.Size();
 	var num2 = b.Size();
-	if (size == num2) {
+	if (size === num2) {
 		while (size-- > 0) {
-			if (a.digits[size] != b.digits[size]) {
+			if (a.digits[size] !== b.digits[size]) {
 				return (a.digits[size] < b.digits[size]) ? -1 : 1;
 			}
 		}
@@ -234,19 +225,19 @@ System.BigInt.Compare = function (a, b) {
 	else {
 		return (size < num2) ? -1 : 1;
 	}
-}
+};
 
 System.BigInt.Equals = function (a, b) {
-	return System.BigInt.Compare(a, b) == 0;
-}
+	return System.BigInt.Compare(a, b) === 0;
+};
 
 System.BigInt.MoreThan = function (a, b) {
-	return System.BigInt.Compare(a, b) == 1;
-}
+	return System.BigInt.Compare(a, b) === 1;
+};
 
 System.BigInt.LessThan = function (a, b) {
-	return System.BigInt.Compare(a, b) == -1;
-}
+	return System.BigInt.Compare(a, b) === -1;
+};
 
 System.BigInt._Utils = function () {
 
@@ -485,7 +476,7 @@ System.BigInt._Utils = function () {
 	//does a single round of Miller-Rabin base b consider x to be a possible prime?
 	//x is a bigInt, and b is an integer, with b<x
 	function millerRabinInt(x, b) {
-		if (mr_x1.length != x.length) {
+		if (mr_x1.length !== x.length) {
 			mr_x1 = dup(x);
 			mr_r = dup(x);
 			mr_a = dup(x);
@@ -500,7 +491,7 @@ System.BigInt._Utils = function () {
 	function millerRabin(x, b) {
 		var i, j, k, s;
 
-		if (mr_x1.length != x.length) {
+		if (mr_x1.length !== x.length) {
 			mr_x1 = dup(x);
 			mr_r = dup(x);
 			mr_a = dup(x);
@@ -548,7 +539,7 @@ System.BigInt._Utils = function () {
 	//returns how many bits long the bigInt is, not counting leading zeros.
 	function bitSize(x) {
 		var j, z, w;
-		for (j = x.length - 1; (x[j] == 0) && (j > 0); j--);
+		for (j = x.length - 1; (x[j] === 0) && (j > 0); j--);
 		for (z = 0, w = x[j]; w; (w >>= 1), z++);
 		z += bpe * j;
 		return z;
@@ -591,10 +582,10 @@ System.BigInt._Utils = function () {
 
 		//optimization: try larger and smaller B to find the best limit.
 
-		if (primes.length == 0)
+		if (primes.length === 0)
 			primes = findPrimes(30000);  //check for divisibility by primes <=30000
 
-		if (rpprb.length != ans.length)
+		if (rpprb.length !== ans.length)
 			rpprb = dup(ans);
 
 		for (; ;) { //keep trying random values for ans until one appears to be prime
@@ -608,7 +599,7 @@ System.BigInt._Utils = function () {
 
 			//check ans for divisibility by small primes up to B
 			for (i = 0; (i < primes.length) && (primes[i] <= B); i++)
-				if (modInt(ans, primes[i]) == 0 && !equalsInt(ans, primes[i])) {
+				if (modInt(ans, primes[i]) === 0 && !equalsInt(ans, primes[i])) {
 					divisible = 1;
 					break;
 				}
@@ -690,12 +681,12 @@ System.BigInt._Utils = function () {
 				if (!greater(x1, y1)) {
 					z = sub(y1, x);
 					negate_(z);
-					return z
+					return z;
 				}
 			}
 		}
 
-		var ans = expand(x, (x.length > y.length ? x.length + 1 : y.length + 1));
+		var ans = expand(x, x.length > y.length ? x.length + 1 : y.length + 1);
 		sub_(ans, y);
 		return trim(ans, 1);
 	}
@@ -719,7 +710,7 @@ System.BigInt._Utils = function () {
 				if (greater(y1, x1)) {
 					return sub(y1, x1);
 				} else {
-					var z = sub(x1, y1);
+					z = sub(x1, y1);
 					negate_(z);
 					return z;
 				}
@@ -729,7 +720,7 @@ System.BigInt._Utils = function () {
 				if (greater(x1, y1)) {
 					return sub(x1, y1);
 				} else {
-					var z = sub(y1, x1);
+					z = sub(y1, x1);
 					negate_(z);
 					return z;
 				}
@@ -763,10 +754,10 @@ System.BigInt._Utils = function () {
 	function randTruePrime_(ans, k) {
 		var c, m, pm, dd, j, r, B, divisible, z, zz, recSize;
 
-		if (primes.length == 0)
+		if (primes.length === 0)
 			primes = findPrimes(30000);  //check for divisibility by primes <=30000
 
-		if (pows.length == 0) {
+		if (pows.length === 0) {
 			pows = new Array(512);
 			for (j = 0; j < 512; j++) {
 				pows[j] = Math.pow(2, j / 511. - 1.);
@@ -778,7 +769,7 @@ System.BigInt._Utils = function () {
 		m = 20;   //generate this k-bit number by first recursively generating a number that has between k/2 and k-m bits
 		recLimit = 20; //stop recursion when k <=recLimit.  Must have recLimit >= 2
 
-		if (s_i2.length != ans.length) {
+		if (s_i2.length !== ans.length) {
 			s_i2 = dup(ans);
 			s_R = dup(ans);
 			s_n1 = dup(ans);
@@ -801,8 +792,8 @@ System.BigInt._Utils = function () {
 			for (dd = 1; dd;) {
 				dd = 0;
 				ans[0] = 1 | (1 << (k - 1)) | Math.floor(Math.random() * (1 << k));  //random, k-bit, odd integer, with msb 1
-				for (j = 1; (j < primes.length) && ((primes[j] & pm) == primes[j]); j++) { //trial division by all primes 3...sqrt(2^k)
-					if (0 == (ans[0] % primes[j])) {
+				for (j = 1; (j < primes.length) && ((primes[j] & pm) === primes[j]); j++) { //trial division by all primes 3...sqrt(2^k)
+					if (0 === (ans[0] % primes[j])) {
 						dd = 1;
 						break;
 					}
@@ -849,7 +840,7 @@ System.BigInt._Utils = function () {
 
 			//check s_n for divisibility by small primes up to B
 			for (divisible = 0, j = 0; (j < primes.length) && (primes[j] < B); j++)
-				if (modInt(s_n, primes[j]) == 0 && !equalsInt(s_n, primes[j])) {
+				if (modInt(s_n, primes[j]) === 0 && !equalsInt(s_n, primes[j])) {
 					divisible = 1;
 					break;
 				}
@@ -860,7 +851,7 @@ System.BigInt._Utils = function () {
 
 			if (!divisible) {  //if it passes that test, continue checking s_n
 				addInt_(s_n, -3);
-				for (j = s_n.length - 1; (s_n[j] == 0) && (j > 0); j--);  //strip leading zeros
+				for (j = s_n.length - 1; (s_n[j] === 0) && (j > 0); j--);  //strip leading zeros
 				for (zz = 0, w = s_n[j]; w; (w >>= 1), zz++);
 				zz += bpe * j;                             //zz=number of bits in s_n, ignoring leading zeros
 				for (; ;) {  //generate z-bit numbers until one falls in the range [0,s_n-1]
@@ -911,7 +902,7 @@ System.BigInt._Utils = function () {
 			b[i] = Math.floor(Math.random() * (1 << (bpe - 1)));
 		}
 		b[a - 1] &= (2 << ((n - 1) % bpe)) - 1;
-		if (s == 1)
+		if (s === 1)
 			b[a - 1] |= (1 << ((n - 1) % bpe));
 	}
 
@@ -928,7 +919,7 @@ System.BigInt._Utils = function () {
 	//y is destroyed.
 	function GCD_(x, y) {
 		var i, xp, yp, A, B, C, D, q, sing;
-		if (T.length != x.length)
+		if (T.length !== x.length)
 			T = dup(x);
 
 		sing = 1;
@@ -948,7 +939,7 @@ System.BigInt._Utils = function () {
 			while ((yp + C) && (yp + D)) {
 				q = Math.floor((xp + A) / (yp + C));
 				qp = Math.floor((xp + B) / (yp + D));
-				if (q != qp)
+				if (q !== qp)
 					break;
 				t = A - q * C; A = C; C = t;    //  do (A,B,xp, C,D,yp) = (C,D,yp, A,B,xp) - q*(0,0,0, C,D,yp)      
 				t = B - q * D; B = D; D = t;
@@ -965,7 +956,7 @@ System.BigInt._Utils = function () {
 				copy_(y, T);
 			}
 		}
-		if (y[0] == 0)
+		if (y[0] === 0)
 			return;
 		t = modInt(x, y[0]);
 		copyInt_(x, y[0]);
@@ -987,7 +978,7 @@ System.BigInt._Utils = function () {
 			return 0;
 		}
 
-		if (eg_u.length != k) {
+		if (eg_u.length !== k) {
 			eg_u = new Array(k);
 			eg_v = new Array(k);
 			eg_A = new Array(k);
@@ -1053,13 +1044,13 @@ System.BigInt._Utils = function () {
 	function inverseModInt(x, n) {
 		var a = 1, b = 0, t;
 		for (; ;) {
-			if (x == 1) return a;
-			if (x == 0) return 0;
+			if (x === 1) return a;
+			if (x === 0) return 0;
 			b -= a * Math.floor(n / x);
 			n %= x;
 
-			if (n == 1) return b; //to avoid negatives, change this b to n-b, and each -= to +=
-			if (n == 0) return 0;
+			if (n === 1) return b; //to avoid negatives, change this b to n-b, and each -= to +=
+			if (n === 0) return 0;
 			a -= b * Math.floor(x / n);
 			x %= n;
 		}
@@ -1077,7 +1068,7 @@ System.BigInt._Utils = function () {
 	function eGCD_(x, y, v, a, b) {
 		var g = 0;
 		var k = Math.max(x.length, y.length);
-		if (eg_u.length != k) {
+		if (eg_u.length !== k) {
 			eg_u = new Array(k);
 			eg_A = new Array(k);
 			eg_B = new Array(k);
@@ -1171,7 +1162,7 @@ System.BigInt._Utils = function () {
 	}
 
 	//is x > y? (x and y both nonnegative)
-	function greater(x, y) {
+	var greater = function (x, y) {
 		var i;
 		var k = (x.length < y.length) ? x.length : y.length;
 
@@ -1189,7 +1180,7 @@ System.BigInt._Utils = function () {
 			else if (x[i] < y[i])
 				return 0;
 		return 0;
-	}
+	};
 
 	//divide x by y giving quotient q and remainder r.  (q=floor(x/y),  r=x mod y).  All 4 are bigints.
 	//x must have at least one leading zero element.
@@ -1200,7 +1191,7 @@ System.BigInt._Utils = function () {
 		var kx, ky;
 		var i, j, y1, y2, c, a, b;
 		copy_(r, x);
-		for (ky = y.length; y[ky - 1] == 0; ky--); //ky is number of elements in y, not including leading zeros
+		for (ky = y.length; y[ky - 1] === 0; ky--); //ky is number of elements in y, not including leading zeros
 
 		//normalize: ensure the most significant element of y has its highest bit set  
 		b = y[ky - 1];
@@ -1211,7 +1202,7 @@ System.BigInt._Utils = function () {
 		leftShift_(r, a);
 
 		//Rob Visser discovered a bug: the following line was originally just before the normalization.
-		for (kx = r.length; r[kx - 1] == 0 && kx > ky; kx--); //kx is number of elements in normalized x, not including leading zeros
+		for (kx = r.length; r[kx - 1] === 0 && kx > ky; kx--); //kx is number of elements in normalized x, not including leading zeros
 
 		copyInt_(q, 0);                      // q=0
 		while (!greaterShift(y, r, kx - ky)) {  // while (leftShift_(y,kx-ky) <= r) {
@@ -1220,7 +1211,7 @@ System.BigInt._Utils = function () {
 		}                                   // }
 
 		for (i = kx - 1; i >= ky; i--) {
-			if (r[i] == y[ky - 1])
+			if (r[i] === y[ky - 1])
 				q[i - ky] = mask;
 			else
 				q[i - ky] = Math.floor((r[i] * radix + r[i - 1]) / y[ky - 1]);
@@ -1238,7 +1229,7 @@ System.BigInt._Utils = function () {
 				c = y1 >> bpe;
 				y1 = y1 & mask;
 
-				if (c == r[i] ? y1 == r[i - 1] ? y2 > (i > 1 ? r[i - 2] : 0) : y1 > r[i - 1] : c > r[i])
+				if (c === r[i] ? y1 === r[i - 1] ? y2 > (i > 1 ? r[i - 2] : 0) : y1 > r[i - 1] : c > r[i])
 					q[i - ky]--;
 				else
 					break;
@@ -1300,7 +1291,7 @@ System.BigInt._Utils = function () {
 	function str2bigInt(s, base, minSize) {
 		var d, i, j, x, y, kk;
 		var k = s.length;
-		if (base == -1) { //comma-separated list of array elements in decimal
+		if (base === -1) { //comma-separated list of array elements in decimal
 			x = new Array(0);
 			for (; ;) {
 				y = new Array(x.length + 1);
@@ -1312,7 +1303,7 @@ System.BigInt._Utils = function () {
 				if (d < 1)
 					break;
 				s = s.substring(d + 1);
-				if (s.length == 0)
+				if (s.length === 0)
 					break;
 			}
 			if (x.length < minSize) {
@@ -1350,7 +1341,7 @@ System.BigInt._Utils = function () {
 	//y must have less than bpe bits
 	function equalsInt(x, y) {
 		var i;
-		if (x[0] != y)
+		if (x[0] !== y)
 			return 0;
 		for (i = 1; i < x.length; i++)
 			if (x[i])
@@ -1364,7 +1355,7 @@ System.BigInt._Utils = function () {
 		var i;
 		var k = x.length < y.length ? x.length : y.length;
 		for (i = 0; i < k; i++)
-			if (x[i] != y[i])
+			if (x[i] !== y[i])
 				return 0;
 		if (x.length > y.length) {
 			for (; i < x.length; i++)
@@ -1392,12 +1383,12 @@ System.BigInt._Utils = function () {
 	function bigInt2str(x, base) {
 		var i, t, s = "";
 
-		if (s6.length != x.length)
+		if (s6.length !== x.length)
 			s6 = dup(x);
 		else
 			copy_(s6, x);
 
-		if (base == -1) { //return the list of array contents
+		if (base === -1) { //return the list of array contents
 			for (i = x.length - 1; i > 0; i--)
 				s += x[i] + ',';
 			s += x[0];
@@ -1408,7 +1399,7 @@ System.BigInt._Utils = function () {
 				s = digitsStr.substring(t, t + 1) + s;
 			}
 		}
-		if (s.length == 0)
+		if (s.length === 0)
 			s = "0";
 		return s;
 	}
@@ -1717,7 +1708,7 @@ System.BigInt._Utils = function () {
 	//do x=x*y for bigInts x and y.  This is faster when y<x.
 	function mult_(x, y) {
 		var i;
-		if (ss.length != 2 * x.length)
+		if (ss.length !== 2 * x.length)
 			ss = new Array(2 * x.length);
 		copyInt_(ss, 0);
 		for (i = 0; i < y.length; i++)
@@ -1728,11 +1719,11 @@ System.BigInt._Utils = function () {
 
 	//do x=x mod n for bigInts x and n.
 	function mod_(x, n) {
-		if (s4.length != x.length)
+		if (s4.length !== x.length)
 			s4 = dup(x);
 		else
 			copy_(s4, x);
-		if (s5.length != x.length)
+		if (s5.length !== x.length)
 			s5 = dup(x);
 		divide_(s4, n, s5, x);  //x = remainder of s4 / n
 	}
@@ -1741,7 +1732,7 @@ System.BigInt._Utils = function () {
 	//for greater speed, let y<x.
 	function multMod_(x, y, n) {
 		var i;
-		if (s0.length != 2 * x.length)
+		if (s0.length !== 2 * x.length)
 			s0 = new Array(2 * x.length);
 		copyInt_(s0, 0);
 		for (i = 0; i < y.length; i++)
@@ -1756,7 +1747,7 @@ System.BigInt._Utils = function () {
 		var i, j, d, c, kx, kn, k;
 		for (kx = x.length; kx > 0 && !x[kx - 1]; kx--);  //ignore leading zeros in x
 		k = kx > n.length ? 2 * kx : 2 * n.length; //k=# elements in the product, which is twice the elements in the larger of x and n
-		if (s0.length != k)
+		if (s0.length !== k)
 			s0 = new Array(k);
 		copyInt_(s0, 0);
 		for (i = 0; i < kx; i++) {
@@ -1765,7 +1756,7 @@ System.BigInt._Utils = function () {
 			c >>= bpe;
 			for (j = i + 1; j < kx; j++) {
 				c = s0[i + j] + 2 * x[i] * x[j] + c;
-				s0[i + j] = (c & mask);
+				s0[i + j] = c & mask;
 				c >>= bpe;
 			}
 			s0[i + kx] = c;
@@ -1787,12 +1778,12 @@ System.BigInt._Utils = function () {
 	//this is faster when n is odd.  x usually needs to have as many elements as n.
 	function powMod_(x, y, n) {
 		var k1, k2, kn, np;
-		if (s7.length != n.length)
+		if (s7.length !== n.length)
 			s7 = dup(n);
 
 		//for even modulus, use a simple square-and-multiply algorithm,
 		//rather than using the more complex Montgomery algorithm.
-		if ((n[0] & 1) == 0) {
+		if ((n[0] & 1) === 0) {
 			copy_(s7, x);
 			copyInt_(x, 1);
 			while (!equalsInt(y, 0)) {
@@ -1811,13 +1802,13 @@ System.BigInt._Utils = function () {
 		s7[kn] = 1;
 		multMod_(x, s7, n);   // x = x * 2**(kn*bp) mod n
 
-		if (s3.length != x.length)
+		if (s3.length !== x.length)
 			s3 = dup(x);
 		else
 			copy_(s3, x);
 
 		for (k1 = y.length - 1; k1 > 0 & !y[k1]; k1--);  //k1=first nonzero element of y
-		if (y[k1] == 0) {  //anything to the 0th power is 1
+		if (y[k1] === 0) {  //anything to the 0th power is 1
 			copyInt_(x, 1);
 			return;
 		}
@@ -1854,13 +1845,13 @@ System.BigInt._Utils = function () {
 		var kn = n.length;
 		var ky = y.length;
 
-		if (sa.length != kn)
+		if (sa.length !== kn)
 			sa = new Array(kn);
 
 		copyInt_(sa, 0);
 
-		for (; kn > 0 && n[kn - 1] == 0; kn--); //ignore leading zeros of n
-		for (; ky > 0 && y[ky - 1] == 0; ky--); //ignore leading zeros of y
+		for (; kn > 0 && n[kn - 1] === 0; kn--); //ignore leading zeros of n
+		for (; ky > 0 && y[ky - 1] === 0; ky--); //ignore leading zeros of y
 		ks = sa.length - 1; //sa will never have more than this many nonzero elements.  
 
 		//the following loop consumes 95% of the runtime for randTruePrime_() and powMod_() for large numbers
@@ -1914,12 +1905,12 @@ System.BigInt._Utils = function () {
 	this.ToArray = function (x, base) {
 		var i, t;
 		var s = [];
-		if (s6.length != x.length)
+		if (s6.length !== x.length)
 			s6 = dup(x);
 		else
 			copy_(s6, x);
 
-		if (base == -1) { //return the list of array contents
+		if (base === -1) { //return the list of array contents
 			for (i = 0; i < x.length; i++) s.push(x[i]);
 		}
 		else { //return it in the given base
@@ -1928,9 +1919,9 @@ System.BigInt._Utils = function () {
 				s.push(t);
 			}
 		}
-		if (s.length == 0) s.push(0);
+		if (s.length === 0) s.push(0);
 		return s;
-	}
+	};
 
 	this.FromArray = function (s, base, minSize) {
 		var d, i, j, x, y, kk;
@@ -1955,18 +1946,18 @@ System.BigInt._Utils = function () {
 		for (; i < k; i++)
 			y[i] = 0;
 		return y;
-	}
+	};
 
 	var greater2 = greater;
 
 	greater = function (x, y) {
 
-		return greater2(x, y) == 1;
+		return greater2(x, y) === 1;
 
-	}
+	};
 
-	this.ToBytes = function (x) { return this.ToArray(x, 256); }
-	this.FromBytes = function (bytes) { return this.FromArray(bytes, 256, 0); }
+	this.ToBytes = function (x) { return this.ToArray(x, 256); };
+	this.FromBytes = function (bytes) { return this.FromArray(bytes, 256, 0); };
 
 	this._initialize = function () {
 
@@ -2048,10 +2039,10 @@ System.BigInt._Utils = function () {
 		this.SquareMod_ = squareMod_;
 		this.SubtractShift_ = subShift_;
 
-	}
+	};
 	this._initialize.apply(this, arguments);
 
-}
+};
 
 System.BigInt.Utils = new System.BigInt._Utils();
 
@@ -2064,7 +2055,7 @@ System.BigInt.Divide = function (a, b, qBi, rBi) {
 	qBi.digits = new Array(a.digits.length);
 	rBi.digits = new Array(a.digits.length);
 	System.BigInt.Utils.Divide_(a.digits, b.digits, qBi.digits, rBi.digits);
-}
+};
 System.BigInt.Negate = function (a) {
 	System.BigInt.Utils.Negate_(a.digits);
 };

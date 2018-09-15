@@ -23,7 +23,7 @@ namespace Scripts.Classes.Examples
 		byte[] Transform(byte[] dataBytes, byte[] passwordBytes, bool encrypt)
 		{
 			/// <summary>Encrypt by using AES-256 algorithm.</summary>
-			// Create an instance of the Rijndael class.
+			// Create an instance of the AES class.
 			var cipher = new System.Security.Cryptography.AesCryptoServiceProvider();
 			// Calculate salt to make it harder to guess key by using a dictionary attack.
 			var hmac = new System.Security.Cryptography.HMACSHA1(passwordBytes);

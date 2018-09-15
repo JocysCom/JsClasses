@@ -3,15 +3,6 @@
 // 2009-02-01 Evaldas Jocys [evaldas@jocys.com]
 // 2009-11-02 Jason Ensinger [http://www.codeproject.com/Members/SlingBlade]
 //     System.Drawing.Size class updated.
-//-----------------------------------------------------------------------------
-// You can include this script on both sides - server and client:
-// Server: <!-- #INCLUDE FILE="ScriptFile.js" -->
-// Client: <script type="text/javascript" src="ScriptFile.js"></script>
-//-----------------------------------------------------------------------------
-// Warning: Be careful about what code you include in such way. Since the  code
-// will be passed to the client side as simple text, your code can be  seen  by
-// anyone who wants. Never do this with  scripts  which  contain  any  kind  of
-// passwords, database connection strings, or SQL queries.
 //=============================================================================
 /// <reference path="System.debug.js" />
 //=============================================================================

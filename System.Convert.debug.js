@@ -1,15 +1,6 @@
 ﻿//=============================================================================
 // Jocys.com JavaScript.NET Classes               (In C# Object Oriented Style)
 // Created by Evaldas Jocys <evaldas@jocys.com>
-//-----------------------------------------------------------------------------
-// You can include this script on both sides - server and client:
-// Server: <!-- #INCLUDE FILE="ScriptFile.js" -->
-// Client: <script type="text/javascript" src="ScriptFile.js"></script>
-//-----------------------------------------------------------------------------
-// Warning: Be careful about what code you include in such way. Since the  code
-// will be passed to the client side as simple text, your code can be  seen  by
-// anyone who wants. Never do this with  scripts  which  contain  any  kind  of
-// passwords, database connection strings, or SQL queries.
 //=============================================================================
 /// <reference path="System.debug.js" />
 //=============================================================================
@@ -23,6 +14,24 @@
 /// <reference path="System.debug.js" />
 System.Convert = System.Convert ? System.Convert : {};
 System.Type.RegisterNamespace("System.Convert");
+
+//=============================================================================
+// System.Base64FormattingOptions Enum
+//-----------------------------------------------------------------------------
+
+System.Base64FormattingOptions = function () {
+	/// <summary>Specifies whether relevant methods insert line breaks in their output.</summary>
+	/// <field name="None" type="Number" integer="true" static="true">Does not insert line breaks after every 76 characters in the string representation.</field>
+	/// <field name="InsertLineBreaks" type="Number" integer="true" static="true">Inserts line breaks after every 76 characters in the string representation.</field>
+};
+
+System.Base64FormattingOptions.prototype = {
+	None: 0,
+	InsertLineBreaks: 1
+};
+
+System.Type.RegisterEnum("System.Base64FormattingOptions");
+
 //=============================================================================
 
 System.Convert.Base64Array = function () {
@@ -47,13 +56,13 @@ System.Convert.Base64Array = function () {
 	this.InitializeClass();
 };
 
-System.Convert.ToBase64String = function (b, wrap) {
+System.Convert.ToBase64String = function (b, options) {
 	/// <summary>
 	/// Converts the value of an array of 8-bit unsigned integers to its equivalent
 	/// System.String representation encoded with base 64 digits.
 	/// </summary>
 	/// <param type="byte[]" name="b">An array of 8-bit unsigned integers.</param>
-	/// <param type="bool" name="wrap">Wrap base64 string with '\r\n' separator.</param>
+	/// <param type="int" name="options">Specify: 1 - to insert a line break every 76 characters, 0 - to not insert line breaks.</param>
 	/// <returns type="string">
 	/// The System.String representation, in base 64, of the contents of inArray.
 	/// </returns>
@@ -62,6 +71,7 @@ System.Convert.ToBase64String = function (b, wrap) {
 	/// in full accordance with RFC 2045. Based on http://migbase64.sourceforge.net/
 	/// Converted to JavaScript by Evaldas Jocys [evaldas@jocys.com], http://www.jocys.com
 	/// </remarks>
+	var insertBreaks = options === System.Base64FormattingOptions.InsertLineBreaks || options === true;
 	var B64 = new System.Convert.Base64Array();
 	// Check special case
 	var bLen = b ? b.length : 0;
@@ -70,7 +80,7 @@ System.Convert.ToBase64String = function (b, wrap) {
 	var eLen = Math.floor(bLen / 3) * 3;
 	// Returned character count.
 	var cCnt = (bLen - 1) / 3 + 1 << 2;
-	var dLen = cCnt + (wrap ? (cCnt - 1) / 76 << 1 : 0); // Length of returned array
+	var dLen = cCnt + (insertBreaks ? (cCnt - 1) / 76 << 1 : 0); // Length of returned array
 	var dArr = new Array(dLen);
 	// Encode even 24-bits.
 	for (var s = 0, d = 0, cc = 0; s < eLen;) {
@@ -82,7 +92,7 @@ System.Convert.ToBase64String = function (b, wrap) {
 		dArr[d++] = B64.CA[i >>> 6 & 0x3f];
 		dArr[d++] = B64.CA[i & 0x3f];
 		// Add optional line separator as specified in RFC 2045.
-		if (wrap && ++cc === 19 && d < dLen - 2) {
+		if (insertBreaks && ++cc === 19 && d < dLen - 2) {
 			dArr[d++] = '\r';
 			dArr[d++] = '\n';
 			cc = 0;
@@ -172,19 +182,19 @@ System.Convert.FromBase64String = function (s, fix) {
 	return bytes;
 };
 
-System.Convert.ToBase64UrlString = function (b, wrap) {
+System.Convert.ToBase64UrlString = function (b, options) {
 	/// <summary>
 	/// Converts the value of an array of 8-bit unsigned integers to its equivalent
 	/// System.String representation encoded with Base64URL digits.
 	/// </summary>
 	/// <param type="byte[]" name="b">An array of 8-bit unsigned integers.</param>
-	/// <param type="bool" name="wrap">Wrap base64 string with '\r\n' separator.</param>
+	/// <param type="int" name="options">Specify: 1 - to insert a line break every 76 characters, 0 - to not insert line breaks.</param>
 	/// <returns type="string">
 	/// The System.String representation, in Base64URL, of the contents of inArray.
 	/// </returns>
 	//
 	// Use standard base64 encoder.
-	var s = System.Convert.ToBase64String(b, wrap);
+	var s = System.Convert.ToBase64String(b, options);
 	// Remove trailing '='.
 	s = s.replace(new RegExp("[=]+$", "g"), "");
 	// Replace base64 characters to be URL compatible.

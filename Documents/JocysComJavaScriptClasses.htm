@@ -656,39 +656,6 @@ var bytes = n3.Elements // A6602F11054C86B8DCF3FEFEFFFFFF...  &nbsp;
 				inside JavaScript XML Comments in order to specify type of input data and <code>&lt;returns
 					type="double"&gt;...&lt;/returns&gt; </code>- for output.
 			</p>
-			<p>
-				Files from this JavaScript library can be included on the client and server side,
-				thanks to special header and footer:</p>
-			<pre id="pre2" lang="jscript">&lt;!--//--&gt;&lt;%
-//=============================================================================
-// Jocys.com JavaScript.NET Classes (In C# Object Oriented Style)
-// Created by Evaldas Jocys &lt;evaldas@jocys.com&gt;
-//-----------------------------------------------------------------------------
-// You can include this script on both sides - server and client:
-// Server: &lt;!-- #INCLUDE FILE="ScriptFile.js" --&gt;
-// Client: &lt;script type="text/javascript" src="ScriptFile.js"&gt;&lt;/script&gt;
-//=============================================================================
-        
-JavaScript Code Here...
-
-//==============================================================================
-// END
-//------------------------------------------------------------------------------
-//%&gt;</pre>
-			<p>
-				... and by avoiding <code>Response.Write() </code>or <code>alert() </code>use directly:
-				for example: I can detect if the script is running on the server side or client
-				side and show the message accordingly with this code:
-			</p>
-			<pre id="pre3" lang="cs">this.IsServerSide = (typeof(Response) == "object");
-// If we are on server side then...
-if (this.IsServerSide){
-    // Write text to output.
-    Response.Write(text);
-}else{
-    // Show popup message.
-    alert(text);
-}</pre>
 			<h2>
 				JavaScript IntelliSense
 			</h2>

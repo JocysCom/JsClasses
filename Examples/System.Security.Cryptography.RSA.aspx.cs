@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace Scripts.Classes.Examples
@@ -63,15 +55,10 @@ namespace Scripts.Classes.Examples
 				"<D>XZqFVrYy4qhECruJgVZFp/GVuD5Y0gev88nVjl5r911QT+I8vgJSklTso7jTlpMtf2oe7UZ0WRWEtgPS3tZn4Q==</D>" +
 			"</RSAKeyValue>";
 
-		System.Security.Cryptography.RSACryptoServiceProvider GetNewRsaProvider()
-		{
-			return GetNewRsaProvider(512);
-		}
-
-		System.Security.Cryptography.RSACryptoServiceProvider GetNewRsaProvider(int dwKeySize)
+		System.Security.Cryptography.RSACryptoServiceProvider GetNewRsaProvider(int dwKeySize = 512)
 		{
 			// Tell IIS to use Machine Key store or creation of RSA service provider will fail.
-			CspParameters cspParams = new CspParameters();
+			var cspParams = new CspParameters();
 			cspParams.Flags = CspProviderFlags.UseMachineKeyStore;
 			// Create a new instance of RSACryptoServiceProvider.
 			return new System.Security.Cryptography.RSACryptoServiceProvider(dwKeySize, cspParams);
@@ -212,23 +199,27 @@ namespace Scripts.Classes.Examples
 
 		// https://docs.microsoft.com/en-us/windows/desktop/seccrypto/rsa-schannel-key-blobs
 
-		string ConvertKeyToBase64(bool includePrivateKey)
+		protected void ConvertToBasePublicKeyButton_Click(object sender, EventArgs e)
 		{
+			ConvertKeyToBase64(false);
+		}
+
+		void ConvertKeyToBase64(bool includePrivateKey)
+		{
+			var xmlParams = KeyTextBox.Text;
 			// ------------------------------------------------
 			// RSA Keys
 			// ------------------------------------------------
 			var rsa = GetNewRsaProvider();
-			var key = GetRsaKey(includePrivateKey);
-			// Import parameters from XML.
-			//rsa.ImportParameters(xmlParams);
-			var blob = rsa.ExportCspBlob(includePrivateKey);
+			// Import parameters from xml.
+			rsa.FromXmlString(xmlParams);
 			// Export RSA key to RSAParameters and include:
 			//    false - Only public key required for encryption.
 			//    true  - Private key required for decryption.
 			var xmlString = rsa.ToXmlString(includePrivateKey);
 			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString);
-			//var base64 = System.Convert.ToBase64String(bytes, true);
-			return null;
+			var base64 = System.Convert.ToBase64String(bytes);
+			Base64KeyTextBox.Text = base64;
 		}
 
 		public enum AlgorithmID : uint
@@ -292,9 +283,9 @@ namespace Scripts.Classes.Examples
 			public BlobHeader publickeystruc;
 			public RSAPubKey rsapubkey;
 			public byte[] modulus; //[rsapubkey.bitlen / 8];
-			 /// <summary>P</summary>
+								   /// <summary>P</summary>
 			public byte[] prime1; //[rsapubkey.bitlen / 16];
-			 /// <summary>Q</summary>
+								  /// <summary>Q</summary>
 			public byte[] prime2; //[rsapubkey.bitlen / 16];
 			public byte[] exponent1; //[rsapubkey.bitlen / 16];
 			public byte[] exponent2; //[rsapubkey.bitlen / 16];
@@ -316,7 +307,6 @@ namespace Scripts.Classes.Examples
 			// Show public key for encryption to user.
 			PublicKeyTextBox.Text = rsa.ToXmlString(false);
 		}
-
 
 		protected void SubmitButton_Click(object sender, EventArgs e)
 		{
@@ -345,5 +335,14 @@ namespace Scripts.Classes.Examples
 
 		#endregion
 
+
+		protected void GenerateRandomDataButton_Click(object sender, EventArgs e)
+		{
+			// Generate random 10 byte array.
+			var rnd = new System.Security.Cryptography.RNGCryptoServiceProvider();
+			var bytes = new System.Byte[10];
+			rnd.GetNonZeroBytes(bytes);
+			DataTextBox.Text = string.Join("", bytes.Select(x => x.ToString("X2")));
+		}
 	}
 }

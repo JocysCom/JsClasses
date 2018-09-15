@@ -1,15 +1,6 @@
-﻿//=============================================================================
+﻿//============================================================================
 // Jocys.com JavaScript.NET Classes               (In C# Object Oriented Style)
 // Created by Evaldas Jocys <evaldas@jocys.com>
-//-----------------------------------------------------------------------------
-// You can include this script on both sides - server and client:
-// Server: <!-- #INCLUDE FILE="ScriptFile.js" -->
-// Client: <script type="text/javascript" src="ScriptFile.js"></script>
-//-----------------------------------------------------------------------------
-// Warning: Be careful about what code you include in such way. Since the  code
-// will be passed to the client side as simple text, your code can be  seen  by
-// anyone who wants. Never do this with  scripts  which  contain  any  kind  of
-// passwords, database connection strings, or SQL queries.
 //=============================================================================
 // Namespaces
 //-----------------------------------------------------------------------------
@@ -2440,14 +2431,10 @@ System.Type.RegisterNamespace("System.Web.UI");
 
 System.Web.IsIE = function () {
 	var ua = window.navigator.userAgent;
-	return
-	// IE
-	ua.indexOf('MSIE ') > 0 |
-		// IE 11
-		ua.indexOf('Trident/') > 0 |
-		// IE 12+
-		ua.indexOf('Edge/') > 0;
-}
+	return ua.indexOf('MSIE ') > 0 || // IE
+		ua.indexOf('Trident/') > 0 || // IE11
+		ua.indexOf('Edge/') > 0; // IE12+
+};
 
 System.Web.UI.Console = function (id, context) {
 	/// <summary

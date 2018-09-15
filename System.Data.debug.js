@@ -1,15 +1,6 @@
 ﻿//=============================================================================
 // Jocys.com JavaScript.NET Classes               (In C# Object Oriented Style)
 // Created by Evaldas Jocys <evaldas@jocys.com>
-//-----------------------------------------------------------------------------
-// You can include this script on both sides - server and client:
-// Server: <!-- #INCLUDE FILE="ScriptFile.js" -->
-// Client: <script type="text/javascript" src="ScriptFile.js"></script>
-//-----------------------------------------------------------------------------
-// Warning: Be careful about what code you include in such way. Since the  code
-// will be passed to the client side as simple text, your code can be  seen  by
-// anyone who wants. Never do this with  scripts  which  contain  any  kind  of
-// passwords, database connection strings, or SQL queries.
 //=============================================================================
 /// <reference path="System.debug.js" />
 //=============================================================================
@@ -40,13 +31,13 @@ System.Data.Ado.EnumeratedConstants = function () {
 	this.GetNameByValue = function (category, value) {
 		var name = "";
 		for (var property in this[category]) {
-			if (this[category][property] == value) {
+			if (this[category][property] === value) {
 				name = "AdoEnums." + category + "." + property;
 				break;
 			}
 		}
 		return name;
-	}
+	};
 	//---------------------------------------------------------
 	// PARAMETERS:
 	//---------------------------------------------------------
@@ -58,13 +49,13 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Normal: 3,
 		AboveNormal: 4,
 		Highest: 5
-	}
+	};
 	//---- ADCPROP_AUTORECALC_ENUM Values ----
 	this.AdcPropAutoRecalc = {
 		_prefix: "adRecalc",
 		UpFront: 0,
 		Always: 1
-	}
+	};
 	//---- ADCPROP_UPDATECRITERIA_ENUM Values ----
 	this.AdcPropUpdateCriteria = {
 		_prefix: "adCriteria",
@@ -72,7 +63,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		AllCols: 1,
 		UpdCols: 2,
 		TimeStamp: 3
-	}
+	};
 	//---- ADCPROP_UPDATERESYNC_ENUM Values ----
 	this.AdcPropUpdateResync = {
 		_prefix: "adResync",
@@ -82,7 +73,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Updates: 4,
 		Inserts: 8,
 		All: 15
-	}
+	};
 	//---- AffectEnum Values ----
 	this.Affect = {
 		_prefix: "adAffect",
@@ -90,14 +81,14 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Group: 2,
 		All: 3,
 		AllChapters: 4
-	}
+	};
 	//---- BookmarkEnum Values ----
 	this.Bookmark = {
 		_prefix: "adBookmark",
 		Current: 0,
 		First: 1,
 		Last: 2
-	}
+	};
 	//---- CommandTypeEnum Values ----
 	this.CommandType = {
 		_prefix: "adCmd",
@@ -108,7 +99,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Unknown: 8,
 		File: 256,
 		TableDirect: 512
-	}
+	};
 	//---- CompareEnum Values ----
 	this.Compare = {
 		_prefix: "adCompare",
@@ -117,7 +108,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		GreaterThan: 2,
 		NotEqual: 3,
 		NotComparable: 4
-	}
+	};
 	//---- ConnectModeEnum Values ----
 	this.ConnectMode = {
 		_prefix: "adMode",
@@ -130,13 +121,13 @@ System.Data.Ado.EnumeratedConstants = function () {
 		ShareExclusive: 0xc,
 		ShareDenyNone: 0x10,
 		Recursive: 0x400000
-	}
+	};
 	//---- ConnectOptionEnum Values ----
 	this.ConnectOption = {
 		_prefix: "ad",
 		ConnectUnspecified: -1,
 		AsyncConnect: 16
-	}
+	};
 	//---- ConnectPromptEnum Values ----
 	this.ConnectPrompt = {
 		_prefix: "adPrompt",
@@ -144,7 +135,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		PromptComplete: 2,
 		PromptCompleteRequired: 3,
 		PromptNever: 4
-	}
+	};
 	//---- CopyRecordOptionsEnum Values ----
 	this.CopyRecordOptions = {
 		_prefix: "adCopy",
@@ -152,14 +143,14 @@ System.Data.Ado.EnumeratedConstants = function () {
 		OverWrite: 1,
 		AllowEmulation: 4,
 		NonRecursive: 2
-	}
+	};
 	//---- CursorLocationEnum Values ----
 	this.CursorLocation = {
 		_prefix: "adUse",
 		None: 1,
 		Server: 2,
 		Client: 3
-	}
+	};
 	//---- CursorOptionEnum Values ----
 	this.CursorOption = {
 		_prefix: "ad",
@@ -176,7 +167,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Find: 0x00080000,
 		Seek: 0x00400000,
 		Index: 0x00800000
-	}
+	};
 	// ---- CursorTypeEnum Values ----
 	this.CursorType = {
 		_prefix: "adOpen",
@@ -185,7 +176,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Dynamic: 2,
 		Static: 3,
 		Unspecified: -1
-	}
+	};
 	//---- DataTypeEnum Values ----
 	this.DataType = {
 		_prefix: "ad",
@@ -229,7 +220,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		PropVariant: 138,
 		VarNumeric: 139,
 		Array: 0x2000
-	}
+	};
 	//---- EditModeEnum Values ----
 	this.EditMode = {
 		_prefix: "adEdit",
@@ -237,7 +228,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		InProgress: 0x0001,
 		Add: 0x0002,
 		Delete: 0x0004
-	}
+	};
 	//---- ErrorValueEnum Values ----
 	this.ErrorValue = {
 		_prefix: "adErr",
@@ -306,8 +297,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		//For internal use only. Don't use.
 		//wrnSecurityDialog : 0xe85,
 		//wrnSecurityDialogHeader : 0xe86,
-
-	}
+	};
 	//---- EventReasonEnum Values ----
 	this.EventReason = {
 		_prefix: "adRsn",
@@ -326,7 +316,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		MoveNext: 13,
 		MovePrevious: 14,
 		MoveLast: 15
-	}
+	};
 	//---- EventStatusEnum Values ----
 	this.EventStatus = {
 		_prefix: "adStatus",
@@ -335,7 +325,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		CantDeny: 0x0000003,
 		Cancel: 0x0000004,
 		UnwantedEvent: 0x0000005
-	}
+	};
 	//---- ExecuteOptionEnum Values ----
 	this.ExecuteOption = {
 		_prefix: "ad",
@@ -346,13 +336,13 @@ System.Data.Ado.EnumeratedConstants = function () {
 		ExecuteStream: 0x00000400,
 		ExecuteRecord: 512,
 		OptionUnspecified: -1
-	}
+	};
 	//---- FieldEnum Values ----
 	this.Field = {
 		_prefix: "ad",
 		DefaultStream: -1,
 		RecordURL: -2
-	}
+	};
 	//---- FieldAttributeEnum Values ----
 	this.FieldAttribute = {
 		_prefix: "adFld",
@@ -372,7 +362,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		IsRowURL: 0x00010000,
 		IsDefaultStream: 0x00020000,
 		IsCollection: 0x00040000
-	}
+	};
 	//---- FieldStatusEnum Values ----
 	this.FieldStatus = {
 		_prefix: "adField",
@@ -406,7 +396,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		PendingChange: 0x40000,
 		PendingUnknown: 0x80000,
 		PendingUnknownDelete: 0x100000
-	}
+	};
 	//---- FilterGroupEnum Values ----
 	this.FilterGroup = {
 		_prefix: "adFilter",
@@ -415,12 +405,12 @@ System.Data.Ado.EnumeratedConstants = function () {
 		AffectedRecords: 2,
 		FetchedRecords: 3,
 		ConflictingRecords: 5
-	}
+	};
 	//---- GetRowsOptionEnum Values ----
 	this.GetRowsOption = {
 		_prefix: "adGetRows",
 		Rest: -1
-	}
+	};
 	//---- IsolationLevelEnum Values ----
 	this.IsolationLevel = {
 		_prefix: "adXact",
@@ -433,14 +423,14 @@ System.Data.Ado.EnumeratedConstants = function () {
 		RepeatableRead: 0x00010000,
 		Serializable: 0x00100000,
 		Isolated: 0x00100000
-	}
+	};
 	//---- LineSeparatorsEnum Values ----
 	this.LineSeparators = {
 		_prefix: "ad",
 		CRLF: -1,
 		LF: 10,
 		CR: 13
-	}
+	};
 	//---- LockTypeEnum Values ----
 	this.LockType = {
 		_prefix: "adLock",
@@ -449,13 +439,13 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Pessimistic: 2,
 		Optimistic: 3,
 		BatchOptimistic: 4
-	}
+	};
 	//---- MarshalOptionsEnum Values ----
 	this.MarshalOptions = {
 		_prefix: "adMarshal",
 		All: 0,
 		ModifiedOnly: 1
-	}
+	};
 	//---- MoveRecordOptionsEnum Values ----
 	this.MoveRecordOption = {
 		_prefix: "adMove",
@@ -463,7 +453,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		OverWrite: 1,
 		DontUpdateLinks: 2,
 		AllowEmulation: 4
-	}
+	};
 	//---- ObjectStateEnum Values ----
 	this.ObjectState = {
 		_prefix: "adState",
@@ -472,14 +462,14 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Connecting: 2,
 		Executing: 4,
 		Fetching: 8
-	}
+	};
 	//---- ParameterAttributesEnum Values ----
 	this.ParameterAttributes = {
 		_prefix: "adParam",
 		Signed: 0x0010,
 		Nullable: 0x0040,
 		Long: 0x0080
-	}
+	};
 	//---- ParameterDirectionEnum Values ----
 	this.ParameterDirection = {
 		_prefix: "adParam",
@@ -488,7 +478,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Output: 2,
 		InputOutput: 3,
 		ReturnValue: 4
-	}
+	};
 	//---- PersistFormatEnum Values ----
 	this.PersistFormat = {
 		_prefix: "adPersist",
@@ -496,14 +486,14 @@ System.Data.Ado.EnumeratedConstants = function () {
 		ADO: 1,
 		XML: 1,
 		ProviderSpecific: 2
-	}
+	};
 	//---- PositionEnum Values ----
 	this.Position = {
 		_prefix: "adPos",
 		Unknown: -1,
 		BOF: -2,
 		EOF: -3
-	}
+	};
 	//---- PropertyAttributesEnum Values ----
 	this.PropertyAttributes = {
 		_prefix: "adProp",
@@ -512,7 +502,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Optional: 0x0002,
 		Read: 0x0200,
 		Write: 0x0400
-	}
+	};
 	//---- RecordCreateOptionsEnum Values ----
 	this.RecordCreateOptions = {
 		_prefix: "ad",
@@ -522,7 +512,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		OpenIfExists: 0x02000000,
 		CreateOverwrite: 0x04000000,
 		CreateStructDoc: 0x80000000
-	}
+	};
 	//---- RecordOpenOptionsEnum Values ----
 	this.RecordOpenOptions = {
 		_prefix: "ad",
@@ -532,7 +522,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		OpenExecuteCommand: 0x00010000,
 		DelayFetchFields: 0x00008000,
 		OpenOutput: 0x00800000
-	}
+	};
 	//---- RecordStatusEnum Values ----
 	this.RecordStatus = {
 		_prefix: "adRec",
@@ -554,7 +544,7 @@ System.Data.Ado.EnumeratedConstants = function () {
 		PermissionDenied: 0x0010000,
 		SchemaViolation: 0x0020000,
 		DBDeleted: 0x0040000
-	}
+	};
 	//---- RecordTypeEnum Values ----
 	this.RecordType = {
 		_prefix: "ad",
@@ -562,19 +552,19 @@ System.Data.Ado.EnumeratedConstants = function () {
 		SimpleRecord: 0,
 		CollectionRecord: 1,
 		StructDoc: 2
-	}
+	};
 	//---- ResyncEnum Values ----
 	this.Resync = {
 		_prefix: "adResync",
 		UnderlyingValues: 1,
 		AllValues: 2
-	}
+	};
 	//---- SaveOptionsEnum Values ----
 	this.SaveOptions = {
 		_prefix: "adSaveCreate",
 		NotExist: 1,
 		OverWrite: 2
-	}
+	};
 	//---- SchemaEnum Values ----
 	this.Schema = {
 		_prefix: "adShema",
@@ -623,13 +613,13 @@ System.Data.Ado.EnumeratedConstants = function () {
 		Actions: 41,
 		Commands: 42,
 		Sets: 43
-	}
+	};
 	//---- SearchDirectionEnum Values ----
 	this.SearchDirection = {
 		_prefix: "adSearch",
 		Forward: 1,
 		Backward: -1
-	}
+	};
 	//---- SeekEnum Values ----
 	this.Seek = {
 		_prefix: "adSeek",
@@ -639,44 +629,44 @@ System.Data.Ado.EnumeratedConstants = function () {
 		After: 0x8,
 		BeforeEQ: 0x10,
 		Before: 0x20
-	}
+	};
 	//---- StreamOpenOptionsEnum Values ----
 	this.StreamOpenOptions = {
 		_prefix: "adOpenStream",
 		Unspecified: -1,
 		Async: 1,
 		FromRecord: 4
-	}
+	};
 	//---- StreamReadEnum Values ----
 	this.StreamRead = {
 		_prefix: "adRead",
 		All: -1,
 		Line: -2
-	}
+	};
 	//---- StreamTypeEnum Values ----
 	this.StreamType = {
 		_prefix: "adType",
 		Binary: 1,
 		Text: 2
-	}
+	};
 	//---- StreamWriteEnum Values ----
 	this.StreamWrite = {
 		_prefix: "adWrite",
 		Char: 0,
 		Line: 1
-	}
+	};
 	//---- StringFormatEnum Values ----
 	this.StringFormat = {
 		_prefix: "ad",
 		ClipString: 2
-	}
+	};
 	//---- XactAttributeEnum Values ----
 	this.XactAttribute = {
 		_prefix: "adXact",
 		CommitRetaining: 0x00020000,
 		AbortRetaining: 0x00040000
-	}
-}
+	};
+};
 // Make this class static.
 System.Data.Ado.EnumeratedConstants = new System.Data.Ado.EnumeratedConstants();
 AdoEnums = System.Data.Ado.EnumeratedConstants;
@@ -686,8 +676,8 @@ AdoEnums = System.Data.Ado.EnumeratedConstants;
 //-----------------------------------------------------------------------------
 
 
-System.Data.DataSet = function () {
-}
+System.Data.DataSet = function () { };
+
 System.Type.RegisterClass("System.Data.DataSet");
 
 System.Data.DataTable = function (name) {
@@ -701,15 +691,15 @@ System.Data.DataTable = function (name) {
 		this.Name = name;
 		this.Rows = this.Items;
 		this.Columns = new System.Collections.SortedList();
-	}
+	};
 	this.InitializeClass();
-}
+};
 System.Type.RegisterClass("System.Data.DataTable");
 
 System.Class.Inherit(System.Data.DataTable, System.Collections.SortedList);
 
 System.Data.DataColumn = function () {
-}
+};
 System.Type.RegisterClass("System.Data.DataColumn");
 
 System.Data.DataRow = function () {
@@ -722,14 +712,14 @@ System.Data.DataRow = function () {
 	this.InitializeClass = function () {
 		this.Name = name;
 		this.Cells = this.Items;
-	}
+	};
 	this.InitializeClass();
-}
+};
 System.Type.RegisterClass("System.Data.DataRow");
 
 
 System.Data.DataCell = function () {
-}
+};
 System.Type.RegisterClass("System.Data.DataCell");
 
 
@@ -802,13 +792,13 @@ System.Data.Client = function (connectionString) {
 	// Connect to database.
 	this.Connect = function () {
 		// If recordset is open then
-		if (this.Recordset.State == AdoEnums.ObjectState.Open) {
+		if (this.Recordset.State === AdoEnums.ObjectState.Open) {
 			//Trace.Write("call this.Recordset.Close()");
 			// We need to close it before new connection.
 			this.Recordset.Close();
 		}
 		// Open Connection.
-		if (this.Connection.State == AdoEnums.ObjectState.Closed) {
+		if (this.Connection.State === AdoEnums.ObjectState.Closed) {
 			//Trace.Write("call this.Connection.Open()");
 			this.Connection.Open();
 			// Set active connection of command.
@@ -827,32 +817,32 @@ System.Data.Client = function (connectionString) {
 				this.cresetCommand.Execute();
 			}
 		}
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: Disconnect
 	//---------------------------------------------------------
 	// Disconnect from database.
 	this.Disconnect = function () {
-		if (this.Recordset.State == AdoEnums.ObjectState.Open) {
+		if (this.Recordset.State === AdoEnums.ObjectState.Open) {
 			//Trace.Write("call this.Recordset.Close()");
 			this.Recordset.Close();
 		}
-		if (this.Connection.State == AdoEnums.ObjectState.Open) {
+		if (this.Connection.State === AdoEnums.ObjectState.Open) {
 			//Trace.Write("call this.Connection.Close()");
 			this.Connection.Close();
 		}
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: ConfigureConnection
 	//---------------------------------------------------------
 	this.ConfigureConnection = function (allowWrite, force) {
-		var allowWrite = (allowWrite == true);
+		allowWrite = (allowWrite === true);
 		//Trace.Write("call this.ConfigureConnection("+allowWrite+")");
 		// If current mode is ReadWrite.
 		var setToWrite = false;
 		var setToRead = false;
 		// If current mode is readOnly then...
-		if (this.Connection.Mode == AdoEnums.ConnectMode.Read) {
+		if (this.Connection.Mode === AdoEnums.ConnectMode.Read) {
 			// ... and we want to write then reconfigure.
 			if (allowWrite) setToWrite = true;
 		} else {
@@ -887,13 +877,13 @@ System.Data.Client = function (connectionString) {
 			// Set to read only because we suspect that this is only read action.
 			this.Recordset.LockType = AdoEnums.LockType.ReadOnly;
 		}
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetArray
 	//---------------------------------------------------------
 	// Get array from current dataset.
 	this.GetArray = function (keepConnectionOpen) {
-		keepConnectionOpen = (keepConnectionOpen == true);
+		keepConnectionOpen = (keepConnectionOpen === true);
 		//http://www.adopenstatic.com/faq/recordcountalternatives.asp
 		// The benefit of this method over .RecordCount is that the Recordset's resources
 		// can be released immediately after .GetRows() is invoked and that a fast
@@ -915,22 +905,22 @@ System.Data.Client = function (connectionString) {
 			results.push(row);
 			this.Recordset.MoveNext();
 		}
-		if (keepConnectionOpen == true) {
+		if (keepConnectionOpen === true) {
 			//this.Recordset.MoveFirst();
 		} else {
 			// Disconnect from database.
 			this.Disconnect();
 		}
 		return results;
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetData
 	//---------------------------------------------------------
 	// Function to execute command.
 	this.GetData = function (keepConnectionOpen) {
-		keepConnectionOpen = (keepConnectionOpen == true);
+		keepConnectionOpen = (keepConnectionOpen === true);
 		//Trace.Write("call this.Execute("+keepConnectionOpen+")");
-		this.ConfigureConnection(keepConnectionOpen)
+		this.ConfigureConnection(keepConnectionOpen);
 		// Reset values.
 		var output;
 		this.ColumnsCount = 0;
@@ -950,37 +940,37 @@ System.Data.Client = function (connectionString) {
 			output = this.Recordset;
 		}
 		// If data available because it was select command then...
-		if (this.Recordset.Fields != null) {
+		if (this.Recordset.Fields !== null) {
 			this.ColumnsCount = this.Recordset.Fields.Count;
 			// Count records if table was retrieved.
 			if (this.ColumnsCount > 0) this.RowsCount = this.Recordset.RecordCount;
 		}
 		// Disconnect from database. Return data as array[] with objects
 		// Use output[rowIndex]["ColumnName"].Value to get value.
-		if (keepConnectionOpen != true) {
+		if (keepConnectionOpen !== true) {
 			output = this.GetArray(true);
 			this.Disconnect();
 		}
 		// Return results.
 		return output;
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: AddParameter
 	//---------------------------------------------------------
 	// Method ot add parameter to default commad.
 	this.AddParameter = function (valName, valType, valDirection, valSize) {
-		if (valSize == null || valSize == 0) {
+		if (valSize === null || valSize === 0) {
 			this.Command.Parameters.Append(this.Command.CreateParameter(valName, valType, valDirection));
 		} else {
 			this.Command.Parameters.Append(this.Command.CreateParameter(valName, valType, valDirection, valSize));
 		}
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetParametersList
 	//---------------------------------------------------------
 	this.GetParametersList = function () {
 		return this.GetParameters(this.Command);
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetParameters
 	//---------------------------------------------------------
@@ -1002,7 +992,7 @@ System.Data.Client = function (connectionString) {
 			param = valCommand.Parameters(i);
 			// Get name of output parameter;
 			var paramNote = new String("");
-			if (param.Direction == AdoEnums.ParameterDirection.InputOutput) {
+			if (param.Direction === AdoEnums.ParameterDirection.InputOutput) {
 				this.ParameterOutputName = param.Name;
 				paramNote = " (output)";
 			}
@@ -1017,13 +1007,13 @@ System.Data.Client = function (connectionString) {
 		htmlText += "</TABLE>";
 		this.ParametersList = htmlText;
 		return htmlText;
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetParameters
 	//---------------------------------------------------------
 	this.GetParametersListForCode = function (valIncludeOld, classNamespace, useNumbers, connectionStringInside) {
-		if (this.Command.Parameters.Count == 0) {
-			return "// Looks like " + this.Command.CommandText + " stored procedure does not exist."
+		if (this.Command.Parameters.Count === 0) {
+			return "// Looks like " + this.Command.CommandText + " stored procedure does not exist.";
 		} else {
 			if (!classNamespace) {
 				classNamespace = "System.Data";
@@ -1031,12 +1021,8 @@ System.Data.Client = function (connectionString) {
 			if (!connectionStringInside) connectionStringInside = "";
 			if (classNamespace) classNamespace += ".";
 			var tabs = new String("\t");
-			if (valIncludeOld) tabs = new String("\t\t")
+			if (valIncludeOld) tabs = new String("\t\t");
 			var htmlText = "";
-			var param = new ActiveXObject("ADODB.Parameter");
-			var parameterValues = "";
-			var parameterValuesDebug = "";
-			var parametersSet = "";
 			// We will generate 5 parts of code.
 			var stringFunctionParam = "";
 			var stringTraceMessages = "";
@@ -1049,20 +1035,20 @@ System.Data.Client = function (connectionString) {
 			for (var i = 0; i < this.Command.Parameters.Count; i++) {
 				var param = this.Command.Parameters(i);
 				var paramName = new String(param.Name);
-				var paramIsChar = (AdoEnums.GetNameByValue("DataType", param.Type).indexOf("Char") > -1);
-				var paramIsTime = (AdoEnums.GetNameByValue("DataType", param.Type).indexOf("Time") > -1);
+				var paramIsChar = AdoEnums.GetNameByValue("DataType", param.Type).indexOf("Char") > -1;
+				var paramIsTime = AdoEnums.GetNameByValue("DataType", param.Type).indexOf("Time") > -1;
 				var paramTypeName = AdoEnums.GetNameByValue("DataType", param.Type);
 				var paramDirection = AdoEnums.GetNameByValue("ParameterDirection", param.Direction);
 				//useNumbers = true;
-				if (useNumbers == true) {
+				if (useNumbers === true) {
 					paramTypeName = param.Type;
 					paramDirection = param.Direction;
 				}
 				// If parameter type is nvarchar but size is more than 1 MB then...
-				if (param.Type == 202 && param.Size > 1048576) {
+				if (param.Type === 202 && param.Size > 1048576) {
 					// then parameter is ntext (long nvarchar).
 					paramTypeName = AdoEnums.GetNameByValue("DataType", 203);
-					if (useNumbers == true) paramTypeName = 203;
+					if (useNumbers === true) paramTypeName = 203;
 				} 			// Declare some other variables.
 				var separator = IsFirstParameter ? "" : ", ";
 				var escapeStart = paramIsChar ? "escape(" : "";
@@ -1072,8 +1058,7 @@ System.Data.Client = function (connectionString) {
 				var timeStart = paramIsTime ? "dataClient.GetDbTime(" : "";
 				var timeEnd = paramIsTime ? ")" : "";
 				// If this is return value;
-				if (paramName == "\@RETURN_VALUE") {
-				} else {
+				if (paramName !== "\@RETURN_VALUE") {
 					paramName = paramName.replace("\@", "");
 					// Capitalize parameter.
 					paramNameS = paramName.substr(0, 1).toUpperCase();
@@ -1108,7 +1093,7 @@ System.Data.Client = function (connectionString) {
 				tempString += "\"" + param.Name + "\", " + paramTypeName + ", " + paramDirection;
 				if (param.Size > 0) tempString += ", " + param.Size;
 				tempString += ");";
-				if (useNumbers == true) {
+				if (useNumbers === true) {
 					//tempString += " // "+AdoEnums.GetNameByValue("DataType",param.Type).replace("AdoEnums.DataType.","");
 					//tempString += " "+AdoEnums.GetNameByValue("ParameterDirection",param.Direction).replace("AdoEnums.ParameterDirection.","");
 				}
@@ -1119,7 +1104,7 @@ System.Data.Client = function (connectionString) {
 			var indexStart = commandName.indexOf("=") + 9;
 			var indexEnd = commandName.indexOf("(");
 			// If indexEnd = -1 then...
-			if (indexEnd == -1) {
+			if (indexEnd === -1) {
 				// There is no parameters and we need to adjust indexEnd.
 				indexEnd = commandName.length - 2;
 			}
@@ -1141,12 +1126,12 @@ System.Data.Client = function (connectionString) {
 			htmlText += tabs + "// Create command and get reference to it.\n";
 			htmlText += tabs + "adoCommand = dataClient.CreateCommand(\"sp" + commandName + "\", getParametersAutomaticaly);\n";
 			htmlText += tabs + "// Add parameters to command.\n";
-			for (var i = 0; i < arrayAddParameters.length; i++) {
-				htmlText += tabs + arrayAddParameters[i] + "\n";
+			for (var i1 = 0; i1 < arrayAddParameters.length; i1++) {
+				htmlText += tabs + arrayAddParameters[i1] + "\n";
 			}
 			htmlText += tabs + "// Set command parameter values.\n";
-			for (var i = 0; i < arraySetParameters.length; i++) {
-				htmlText += tabs + arraySetParameters[i] + "\n";
+			for (var i2 = 0; i2 < arraySetParameters.length; i2++) {
+				htmlText += tabs + arraySetParameters[i2] + "\n";
 			}
 			htmlText += tabs + "// Execute stored procedure.\n";
 			htmlText += tabs + "databaseResults = dataClient.GetData();\n";
@@ -1156,8 +1141,8 @@ System.Data.Client = function (connectionString) {
 				// Script for old version.
 				htmlText += tabs + "// Generate SQL Command.\n";
 				htmlText += tabs + "var sqlString = \"sp" + commandName + "\";\n";
-				for (var i = 0; i < arraySqlExecString.length; i++) {
-					htmlText += tabs + arraySqlExecString[i] + "\n";
+				for (var i3 = 0; i < arraySqlExecString.length; i3++) {
+					htmlText += tabs + arraySqlExecString[i3] + "\n";
 				}
 				htmlText += tabs + "// Execute stored procedure.\n";
 				htmlText += tabs + "databaseResults = dbcon.Execute(sqlString);\n";
@@ -1169,7 +1154,7 @@ System.Data.Client = function (connectionString) {
 			this.ParametersList = htmlText;
 			return htmlText;
 		}
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: SetParameters
 	//---------------------------------------------------------
@@ -1178,18 +1163,18 @@ System.Data.Client = function (connectionString) {
 		for (var i = 0; i < valCommand.Parameters.Count; i++) {
 			param = valCommand.Parameters(i);
 			// Set some default values if found.
-			if (param.Name == "@RecordEnabled") param.Value = 1;
-			if (param.Name == "@RecordDateCreated") param.Value = this.GetDbTimeNow();
-			if (param.Name == "@RecordDateModified") param.Value = null;
+			if (param.Name === "@RecordEnabled") param.Value = 1;
+			if (param.Name === "@RecordDateCreated") param.Value = this.GetDbTimeNow();
+			if (param.Name === "@RecordDateModified") param.Value = null;
 		}
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetDbTimeNow
 	//---------------------------------------------------------
 	this.GetDbTimeNow = function () {
-		var date = new Date;
+		var date = new Date();
 		return this.GetDbTime(date);
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: GetDbTime
 	//---------------------------------------------------------
@@ -1204,7 +1189,7 @@ System.Data.Client = function (connectionString) {
 		var intDtm = 0;
 		intDtm = valDate.getTime() / 1000 / 60 / 60 / 24 - valDate.getTimezoneOffset() / 60 / 24 - intPointDtb;
 		return intDtm;
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: Dispose
 	//---------------------------------------------------------
@@ -1215,7 +1200,7 @@ System.Data.Client = function (connectionString) {
 		this.Recordset = null;
 		this.Connection = null;
 		this.Command = null;
-	}
+	};
 	//---------------------------------------------------------
 	// METHOD: CreateCommand
 	//---------------------------------------------------------
@@ -1224,8 +1209,8 @@ System.Data.Client = function (connectionString) {
 		//Trace.Write("-------------"+commandText+"'");
 		// Detect command type.
 		var commandType = AdoEnums.CommandType.Text;
-		if (commandText.toUpperCase().indexOf("SP") == 0) commandType = AdoEnums.CommandType.StoredProc;
-		if (commandText.toUpperCase().indexOf("UP") == 0) commandType = AdoEnums.CommandType.StoredProc;
+		if (commandText.toUpperCase().indexOf("SP") === 0) commandType = AdoEnums.CommandType.StoredProc;
+		if (commandText.toUpperCase().indexOf("UP") === 0) commandType = AdoEnums.CommandType.StoredProc;
 		// Specify command type (SQL text or stored procedure).
 		this.Command.CommandType = commandType;
 		// How long to wait in seconds for a command to execute.
@@ -1247,22 +1232,22 @@ System.Data.Client = function (connectionString) {
 		}
 		// Return command.
 		return this.Command;
-	}
+	};
 	//---------------------------------------------------------
 	// INIT: Class
 	//---------------------------------------------------------
 	this.InitializeClass = function () {
 		// Create Connection.
-		this.Connection.ConnectionString = connectionString
-		if (connectionString == null && typeof (System.Data.DefaultConnectionString) == "string") {
+		this.Connection.ConnectionString = connectionString;
+		if (connectionString === null && typeof System.Data.DefaultConnectionString === "string") {
 			this.Connection.ConnectionString = System.Data.DefaultConnectionString;
 		}
 		// Make writable by default.
 		this.ConfigureConnection(true, true);
-	}
+	};
 	this.InitializeClass();
 
-}
+};
 System.Type.RegisterClass("System.Data.Client");
 
 //==============================================================================

@@ -30,15 +30,24 @@ namespace Scripts.Classes.Examples {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox KeyTextBox;
-        
-        /// <summary>
-        /// KeySizeDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList KeySizeDropDownList;
+
+		/// <summary>
+		/// Base64KeyTextBox control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox Base64KeyTextBox;
+
+		/// <summary>
+		/// KeySizeDropDownList control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.DropDownList KeySizeDropDownList;
         
         /// <summary>
         /// NewKey control.

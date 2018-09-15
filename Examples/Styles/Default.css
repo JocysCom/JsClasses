@@ -12,11 +12,20 @@ td.DataTableHighlight { background-color: whitesmoke !important; cursor: pointer
 input { font-family: Consolas, Verdana; font-size: small; }
 
 textarea {
-font-family: Consolas, Verdana; font-size: small;
+font-family: Consolas, Verdana; 
 -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
 -moz-box-sizing: border-box; /* FF1+ */
 box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
+
+textarea.Small {
+	font-family: Consolas, Verdana;
+	font-size: smaller;
+	-webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+	-moz-box-sizing: border-box; /* FF1+ */
+	box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}
+
 
 /* jQuery-UI DataTables */
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover { background-color: #95d0ff !important; }

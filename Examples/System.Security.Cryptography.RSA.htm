@@ -90,7 +90,7 @@
 		function EncryptButton_Click(sender, e) {
 			$("EncryptedTextBox").value = "";
 			var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
-			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
+			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
 			// ------------------------------------------------
 			// Encrypt
 			// ------------------------------------------------
@@ -110,7 +110,7 @@
 			$("DecryptedTextBox").value = "";
 			//var encryptedBytes = System.Convert.HexStringToBytes($("EncryptedTextBox").value);
 			var encryptedBytes = System.Convert.FromBase64String($("EncryptedTextBox").value);
-			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
+			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
 			// ------------------------------------------------
 			// Decrypt
 			// ------------------------------------------------
@@ -129,7 +129,7 @@
         {
             $("EncryptedTextBox").value = "";
             var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
-            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
+            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
             // ------------------------------------------------
             // Sign
             // ------------------------------------------------
@@ -150,7 +150,7 @@
             $("DecryptedTextBox").value = "";
             var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
             var signatureBytes = System.Convert.FromBase64String($("EncryptedTextBox").value);
-            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
+            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
             // ------------------------------------------------
             // Verify
             // ------------------------------------------------
@@ -176,7 +176,7 @@
 		function DoWork(sender, e) {
 			var text = $("DataTextBox").value;
 			var decryptedBytes = System.Text.Encoding.UTF8.GetBytes(text);
-			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value == "OAEP";
+			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
 			var rsa = GetNewRsaProvider();
 			rsa.ImportParameters(GetRsaKey(true));
 			var encryptedBytes = rsa.Encrypt(decryptedBytes, doOaepPadding);
@@ -189,7 +189,7 @@
 				WriteLog(encryptedBytes);
 			}
 			maxTests--;
-			var success = (text == decryptedString);
+			var success = (text === decryptedString);
 			WriteLog(maxTests + ". bytes: " + encryptedBytes.length + " " + success);
 			if (maxTests > 0 && success) setTimeout(DoWork, 10);
 		}
@@ -227,8 +227,8 @@
 			//    true  - Private key required for decryption.
 			var xmlString = rsa.ToXmlString(includePrivateKey);
 			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString);
-			var base = System.Convert.ToBase64String(bytes, true);
-			$("Base64KeyTextBox").value = base;
+			var base64 = System.Convert.ToBase64String(bytes);
+			$("Base64KeyTextBox").value = base64;
 		}
 
 		function RSA_CreateKeyCompleted(sender, e) {
