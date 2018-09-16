@@ -1834,6 +1834,15 @@ System.Array.Sort = function (array, index, direction) {
 	array.sort(System.Array.SortComparer(index, direction));
 };
 
+System.Array.Resize = function (array, newSize, defaultValue) {
+	/// <sumary>Resize array.</summary>
+	if (typeof defaultValue === "undefined")
+		defaultValue = 0;
+	while (newSize > array.length)
+		array.push(defaultValue);
+	array.length = newSize;
+};
+
 //=============================================================================
 // System.Buffer
 //-----------------------------------------------------------------------------

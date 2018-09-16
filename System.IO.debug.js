@@ -667,6 +667,141 @@ System.IO.Stream = function () {
 System.Type.RegisterClass("System.IO.Stream");
 
 //=============================================================================
+// CLASS: BinaryReader
+//-----------------------------------------------------------------------------
+
+System.IO.BinaryReader = function (input) {
+	this.Stream = new System.IO.Stream(input);
+	var m_buffer = [];
+	//---------------------------------------------------------
+	this.Close = function () {
+		this.Stream.Close();
+	};
+	//---------------------------------------------------------
+	this.Dispose = function () {
+		this.Stream.Dispose();
+	};
+	//---------------------------------------------------------
+	this.Dispose = function () {
+		this.Stream.Dispose();
+	};
+	//---------------------------------------------------------
+	this.PeekChar = function () {
+		throw new System.Exception("NotImplementedException");
+	};
+	//---------------------------------------------------------
+	this.PeekChar = function () {
+		// Involves characters with encoding.
+		throw new System.Exception("NotImplementedException");
+	};
+	//---------------------------------------------------------
+	this._Read1 = function () {
+		// Involves characters with encoding.
+		throw new System.Exception("NotImplementedException");
+	};
+	//---------------------------------------------------------
+	this._Read2 = function (buffer, index, count) {
+		/// <summary>
+		/// Reads the specified number of bytes from the stream, starting from a specified
+		///  point in the byte array.
+		/// </summary>
+		this.Stream.Read(buffer, index, count);
+	};
+	//---------------------------------------------------------
+	this.Read = function () {
+		if (arguments.length === 1)
+			return this._Read1(arguments);
+		else if (arguments.length === 3)
+			return this._Read2(arguments);
+	};
+	//---------------------------------------------------------
+	this.ReadBoolean = function () {
+		this.FillBuffer(1);
+		return System.BitConverter.ToBoolean(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadByte = function () {
+		this.FillBuffer(1);
+		return m_buffer[0];
+	};
+	//---------------------------------------------------------
+	this.ReadBytes = function (count) {
+		this.FillBuffer(count);
+		var bytes = new Array(count);
+		System.Array.Copy(m_buffer, bytes, count);
+		return bytes;
+	};
+	//---------------------------------------------------------
+	this.ReadDecimal = function () {
+		this.FillBuffer(8);
+		return System.BitConverter.ToDouble(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadDouble = function () {
+		this.FillBuffer(8);
+		return System.BitConverter.ToDouble(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadInt16 = function () {
+		this.FillBuffer(2);
+		return System.BitConverter.ToInt16(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadInt32 = function () {
+		this.FillBuffer(4);
+		return System.BitConverter.ToInt32(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadInt64 = function () {
+		this.FillBuffer(8);
+		return System.BitConverter.ToInt64(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadSByte = function () {
+		this.FillBuffer(1);
+		var sbyte = System.BitConverter.GetSigned(m_buffer[0], System.TypeCode.Byte);
+		return sbyte;
+	};
+	//---------------------------------------------------------
+	this.ReadSingle = function () {
+		this.FillBuffer(4);
+		return System.BitConverter.ToSingle(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadString = function () {
+		// Involves characters with encoding.
+		throw new System.Exception("NotImplementedException");
+	};
+	//---------------------------------------------------------
+	this.ReadUInt16 = function () {
+		this.FillBuffer(2);
+		return System.BitConverter.ToUInt16(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadUInt32 = function () {
+		this.FillBuffer(4);
+		return System.BitConverter.ToUInt32(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.ReadUInt64 = function () {
+		this.FillBuffer(8);
+		return System.BitConverter.ToUInt64(m_buffer);
+	};
+	//---------------------------------------------------------
+	this.FillBuffer = function (numBytes) {
+		/// <summary>Fills the internal buffer with the specified number of bytes read from the stream.</summary>
+		m_buffer = new System.Byte(numBytes);
+		this.Stream.Read(m_buffer, 0, numBytes);
+	};
+	//---------------------------------------------------------
+	this.Initialize = function () {
+		this.Stream = new System.IO.Stream(arguments[0]);
+	};
+	this.Initialize.apply(this, arguments);
+};
+System.Type.RegisterClass("System.IO.BinaryReader");
+
+//=============================================================================
 // CLASS: System.IO.MemoryStream
 //-----------------------------------------------------------------------------
 

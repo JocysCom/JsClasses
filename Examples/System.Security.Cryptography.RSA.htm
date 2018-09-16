@@ -74,13 +74,18 @@
 		}
 
 		function GetRsaKey(includePrivateParameters) {
-			var xmlParams = $("KeyTextBox").value;
+			var keyParams = $("KeyTextBox").value;
 			// ------------------------------------------------
 			// RSA Keys
 			// ------------------------------------------------
 			var rsa = GetNewRsaProvider();
-			// Import parameters from xml.
-			rsa.FromXmlString(xmlParams);
+			if (keyParams[0] === "<") {
+				// Import parameters from xml.
+				rsa.FromXmlString(keyParams);
+			} else {
+				var keyBlob = System.Convert.FromBase64String(keyParams);
+				rsa.ImportCspBlob(keyBlob);
+			}
 			// Export RSA key to RSAParameters and include:
 			//    false - Only public key required for encryption.
 			//    true  - Private key required for decryption.
@@ -215,18 +220,23 @@
 		}
 		
 		function ConvertKeyToBase64(includePrivateKey){
-			var xmlParams = $("KeyTextBox").value;
+			var keyParams = $("KeyTextBox").value;
 			// ------------------------------------------------
 			// RSA Keys
 			// ------------------------------------------------
 			var rsa = GetNewRsaProvider();
-			// Import parameters from xml.
-			rsa.FromXmlString(xmlParams);
+			if (keyParams[0] === "<") {
+				// Import parameters from XML.
+				rsa.FromXmlString(keyParams);
+			} else {
+				// Import parameters from BLOB.
+				var keyBlob = System.Convert.FromBase64String(keyParams);
+				rsa.ImportCspBlob(keyBlob);
+			}
 			// Export RSA key to RSAParameters and include:
 			//    false - Only public key required for encryption.
 			//    true  - Private key required for decryption.
-			var xmlString = rsa.ToXmlString(includePrivateKey);
-			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString);
+			var bytes = rsa.ExportCspBlob(includePrivateKey);
 			var base64 = System.Convert.ToBase64String(bytes);
 			$("Base64KeyTextBox").value = base64;
 		}

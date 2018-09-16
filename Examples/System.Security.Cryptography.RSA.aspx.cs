@@ -66,13 +66,19 @@ namespace Scripts.Classes.Examples
 
 		protected RSAParameters GetRsaKey(bool includePrivateParameters)
 		{
-			var xmlParams = KeyTextBox.Text;
-			// ------------------------------------------------
-			// RSA Keys
-			// ------------------------------------------------
 			var rsa = GetNewRsaProvider();
-			// Import parameters from XML.
-			rsa.FromXmlString(xmlParams);
+			var keyParams = KeyTextBox.Text;
+			if (keyParams.StartsWith("<"))
+			{
+				// Import parameters from XML.
+				rsa.FromXmlString(keyParams);
+			}
+			else
+			{
+				// Import parameters from BLOB.
+				var keyBlob = System.Convert.FromBase64String(keyParams);
+				rsa.ImportCspBlob(keyBlob);
+			}
 			// Export RSA key to RSAParameters and include:
 			//    false - Only public key required for encryption.
 			//    true  - Private key required for decryption.
@@ -204,96 +210,33 @@ namespace Scripts.Classes.Examples
 			ConvertKeyToBase64(false);
 		}
 
+		protected void ConvertToBasePrivateKeyButton_Click(object sender, EventArgs e)
+		{
+			ConvertKeyToBase64(true);
+		}
+
 		void ConvertKeyToBase64(bool includePrivateKey)
 		{
-			var xmlParams = KeyTextBox.Text;
-			// ------------------------------------------------
-			// RSA Keys
-			// ------------------------------------------------
 			var rsa = GetNewRsaProvider();
-			// Import parameters from xml.
-			rsa.FromXmlString(xmlParams);
+			var keyParams = KeyTextBox.Text;
+			if (keyParams.StartsWith("<"))
+			{
+				// Import parameters from XML.
+				rsa.FromXmlString(keyParams);
+			}
+			else
+			{
+				// Import parameters from BLOB.
+				var keyBlob = System.Convert.FromBase64String(keyParams);
+				rsa.ImportCspBlob(keyBlob);
+			}
 			// Export RSA key to RSAParameters and include:
 			//    false - Only public key required for encryption.
 			//    true  - Private key required for decryption.
-			var xmlString = rsa.ToXmlString(includePrivateKey);
-			var bytes = System.Text.Encoding.UTF8.GetBytes(xmlString);
+			var bytes = rsa.ExportCspBlob(includePrivateKey);
 			var base64 = System.Convert.ToBase64String(bytes);
 			Base64KeyTextBox.Text = base64;
 		}
-
-		public enum AlgorithmID : uint
-		{
-			/// <summary>
-			/// RSA public key exchange algorithm.This algorithm is supported by the Microsoft Base Cryptographic Provider.
-			/// </summary>
-			CALG_RSA_KEYX = 0x0000a400,
-			/// <summary>
-			/// RSA public key signature algorithm.This algorithm is supported by the Microsoft Base Cryptographic Provider.
-			/// </summary>
-			CALG_RSA_SIGN = 0x00002400,
-
-		}
-
-		public enum BlobType : byte
-		{
-			KeyState = 0xC, // The BLOB is a key state BLOB.
-			OpaqueKey = 0x9, // The key is a session key.
-			PlainTextKey = 0x8, // The key is a session key.
-			PrivateKey = 0x7, // The key is a public/private key pair.
-			PublicKey = 0x6, // The key is a public key.
-			PublicKeyEx = 0xA, // The key is a public key.
-			Simple = 0x1, // The key is a session key.
-			SymmetricWrapKey = 0xB, // The key is a symmetric key. 
-		}
-
-		public struct BlobHeader
-		{
-			public BlobType bType;
-			public byte bVersion;
-			public ushort reserved;
-			public AlgorithmID aiKeyAlg;
-		}
-
-		public struct RSAPubKey
-		{
-			/// <summary>
-			///  Set to RSA1 (0x31415352) for public keys and to RSA2 (0x32415352) for private keys.
-			/// </summary>
-			public uint magic;
-			/// <summary>
-			/// Number of bits in the modulus. In practice, this must always be a multiple of eight.
-			/// </summary>
-			public uint bitlen;
-			/// <summary>
-			/// The public exponent.
-			/// </summary>
-			public uint pubexp;
-		}
-
-		public struct PublicKey
-		{
-			public BlobHeader publickeystruc;
-			public RSAPubKey rsapubkey;
-			public byte[] modulus; //[rsapubkey.bitlen / 8];
-		}
-
-		public class PrivateKey
-		{
-			public BlobHeader publickeystruc;
-			public RSAPubKey rsapubkey;
-			public byte[] modulus; //[rsapubkey.bitlen / 8];
-								   /// <summary>P</summary>
-			public byte[] prime1; //[rsapubkey.bitlen / 16];
-								  /// <summary>Q</summary>
-			public byte[] prime2; //[rsapubkey.bitlen / 16];
-			public byte[] exponent1; //[rsapubkey.bitlen / 16];
-			public byte[] exponent2; //[rsapubkey.bitlen / 16];
-			public byte[] coefficient; //[rsapubkey.bitlen / 16];
-			public byte[] privateExponent; //[rsapubkey.bitlen / 8];
-		}
-
-		// http://msdn.microsoft.com/en-us/library/windows/desktop/aa375601(v=vs.85).aspx
 
 		#endregion
 

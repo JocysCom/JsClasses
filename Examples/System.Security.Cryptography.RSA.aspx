@@ -41,6 +41,7 @@
 					<asp:Button ID="NewKey" runat="server" Text="↓ - Generate New Key Pair (Private and Public)" OnClick="NewKeyButton_Click" />
 				</td>
 				<td>
+					<asp:Button ID="ConvertToBasePrivateKeyButton" runat="server" Text="↓ - Export Private Key" OnClick="ConvertToBasePrivateKeyButton_Click" />
 					<asp:Button ID="ConvertToBasePublicKeyButton" runat="server" Text="↓ - Export Public Key" OnClick="ConvertToBasePublicKeyButton_Click" />
 				</td>
 			</tr>
