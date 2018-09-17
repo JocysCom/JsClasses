@@ -310,7 +310,7 @@ It will produce this interface on the web page:
 
 ![Screenshot](https://raw.githubusercontent.com/JocysCom/JsClasses/master/Documents/JocysComJavaScriptClasses/JocysComJavaScriptClassesToolBar.png)
 
-## Requirements
+## JavaScript Types
 
 JavaScript has a very limited number of types:
 
@@ -377,6 +377,40 @@ var bytes = n3.Elements // A6602F11054C86B8DCF3FEFEFFFFFF...
 ```
 
 **NOTE**: You can use `<param type="byte[]" name="data">...</param>` inside JavaScript XML Comments in order to specify type of input data and `<returns type="double">...</returns> `- for output.
+
+## JavaScript References
+
+In JavaScript there is no `ref` or `out` keyword, which indicates a value that is passed by reference. You have to use JavaScript object to replicate that functionality. For example:
+
+C# reference parameter example:
+
+```cs
+// Function with reference parameter.
+void ChangeValue(ref int param1)
+{
+    param1 = 2;
+}
+
+// Set default value to 0.
+var p = 0;
+// Funcion will set 'p' to 2.
+void ChangeValue(p);
+```
+
+JavaScript reference parameter example:
+
+```cs
+// Function with reference parameter.
+function ChangeValue(param1)
+{
+    param1.Value = 2;
+}
+
+// Set default value to 0.
+var p = { Value: 0 };
+// Funcion will set 'p.Value' to 2.
+void ChangeValue(p);
+```
 
 ## JavaScript IntelliSense
 
