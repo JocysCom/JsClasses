@@ -679,12 +679,12 @@ System.Text.UTF8Encoder = function () {
 		for (var i = 0; i < ln; i++) {
 			b = bytes[i];
 			if (b < 0x80) {
-				// Char represended by 1 byte.
+				// Char represented by 1 byte.
 				s += b > 0 ? String.fromCharCode(b) : "";
 			} else if (b < 0xC0) {
-				// Byte 2,3,4 of unicode char.
+				// Byte 2,3,4 of Unicode char.
 			} else if (b < 0xE0) {
-				// Char represended by 2 bytes.
+				// Char represented by 2 bytes.
 				if (ln > i + 1) {
 					b1 = b & 0x1F; i++;
 					b2 = bytes[i] & 0x3F;
@@ -692,7 +692,7 @@ System.Text.UTF8Encoder = function () {
 					s += String.fromCharCode(bE);
 				}
 			} else if (b < 0xF0) {
-				// Char represended by 3 bytes.
+				// Char represented by 3 bytes.
 				if (ln > i + 2) {
 					b1 = b & 0xF; i++;
 					b2 = bytes[i] & 0x3F; i++;
@@ -701,7 +701,7 @@ System.Text.UTF8Encoder = function () {
 					s += String.fromCharCode(bE);
 				}
 			} else if (b < 0xF8) {
-				// Char represended by 4 bytes.
+				// Char represented by 4 bytes.
 				if (ln > i + 3) {
 					b1 = b & 0x7; i++;
 					b2 = bytes[i] & 0x3F; i++;
@@ -716,6 +716,44 @@ System.Text.UTF8Encoder = function () {
 		}
 		return s;
 	};
+	//---------------------------------------------------------
+	// Reference Parameters:
+	//
+	// var bytesUsed = { Value: 0 };
+	// var charsUsed = { Value: 0 };
+	// var completed = { Value: false };
+	//
+	this.function = Convert(bytes, byteIndex, byteCount, chars, charIndex, charCount, flush, bytesUsed, charsUsed, completed)
+	{
+		/// <summary>Converts an array of encoded bytes to UTF-16 encoded characters and stores the result in a character array.</summary>
+		/// <param name="bytes">A byte array to convert.</param>
+		/// <param name="byteIndex">The first element of <paramref name="bytes" /> to convert.</param>
+		/// <param name="byteCount">The number of elements of <paramref name="bytes" /> to convert.</param>
+		/// <param name="chars">An array to store the converted characters.</param>
+		/// <param name="charIndex">The first element of <paramref name="chars" /> in which data is stored.</param>
+		/// <param name="charCount">The maximum number of elements of <paramref name="chars" /> to use in the conversion.</param>
+		/// <param name="flush">true to indicate that no further data is to be converted; otherwise, false.</param>
+		/// <param name="bytesUsed">When this method returns, contains the number of bytes that were used in the conversion. This parameter is passed uninitialized.</param>
+		/// <param name="charsUsed">When this method returns, contains the number of characters from <paramref name="chars" /> that were produced by the conversion. This parameter is passed uninitialized.</param>
+		/// <param name="completed">When this method returns, contains true if all the characters specified by <paramref name="byteCount" /> were converted; otherwise, false. This parameter is passed uninitialized.</param>
+
+		if (bytes.length == 0)
+			return 0;
+		var charCount = chars.length - charIndex;
+		if (chars.length == 0)
+			chars = new char[1];
+		//  public virtual void Convert(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex, int charCount, bool flush, out int bytesUsed, out int charsUsed, out bool completed)
+		bytesUsed = byteCount;
+		//while (bytesUsed > 0) {
+		//	if (this.GetCharCount(bytes, byteIndex, bytesUsed, flush) <= charCount) {
+		//		charsUsed = this.GetChars(bytes, byteIndex, bytesUsed, chars, charIndex, flush);
+		//		completed = bytesUsed == byteCount && (this.m_fallbackBuffer == null || this.m_fallbackBuffer.Remaining == 0);
+		//		return;
+		//	}
+		//	flush = false;
+		//	bytesUsed /= 2;
+		//}
+	}
 	//---------------------------------------------------------
 	this.InitializeClass = function () {
 	};
