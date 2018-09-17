@@ -380,7 +380,7 @@ var bytes = n3.Elements // A6602F11054C86B8DCF3FEFEFFFFFF...
 
 ## JavaScript References
 
-In JavaScript there is no `ref` or `out` keyword, which indicates a value that is passed by reference. You have to use JavaScript object to replicate that functionality. For example:
+In JavaScript there is no `ref` or `out` keyword, which indicates a value that is passed by reference. You have to use JavaScript Object type to replicate reference functionality. For example:
 
 C# reference parameter example:
 
