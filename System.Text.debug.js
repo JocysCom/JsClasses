@@ -611,6 +611,7 @@ System.Type.RegisterClass("System.Text.Encoding");
 // CLASS: Encoder.UTF8
 //-----------------------------------------------------------------------------
 
+// https://referencesource.microsoft.com/#mscorlib/system/text/utf8encoding.cs
 // UTF-8, a transformation format of ISO 10646:
 // http://www.ietf.org/rfc/rfc3629.txt
 // Transformation:
@@ -620,14 +621,14 @@ System.Type.RegisterClass("System.Text.Encoding");
 //   The letter x indicates bits available for encoding bits of the
 //   character number.
 //
-//    Char. number range   |        UTF-8 octet sequence
-//       (hexadecimal)     |              (binary)
-//   ----------------------+---------------------------------------------
-//   0000 0000 - 0000 007F | 0xxxxxxx
-//   0000 0080 - 0000 07FF | 110xxxxx 10xxxxxx
-//   0000 0800 - 0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx
-//   0001 0000 - 0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-
+//   Bytes | Bits | Char HEX number range | UTF-8 octet sequence (binary)
+//   ------+------+-----------------------+-------------------------------------
+//      1  |   7  | 0000 0000 - 0000 007F | 0xxxxxxx
+//      2  |  11  | 0000 0080 - 0000 07FF | 110xxxxx 10xxxxxx
+//      3  |  16  | 0000 0800 - 0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx
+//      4  |  21  | 0001 0000 - 0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+//   ------+------+-----------------------+-------------------------------------
+//
 System.Text.UTF8Encoder = function () {
 	//---------------------------------------------------------
 	// Private properties.
@@ -678,8 +679,8 @@ System.Text.UTF8Encoder = function () {
 		var ln = bytes.length;
 		for (var i = 0; i < ln; i++) {
 			b = bytes[i];
+			// If char represented by 1 byte then...
 			if (b < 0x80) {
-				// Char represented by 1 byte.
 				s += b > 0 ? String.fromCharCode(b) : "";
 			} else if (b < 0xC0) {
 				// Byte 2,3,4 of Unicode char.
@@ -723,7 +724,7 @@ System.Text.UTF8Encoder = function () {
 	// var charsUsed = { Value: 0 };
 	// var completed = { Value: false };
 	//
-	this.function = Convert(bytes, byteIndex, byteCount, chars, charIndex, charCount, flush, bytesUsed, charsUsed, completed)
+	this.function = Convert(bytes, byteIndex, byteCount, chars, charIndex, charCount, flush, out_bytesUsed, out_charsUsed, out_completed)
 	{
 		/// <summary>Converts an array of encoded bytes to UTF-16 encoded characters and stores the result in a character array.</summary>
 		/// <param name="bytes">A byte array to convert.</param>
@@ -736,23 +737,57 @@ System.Text.UTF8Encoder = function () {
 		/// <param name="bytesUsed">When this method returns, contains the number of bytes that were used in the conversion. This parameter is passed uninitialized.</param>
 		/// <param name="charsUsed">When this method returns, contains the number of characters from <paramref name="chars" /> that were produced by the conversion. This parameter is passed uninitialized.</param>
 		/// <param name="completed">When this method returns, contains true if all the characters specified by <paramref name="byteCount" /> were converted; otherwise, false. This parameter is passed uninitialized.</param>
-
+		out_bytesUsed.Value = 0;
+		out_charsUsed.Value = 0;
+		out_completed.Value = false;
 		if (bytes.length == 0)
 			return 0;
 		var charCount = chars.length - charIndex;
 		if (chars.length == 0)
 			chars = new char[1];
-		//  public virtual void Convert(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex, int charCount, bool flush, out int bytesUsed, out int charsUsed, out bool completed)
 		bytesUsed = byteCount;
-		//while (bytesUsed > 0) {
-		//	if (this.GetCharCount(bytes, byteIndex, bytesUsed, flush) <= charCount) {
-		//		charsUsed = this.GetChars(bytes, byteIndex, bytesUsed, chars, charIndex, flush);
-		//		completed = bytesUsed == byteCount && (this.m_fallbackBuffer == null || this.m_fallbackBuffer.Remaining == 0);
-		//		return;
-		//	}
-		//	flush = false;
-		//	bytesUsed /= 2;
-		//}
+		/// <summary>
+		/// Get string from array of bytes.
+		/// </summary>
+		var c;
+		var ln = byteIndex + byteCount;
+		var i;
+		for (i = byteIndex; i < ln; i++) {
+			// If 1 byte (0xxxxxxx) char then...
+			if (bytes[i] >> 7 == 0x00) {
+				c = (bytes[i] & 0x3F);
+			}
+			// If 2 byte (110xxxxx) char and all bytes available then...
+			else if (bytes[i] >> 5 == 0x06) {
+				// If all bytes available then break.
+				if (ln > i + 1)
+					c = (bytes[i++] & 0x1F) << 6 |
+						(bytes[i] & 0x3F);
+			}
+			// If 3 byte (1110xxxx) char and all bytes available then...
+			else if (bytes[i] >> 4 == 0x0E) {
+				// If all bytes available then break.
+				if (ln > i + 2)
+					c = (bytes[i++] & 0x0F) << 12 |
+						(bytes[i++] & 0x3F) << 6 |
+						(bytes[i] & 0x3F);
+			}
+			// If 4 byte (11110xxx) char and all bytes available then...
+			else if (bytes[i] >> 3 == 0x1C) {
+				// If all bytes available then...
+				if (ln > i + 3)
+					c = (bytes[i++] & 0x07) << 18 |
+						(bytes[i++] & 0x3F) << 12 |
+						(bytes[i++] & 0x3F) << 6 |
+						(bytes[i] & 0x3F);
+			}
+			// If unknown byte then...
+			else {
+				c = 0x3F;
+			}
+			chars.push(String.fromCharCode(c));
+		}
+		out_charsUsed.Value = chars.length;
 	}
 	//---------------------------------------------------------
 	this.InitializeClass = function () {
