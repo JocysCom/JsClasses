@@ -1153,19 +1153,18 @@ System.Security.Cryptography.Utils.DWORDFromBigEndian = function (x, digits, blo
 	}
 };
 
-System.Security.Cryptography.Utils.OidToHashAlgorithmName = function(oid)
-{
-    if (oid != "1.3.14.3.2.26") {
-        if (oid == "2.16.840.1.101.3.4.2.1")
-            return "SHA256";
-        if (oid == "2.16.840.1.101.3.4.2.2")
-            return "SHA384";
-        if (oid != "2.16.840.1.101.3.4.2.3")
-            throw "Not suported";
-        return "SHA512";
-    }
-    return "SHA1";
-}
+System.Security.Cryptography.Utils.OidToHashAlgorithmName = function (oid) {
+	if (oid !== "1.3.14.3.2.26") {
+		if (oid === "2.16.840.1.101.3.4.2.1")
+			return "SHA256";
+		if (oid === "2.16.840.1.101.3.4.2.2")
+			return "SHA384";
+		if (oid !== "2.16.840.1.101.3.4.2.3")
+			throw "Not supported";
+		return "SHA512";
+	}
+	return "SHA1";
+};
 
 //-----------------------------------------------------------------------------
 // CipherMode

@@ -33,7 +33,7 @@ namespace Scripts.Classes.Examples
 				byte[] bytes;
 				char[] chars;
 				// If at least 2 characters available and both form UTF-16 surrogate pair then...
-				if (i < input.Length - 1 && System.Char.IsHighSurrogate(input[i]) && System.Char.IsLowSurrogate(input[i + 1]))
+				if (i < input.Length - 1 && System.Char.IsHighSurrogate(input, i) && System.Char.IsLowSurrogate(input, i + 1))
 				{
 					// Get UTF-32 (Unicode) code point.
 					code = System.Char.ConvertToUtf32(input[i], input[i + 1]);
