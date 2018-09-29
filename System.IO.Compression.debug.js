@@ -753,39 +753,45 @@ System.IO.Compression.FastEncoder = function () {
 			if (currentMatch.State === System.IO.Compression.MatchState.HasSymbol) {
 				WriteChar.apply(this, [currentMatch.Symbol, output]);
 			}
+			else if (currentMatch.State === System.IO.Compression.MatchState.HasMatch) {
+				WriteMatch.apply(this, [currentMatch.Length, currentMatch.Position, output]);
+			}
 			else {
-				if (currentMatch.State === System.IO.Compression.MatchState.HasMatch) {
-					WriteMatch.apply(this, [currentMatch.Length, currentMatch.Position, output]);
-					continue;
-				}
 				WriteChar.apply(this, [currentMatch.Symbol, output]);
 				WriteMatch.apply(this, [currentMatch.Length, currentMatch.Position, output]);
 			}
 		}
 	}
 	//---------------------------------------------------------
+	// maxBytesToCopy limits the number of bytes we can copy from input. Set to any value < 1 if no limit
 	function GetCompressedOutput_3(input, output, maxBytesToCopy) {
-		var bytesWritten = output.BytesWritten();
-		var num2 = 0;
-		var num3 = this.BytesInHistory() + input.Count;
+		// snapshot for compression ratio stats
+		var bytesWrittenPre = output.BytesWritten();
+		var bytesConsumedFromInput = 0;
+		var inputBytesPre = this.BytesInHistory() + input.Count;
 		do {
-			var num4 = input.Count < inputWindow.FreeWindowSpace() ? input.Count : inputWindow.FreeWindowSpace();
+			// read more input data into the window if there is space available
+			var bytesToCopy = input.Count < inputWindow.FreeWindowSpace()
+				? input.Count : inputWindow.FreeWindowSpace();
 			if (maxBytesToCopy >= 1) {
-				num4 = Math.min(num4, maxBytesToCopy - num2);
+				bytesToCopy = Math.min(bytesToCopy, maxBytesToCopy - bytesConsumedFromInput);
 			}
-			if (num4 > 0) {
-				inputWindow.CopyBytes(input.Buffer, input.StartIndex, num4);
-				input.ConsumeBytes(num4);
-				num2 += num4;
+			if (bytesToCopy > 0) {
+				// copy data into history window
+				inputWindow.CopyBytes(input.Buffer, input.StartIndex, bytesToCopy);
+				input.ConsumeBytes(bytesToCopy);
+				bytesConsumedFromInput += bytesToCopy;
 			}
 			this.GetCompressedOutput(output);
 		}
-		while (this.SafeToWriteTo(output) && this.InputAvailable(input) && (maxBytesToCopy < 1 || num2 < maxBytesToCopy));
-		var num6 = output.BytesWritten() - bytesWritten;
-		var num7 = this.BytesInHistory() + input.Count;
-		var num8 = num3 - num7;
-		if (num6 !== 0) {
-			lastCompressionRatio = num6 / num8; // double
+		while (this.SafeToWriteTo(output) && this.InputAvailable(input) && (maxBytesToCopy < 1 || bytesConsumedFromInput < maxBytesToCopy));
+		// determine compression ratio, save
+		var bytesWrittenPost = output.BytesWritten();
+		var bytesWritten = bytesWrittenPost - bytesWrittenPre;
+		var inputBytesPost = this.BytesInHistory() + input.Count;
+		var totalBytesConsumed = inputBytesPre - inputBytesPost;
+		if (bytesWrittenPost !== 0) {
+			lastCompressionRatio = bytesWritten / totalBytesConsumed; // double
 		}
 	}
 	//---------------------------------------------------------
