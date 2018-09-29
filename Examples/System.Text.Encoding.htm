@@ -6,56 +6,121 @@
 	<meta http-equiv="Expires" content="-1" />
 	<title>System.Text.Encoding</title>
 	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<link type="text/css" rel="stylesheet" href="Styles/Default.css" />
+
+	<script src="../Includes/jquery-3.2.1.js"></script>
 
 	<script type="text/javascript" src="../System.debug.js"></script>
 
 	<script type="text/javascript" src="../System.Text.debug.js"></script>
 
+	<!-- Collections and BitConverter scripts are used only in example to display bit information -->
+
+	<script type="text/javascript" src="../System.Collections.debug.js"></script>
+
+	<script type="text/javascript" src="../System.BitConverter.debug.js"></script>
+
 	<script type="text/javascript">
-	function showByte(value){
-	}
-	
-		window.onload = function(){
-			var text = "abcė新闻网";
+
+		function Window_Load() {
 			Trace.IsEnabled = true;
 			Trace.Write("Start Demo");
-			Trace.Write("----------------------------");
-			Trace.Write("text = '"+text+"'");
-			Trace.Write("escape(text) = '"+escape(text)+"'");
-			Trace.Write("CharCodes:");
-			for (var i = 0; i < text.length; i++){
-				var c = text.charAt(i);
-				Trace.Write("char: "+c+" - "+c.charCodeAt(0)+" - "+c.charCodeAt(0).toString(2));
-			}
-			Trace.Write("----------------------------");
-			Trace.Write("System.Text.Encoding.UTF8.GetBytes(text):");
-			var bytes = System.Text.Encoding.UTF8.GetBytes(text);
-			for (var i = 0; i < bytes.length; i++){
-				var b = bytes[i]
-				Trace.Write("byte: "+b.toString(16)+" - "+String.fromCharCode(bytes[i])+" - "+b);
-			}
-			Trace.Write(System.Text.Encoding.UTF8.GetString(bytes)+" from "+text);
-			Trace.Write("----------------------------");
-			Trace.Write("System.Text.Encoding.Unicode.GetBytes(text):");
-			bytes = System.Text.Encoding.Unicode.GetBytes(text);
-			for (var i = 0; i < bytes.length; i++){
-				var b = bytes[i]
-				Trace.Write("byte: "+b.toString(16)+" - "+String.fromCharCode(bytes[i])+" - "+b);
-			}
-			Trace.Write(System.Text.Encoding.Unicode.GetString(bytes)+" from "+text);
-			Trace.Write("----------------------------");
-			Trace.Write("System.Text.Encoding.ASCII.GetBytes(text):");
-			bytes = System.Text.Encoding.ASCII.GetBytes(text);
-			for (var i = 0; i < bytes.length; i++){
-				var b = bytes[i]
-				Trace.Write("byte: "+b.toString(16)+" - "+String.fromCharCode(bytes[i])+" - "+b);
-			}
-			Trace.Write(System.Text.Encoding.ASCII.GetString(bytes)+" from "+text);
+			$("#TestButton").on('click', TestButton_Click);
+			$("#ClearButton").on('click', ClearButton_Click);
+			TestButton_Click(null, null);
 		}
+
+		function TestButton_Click(sender, e) {
+			var s = $("#ValueTextBox").text();
+			ConvertValue(s);
+		}
+
+		function ClearButton_Click(sender, e) {
+			$("#TestButton").text("");
+		}
+
+		function JoinBytes(bytes) {
+			var s = "";
+			for (var i = 0; i < bytes.length; i++) {
+				var b = bytes[i];
+				if (i > 0)
+					s += '-';
+				var hex = b.toString(16).toUpperCase();
+				var hex = "00".substr(0, 2 - hex.length) + hex;
+				s += hex;
+			}
+			return s;
+		}
+
+		function WriteArray(name, input, encoding) {
+			var sb = new System.Text.StringBuilder();
+			sb.AppendLine(name);
+			sb.AppendLine();
+			for (var i = 0; i < input.length; i++) {
+				var s = input[i];
+				var code = System.Char.ConvertToUtf32(input, i);
+				// If at least 2 characters available and both form UTF-16 surrogate pair then...
+				if (i < input.length - 1 && System.Char.IsHighSurrogate(input, i) && System.Char.IsLowSurrogate(input, i + 1)) {
+					// Get UTF-32 (Unicode) code point.
+					s += input[i + 1];
+					i++;
+				}
+				var bytes = encoding.GetBytes(s);
+				var byteString = JoinBytes(bytes);
+				var bitString = "";
+				for (var b = 0; b < bytes.length; b++) {
+					if (b > 0)
+						bitString += " ";
+					var bits = new System.Collections.BitArray([bytes[b]]);
+					for (var x = 0; x < bits.length; x++)
+						bitString += bits[bits.length - x - 1] ? '1' : '0';
+				}
+				var codeHex = code.toString(16).toUpperCase();
+				var codeHex = "00000000".substr(0, 8 - codeHex.length) + codeHex;
+				var s2 = encoding.GetString(bytes);
+				sb.AppendFormat("\t{0}. {1} - {2} - {3} - {4}\r\n", i, codeHex, byteString, bitString, s2);
+			}
+			var text = $("#LogTextBox").text();
+			$("#LogTextBox").text(text + sb.ToString() + "\r\n");
+		}
+
+		function ConvertValue(s) {
+			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
+			//WriteArray("UTF-32 Bytes (Unicode)", s, System.Text.Encoding.UTF32);
+			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
+			WriteArray("ASCII Bytes", s, System.Text.Encoding.ASCII);
+		}
+
+		$(Window_Load);
+
 	</script>
 
 </head>
 <body>
-	<div id="TraceLog" style="width: 100%; height: 400px;"></div>
+	<table class="SQUI_DataTables">
+		<tr>
+			<td>
+				<textarea id="ValueTextBox" rows="2" cols="128">AŁउ𐋄</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button id="TestButton">↓ - Test</button>
+				<button id="ClearButton">Clear</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<textarea id="LogTextBox" rows="32" cols="128"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div id="TraceLog" style="width: 100%; height: 100px;"></div>
+			</td>
+		</tr>
+	</table>
+	
+
 </body>
 </html>

@@ -26,29 +26,18 @@ namespace Scripts.Classes.Examples
 			var sb = new System.Text.StringBuilder();
 			sb.AppendLine(name);
 			sb.AppendLine();
-			for (int i = 0; i < input.Length; i++)
+			for (var i = 0; i < input.Length; i++)
 			{
-				string s;
-				int code; ;
-				byte[] bytes;
-				char[] chars;
+				var s = input[i].ToString();
+				var code = System.Char.ConvertToUtf32(input, i);
 				// If at least 2 characters available and both form UTF-16 surrogate pair then...
 				if (i < input.Length - 1 && System.Char.IsHighSurrogate(input, i) && System.Char.IsLowSurrogate(input, i + 1))
 				{
 					// Get UTF-32 (Unicode) code point.
-					code = System.Char.ConvertToUtf32(input[i], input[i + 1]);
-					chars = new char[] { input[i], input[i + 1] };
-					bytes = encoding.GetBytes(chars);
-					s = input[i].ToString() + input[i + 1].ToString();
+					s += input[i + 1];
 					i++;
 				}
-				else
-				{
-					code = (int)input[i];
-					bytes = encoding.GetBytes(new char[] { input[i] });
-					chars = new char[] { input[i] };
-					s = input[i].ToString();
-				}
+				var bytes = encoding.GetBytes(s);
 				var byteString = string.Join("-", bytes.Select(x => x.ToString("X2")));
 				var bitString = "";
 				for (int b = 0; b < bytes.Length; b++)
@@ -78,9 +67,9 @@ namespace Scripts.Classes.Examples
 
 		void ConvertValue(string s)
 		{
-			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
 			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
 			WriteArray("UTF-32 Bytes (Unicode)", s, System.Text.Encoding.UTF32);
+			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
 			WriteArray("ASCII Bytes", s, System.Text.Encoding.ASCII);
 		}
 

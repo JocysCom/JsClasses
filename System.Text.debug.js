@@ -11,6 +11,93 @@
 // <PropertyGroup>
 //-----------------------------------------------------------------------------
 
+System.Char.UNICODE_PLANE00_END = 0xFFFF;
+// The starting code point for Unicode plane 1.  Plane 1 contains 0x010000 ~ 0x01FFFF.
+System.Char.UNICODE_PLANE01_START = 0x10000;
+// The end code point for Unicode plane 16.
+// This is the maximum code point value allowed for Unicode.
+// Plane 16 contains 0x100000 ~ 0x10ffff.
+System.Char.UNICODE_PLANE16_END = 0x10FFFF;
+System.Char.HIGH_SURROGATE_START = 0xD800;
+System.Char.HIGH_SURROGATE_END = 0xDBFF;
+System.Char.LOW_SURROGATE_START = 0xDC00;
+System.Char.LOW_SURROGATE_END = 0xDFFF;
+
+System.Char.IsHighSurrogate = function (s, index) {
+	/// <summary>Indicates whether the char at the specified position in a string is a high surrogate.</summary>
+	/// <param name="s">A string.</param>
+	/// <param name="index">The position of the character to evaluate in s.</param>
+	/// <returns>True if the numeric value of the specified character in the s parameter is high surrogate; otherwise, false.</returns>
+	var code = s.charCodeAt(index);
+	return 0xD800 <= code && code <= 0xDBFF;
+};
+
+System.Char.IsLowSurrogate = function (s, index) {
+	/// <summary>Indicates whether the char at the specified position in a string is a low surrogate.</summary>
+	/// <param name="s">A string.</param>
+	/// <param name="index">The position of the character to evaluate in s.</param>
+	/// <returns>True if the numeric value of the specified character is low surrogate; otherwise, false.</returns>
+	var code = s.charCodeAt(index);
+	return 0xDC00 <= code && code <= 0xDFFF;
+};
+
+
+System.Char._ConvertToUtf32_1 = function (highSurrogate, lowSurrogate) {
+	/// <summary>Converts the value of a UTF-16 encoded surrogate pair into a Unicode code point.</summary>
+	/// <param name="highSurrogate">A high surrogate code unit.</param>
+	/// <param name="lowSurrogate">A low surrogate code unit.</param>
+	/// <returns>The 21-bit Unicode code point represented by the highSurrogate and lowSurrogate parameters.</returns>
+	if (typeof highSurrogate === "string" && typeof lowSurrogate === "string") {
+		highSurrogate = highSurrogate.charCodeAt(0);
+		lowSurrogate = lowSurrogate.charCodeAt(0);
+	}
+	return (highSurrogate - 0xD800) * 0x400 + lowSurrogate - 0xDC00 + 0x10000;
+};
+
+System.Char._ConvertToUtf32_2 = function (s, index) {
+	/// <summary>
+	/// Converts the value of a UTF - 16 encoded character or surrogate pair at a specified
+	/// position in a string into a Unicode code point.
+	/// </summary >
+	/// <param name="s"> A string that contains a character or surrogate pair.</param>
+	/// <param name="index"> The index position of the character or surrogate pair in s.</param>
+	/// <returns>The 21-bit Unicode code point represented by the highSurrogate and lowSurrogate parameters.</returns>
+	if (index < s.Length - 1 && System.Char.IsHighSurrogate(input, index) && System.Char.IsLowSurrogate(input, index + 1)) {
+		var highSurrogate = s.charCodeAt(index);
+		var lowSurrogate = s.charCodeAt(index + 1);
+		return System.Char._ConvertToUtf32_1(highSurrogate, lowSurrogate);
+	} else {
+		return s.charCodeAt(index);
+	}
+};
+
+System.Char.ConvertToUtf32 = function () {
+	if (typeof arguments[0] === "string" && typeof arguments[1] === "number") {
+		return System.Char._ConvertToUtf32_2(arguments[0], arguments[1]);
+	} else {
+		return System.Char._ConvertToUtf32_1(arguments[0], arguments[1]);
+	}
+};
+
+System.Char.ConvertFromUtf32 = function (utf32) {
+	/// <summary>Converts the specified Unicode code point into a UTF-16 encoded string.</summary>
+	/// <param name="utf32">A 21-bit Unicode code point.</param>
+	/// <returns>A string consisting of one surrogate pair</returns>
+	//
+	// If this is a Unicode plane 1 (BMP) character then...
+	if (utf32 < 0x10000)
+		return String.fromCharCode(utf32);
+	// Convert it to a surrogate pair in UTF-16.
+	utf32 -= 0x10000;
+	var highSurrogate = utf32 / 0x400 + 0xD800;
+	var lowSurrogate = utf32 % 0x400 + 0xDC00;
+	var c1 = String.fromCharCode(highSurrogate);
+	var c2 = String.fromCharCode(lowSurrogate);
+	return c1 + c2;
+};
+
+//-----------------------------------------------------------------------------
+
 System.Type.RegisterNamespace("System.Text");
 
 // HtmlDecode http://lab.msdn.microsoft.com/annotations/htmldecode.js
@@ -571,7 +658,22 @@ System.Text.StringBuilder = function (value) {
 	};
 	//---------------------------------------------------------
 	this.AppendLine = function (value) {
+		if (typeof value === 'undefined')
+			value = "";
 		return this.Append(value + '\r\n');
+	};
+	//---------------------------------------------------------
+	this.AppendFormat = function (format, args) {
+		/// <summary>Appends the string returned by processing a composite format string.</summary>
+		/// <param name="format">A composite format string.</param>
+		/// <param name="An array of objects to format.">A composite format string.</param>
+		/// <returns>A reference to this instance with format appended.</returns>
+		args = Array.prototype.slice.call(arguments, 1);
+		var value = format.replace(/{(\d+)}/g,
+			function (match, number) {
+				return typeof args[number] !== 'undefined' ? args[number] : match;
+			});
+		return this.Append(value);
 	};
 	//---------------------------------------------------------
 	this.Clear = function () {
@@ -665,55 +767,26 @@ System.Text.UTF8Encoder = function () {
 		return bytes;
 	};
 	//---------------------------------------------------------
-	this.GetString = function (bytes) {
-		/// <summary>
-		/// Get string from array of bytes.
-		/// </summary>
+	this.GetString = function (bytes, index, count) {
+		/// <summary>decodes a sequence of bytes from the specified byte array into a string.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="count">The number of bytes to decode.</param>
+		/// <returns>String containing the results of decoding the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		if (typeof count === "undefined")
+			count = bytes.length - index;
 		var s = "";
-		var b = 0;
-		var b1 = 0;
-		var b2 = 0;
-		var b3 = 0;
-		var b4 = 0;
-		var bE = 0;
-		var ln = bytes.length;
-		for (var i = 0; i < ln; i++) {
-			b = bytes[i];
-			// If char represented by 1 byte then...
-			if (b < 0x80) {
-				s += b > 0 ? String.fromCharCode(b) : "";
-			} else if (b < 0xC0) {
-				// Byte 2,3,4 of Unicode char.
-			} else if (b < 0xE0) {
-				// Char represented by 2 bytes.
-				if (ln > i + 1) {
-					b1 = b & 0x1F; i++;
-					b2 = bytes[i] & 0x3F;
-					bE = b1 << 6 | b2;
-					s += String.fromCharCode(bE);
-				}
-			} else if (b < 0xF0) {
-				// Char represented by 3 bytes.
-				if (ln > i + 2) {
-					b1 = b & 0xF; i++;
-					b2 = bytes[i] & 0x3F; i++;
-					b3 = bytes[i] & 0x3F;
-					bE = b1 << 12 | b2 << 6 | b3;
-					s += String.fromCharCode(bE);
-				}
-			} else if (b < 0xF8) {
-				// Char represented by 4 bytes.
-				if (ln > i + 3) {
-					b1 = b & 0x7; i++;
-					b2 = bytes[i] & 0x3F; i++;
-					b3 = bytes[i] & 0x3F; i++;
-					b4 = bytes[i] & 0x3F;
-					bE = b1 << 18 | b2 << 12 | b3 << 6 | b4;
-					s += String.fromCharCode(bE);
-				}
-			} else {
-				s += "?";
-			}
+		var bytesUsed = { Value: 0 };
+		var used = 0;
+		while (used < count) {
+			s += this.ReadChar(bytes, index + used, bytesUsed);
+			used += bytesUsed.Value;
+			// If no more bytes to read then...
+			if (bytesUsed.Value === 0)
+				// Break loop.
+				break;
 		}
 		return s;
 	};
@@ -724,71 +797,42 @@ System.Text.UTF8Encoder = function () {
 	// var charsUsed = { Value: 0 };
 	// var completed = { Value: false };
 	//
-	this.function = Convert(bytes, byteIndex, byteCount, chars, charIndex, charCount, flush, out_bytesUsed, out_charsUsed, out_completed)
-	{
-		/// <summary>Converts an array of encoded bytes to UTF-16 encoded characters and stores the result in a character array.</summary>
-		/// <param name="bytes">A byte array to convert.</param>
-		/// <param name="byteIndex">The first element of <paramref name="bytes" /> to convert.</param>
-		/// <param name="byteCount">The number of elements of <paramref name="bytes" /> to convert.</param>
-		/// <param name="chars">An array to store the converted characters.</param>
-		/// <param name="charIndex">The first element of <paramref name="chars" /> in which data is stored.</param>
-		/// <param name="charCount">The maximum number of elements of <paramref name="chars" /> to use in the conversion.</param>
-		/// <param name="flush">true to indicate that no further data is to be converted; otherwise, false.</param>
-		/// <param name="bytesUsed">When this method returns, contains the number of bytes that were used in the conversion. This parameter is passed uninitialized.</param>
-		/// <param name="charsUsed">When this method returns, contains the number of characters from <paramref name="chars" /> that were produced by the conversion. This parameter is passed uninitialized.</param>
-		/// <param name="completed">When this method returns, contains true if all the characters specified by <paramref name="byteCount" /> were converted; otherwise, false. This parameter is passed uninitialized.</param>
-		out_bytesUsed.Value = 0;
-		out_charsUsed.Value = 0;
-		out_completed.Value = false;
-		if (bytes.length == 0)
-			return 0;
-		var charCount = chars.length - charIndex;
-		if (chars.length == 0)
-			chars = new char[1];
-		bytesUsed = byteCount;
-		/// <summary>
-		/// Get string from array of bytes.
-		/// </summary>
-		var c;
-		var ln = byteIndex + byteCount;
-		var i;
-		for (i = byteIndex; i < ln; i++) {
-			// If 1 byte (0xxxxxxx) char then...
-			if (bytes[i] >> 7 == 0x00) {
-				c = (bytes[i] & 0x3F);
-			}
-			// If 2 byte (110xxxxx) char and all bytes available then...
-			else if (bytes[i] >> 5 == 0x06) {
-				// If all bytes available then break.
-				if (ln > i + 1)
-					c = (bytes[i++] & 0x1F) << 6 |
-						(bytes[i] & 0x3F);
-			}
-			// If 3 byte (1110xxxx) char and all bytes available then...
-			else if (bytes[i] >> 4 == 0x0E) {
-				// If all bytes available then break.
-				if (ln > i + 2)
-					c = (bytes[i++] & 0x0F) << 12 |
-						(bytes[i++] & 0x3F) << 6 |
-						(bytes[i] & 0x3F);
-			}
-			// If 4 byte (11110xxx) char and all bytes available then...
-			else if (bytes[i] >> 3 == 0x1C) {
-				// If all bytes available then...
-				if (ln > i + 3)
-					c = (bytes[i++] & 0x07) << 18 |
-						(bytes[i++] & 0x3F) << 12 |
-						(bytes[i++] & 0x3F) << 6 |
-						(bytes[i] & 0x3F);
-			}
-			// If unknown byte then...
-			else {
-				c = 0x3F;
-			}
-			chars.push(String.fromCharCode(c));
+	this.ReadChar = function (bytes, index, out_bytesUsed) {
+		/// <summary>Read char from byte array.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="out_bytesUsed">Contains the number of bytes that were used in decoding.</param>
+		/// <returns>Decoded character from the specified sequence of bytes.</returns>
+		var c = 0;
+		var i = index;
+		var ln = bytes.length;
+		// If 1 byte (0xxxxxxx) char then...
+		if (bytes[i] >> 7 === 0x00) {
+			c = bytes[i] & 0x7F;
+			out_bytesUsed.Value = 1;
 		}
-		out_charsUsed.Value = chars.length;
-	}
+		// If 2 byte (110xxxxx) char and all bytes available then...
+		else if (bytes[i] >> 5 === 0x06 && ln > i + 1) {
+			c = (bytes[i++] & 0x1F) << 6 | bytes[i] & 0x3F;
+			out_bytesUsed.Value = 2;
+		}
+		// If 3 byte (1110xxxx) char and all bytes available then...
+		else if (bytes[i] >> 4 === 0x0E && ln > i + 2) {
+			c = (bytes[i++] & 0x0F) << 12 | (bytes[i++] & 0x3F) << 6 | bytes[i] & 0x3F;
+			out_bytesUsed.Value = 3;
+		}
+		// If 4 byte (11110xxx) char and all bytes available then...
+		else if (bytes[i] >> 3 === 0x1C && ln > i + 3) {
+			c = (bytes[i++] & 0x07) << 18 | (bytes[i++] & 0x3F) << 12 | (bytes[i++] & 0x3F) << 6 | bytes[i] & 0x3F;
+			out_bytesUsed.Value = 4;
+		}
+		// If unknown byte then...
+		else {
+			c = 0x3F;
+			out_bytesUsed.Value = 1;
+		}
+		return String.fromCharCode(c);
+	};
 	//---------------------------------------------------------
 	this.InitializeClass = function () {
 	};
@@ -800,11 +844,8 @@ System.Type.RegisterClass("System.Text.UTF8Encoder");
 System.Text.Encoding.UTF8 = new System.Text.UTF8Encoder();
 
 //=============================================================================
-// CLASS: Encoder.Unicode
+// CLASS: Encoder.Unicode (UTF-16)
 //-----------------------------------------------------------------------------
-
-// Unicode (UTF-16) Transformation:
-// http://www.czyborra.com/utf/
 
 System.Text.UnicodeEncoder = function () {
 	//---------------------------------------------------------
@@ -821,7 +862,7 @@ System.Text.UnicodeEncoder = function () {
 			c = s.charCodeAt(i);
 			// Reduce to 16 bytes.
 			if (c > 0xFFFF) {
-				bytes.push(0xDC00 | c & 0x3FF);
+				bytes.push(0xDC00 | c & 0x03FF);
 				bytes.push(0xD7C0 + (c >> 10));
 			} else {
 				bytes.push(c & 0xFF);
@@ -831,21 +872,23 @@ System.Text.UnicodeEncoder = function () {
 		return bytes;
 	};
 	//---------------------------------------------------------
-	this.GetString = function (bytes) {
-		/// <summary>
-		/// Get string from array of bytes.
-		/// </summary>
+	this.GetString = function (bytes, index, count) {
+		/// <summary>decodes a sequence of bytes from the specified byte array into a string.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="count">The number of bytes to decode.</param>
+		/// <returns>String containing the results of decoding the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		if (typeof count === "undefined")
+			count = bytes.length - index;
 		var s = "";
-		var b = 0;
 		var b1 = 0;
 		var b2 = 0;
-		for (var i = 0; i < bytes.length; i++) {
-			b1 = bytes[i]; i++;
+		for (var i = index; i < index + count; i++) {
+			b1 = bytes[i++];
 			b2 = bytes[i];
 			s += String.fromCharCode(b2 << 8 | b1);
-			//x1 = (b1 <= 0xF ? "0" : "") + b1.toString(16);
-			//x2 = (b2 <= 0xF ? "0" : "") + b2.toString(16);
-			//s += unescape("%u"+x2+x1);
 		}
 		return s;
 	};

@@ -378,6 +378,7 @@
     <Content Include="Examples\System.Security.Password.Interface.htm" />
     <Content Include="Examples\System.TestTools.UnitTesting.htm" />
     <Content Include="Examples\System.Text.CodeColorizer.htm" />
+    <Content Include="Examples\System.Text.Encoding.aspx" />
     <Content Include="Examples\System.Text.Encoding.htm" />
     <Content Include="Examples\System.Text.htm" />
     <Content Include="Examples\System.Timers.Synchronizer.htm" />
@@ -1016,6 +1017,13 @@
     </Compile>
     <Compile Include="Examples\System.Security.Cryptography.SHA256.aspx.designer.cs">
       <DependentUpon>System.Security.Cryptography.SHA256.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\System.Text.Encoding.aspx.cs">
+      <DependentUpon>System.Text.Encoding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Examples\System.Text.Encoding.aspx.designer.cs">
+      <DependentUpon>System.Text.Encoding.aspx</DependentUpon>
     </Compile>
     <Compile Include="Examples\System.Web.Mobile.asmx.cs">
       <DependentUpon>System.Web.Mobile.asmx</DependentUpon>
