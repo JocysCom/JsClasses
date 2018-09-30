@@ -48,7 +48,7 @@ namespace Scripts.Classes.Examples
 						bitString += bits[bits.Length - x - 1] ? '1' : '0';
 				}
 				var s2 = encoding.GetString(bytes);
-				sb.AppendFormat("\t{0,2}. {1:X8} - {2,-16} - {3,-36} - {4}\r\n", i, code, byteString, bitString, s2);
+				sb.AppendFormat("\t{0,2}.   {1:X8}   {2,-11}   {3,-36}   {4}\r\n", i, code, byteString, bitString, s2);
 			}
 			WriteLog(sb.ToString());
 		}
@@ -68,6 +68,9 @@ namespace Scripts.Classes.Examples
 		void ConvertValue(string s)
 		{
 			LogTextBox.Text = "";
+			WriteLog("	 No   Code       Bytes         Bits                                  Char");
+			WriteLog("	 --   --------   -----------   -----------------------------------   ----");
+			WriteLog("");
 			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
 			WriteArray("UTF-32 Bytes (Unicode)", s, System.Text.Encoding.UTF32);
 			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
