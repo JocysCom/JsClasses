@@ -62,7 +62,7 @@ System.Char._ConvertToUtf32_2 = function (s, index) {
 	/// <param name="s"> A string that contains a character or surrogate pair.</param>
 	/// <param name="index"> The index position of the character or surrogate pair in s.</param>
 	/// <returns>The 21-bit Unicode code point represented by the highSurrogate and lowSurrogate parameters.</returns>
-	if (index < s.Length - 1 && System.Char.IsHighSurrogate(input, index) && System.Char.IsLowSurrogate(input, index + 1)) {
+	if (index < s.length - 1 && System.Char.IsHighSurrogate(s, index) && System.Char.IsLowSurrogate(s, index + 1)) {
 		var highSurrogate = s.charCodeAt(index);
 		var lowSurrogate = s.charCodeAt(index + 1);
 		return System.Char._ConvertToUtf32_1(highSurrogate, lowSurrogate);
@@ -853,16 +853,18 @@ System.Text.UnicodeEncoder = function () {
 	var me = this;
 	//---------------------------------------------------------
 	this.GetBytes = function (s) {
-		/// <summary>
-		/// Get array of bytes.
-		/// </summary>
+		/// <summary>Encodes all the characters in the specified string into a sequence of bytes.</summary>
+		/// <param name="s">The string containing the characters to encode.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
 		var bytes = [];
 		var c = 0;
 		for (var i = 0; i < s.length; i++) {
 			c = s.charCodeAt(i);
-			// Reduce to 16 bytes.
+			// If this is a Unicode Supplementary character then...
 			if (c > 0xFFFF) {
+				// Create a high surrogate code unit.
 				bytes.push(0xDC00 | c & 0x03FF);
+				// Create a low surrogate code unit.
 				bytes.push(0xD7C0 + (c >> 10));
 			} else {
 				bytes.push(c & 0xFF);
@@ -873,7 +875,7 @@ System.Text.UnicodeEncoder = function () {
 	};
 	//---------------------------------------------------------
 	this.GetString = function (bytes, index, count) {
-		/// <summary>decodes a sequence of bytes from the specified byte array into a string.</summary>
+		/// <summary>Decodes a sequence of bytes from the specified byte array into a string.</summary>
 		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
 		/// <param name="index">The index of the first byte to decode.</param>
 		/// <param name="count">The number of bytes to decode.</param>
@@ -901,6 +903,74 @@ System.Type.RegisterClass("System.Text.UnicodeEncoder");
 
 // Make it static.
 System.Text.Encoding.Unicode = new System.Text.UnicodeEncoder();
+
+//=============================================================================
+// CLASS: Encoder.UTF32
+//-----------------------------------------------------------------------------
+
+System.Text.UTF32Encoder = function () {
+	//---------------------------------------------------------
+	// Private properties.
+	var me = this;
+	//---------------------------------------------------------
+	this.GetBytes = function (s) {
+		/// <summary>Encodes all the characters in the specified string into a sequence of bytes.</summary>
+		/// <param name="s">The string containing the characters to encode.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+		var bytes = [];
+		var c = 0;
+		for (var i = 0; i < s.length; i++) {
+			// If high surrogate code then...
+			c = System.Char._ConvertToUtf32_2(s, i);
+			// Push low bytes.
+			bytes.push(c & 0xFF);
+			bytes.push(c >> 8 & 0xFF);
+			// If this is a Unicode Supplementary character then...
+			if (c > 0xFFFF) {
+				// Push high bytes.
+				bytes.push(c >> 16 & 0xFF);
+				bytes.push(c >> 24 & 0xFF);
+				i++;
+			}
+		}
+		return bytes;
+	};
+	//---------------------------------------------------------
+	this.GetString = function (bytes, index, count) {
+		/// <summary>decodes a sequence of bytes from the specified byte array into a string.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="count">The number of bytes to decode.</param>
+		/// <returns>String containing the results of decoding the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		if (typeof count === "undefined")
+			count = bytes.length - index;
+		var s = "";
+		var b1 = 0;
+		var b2 = 0;
+		var b3 = 0;
+		var b4 = 0;
+		var code = 0;
+		for (var i = index; i < index + count; i++) {
+			b1 = bytes[i++];
+			b2 = bytes[i++];
+			b3 = bytes[i++];
+			b4 = bytes[i];
+			code = b4 << 24 | b3 << 16 | b2 << 8 | b1;
+			s += System.Char.ConvertFromUtf32(code);
+		}
+		return s;
+	};
+	//---------------------------------------------------------
+	this.InitializeClass = function () {
+	};
+	this.InitializeClass();
+};
+System.Type.RegisterClass("System.Text.UTF32Encoder");
+
+// Make it static.
+System.Text.Encoding.UTF32 = new System.Text.UTF32Encoder();
 
 //=============================================================================
 // CLASS: Encoder.ASCII
