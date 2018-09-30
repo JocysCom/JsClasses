@@ -737,13 +737,17 @@ System.Text.UTF8Encoder = function () {
 	var me = this;
 	//---------------------------------------------------------
 	this.GetBytes = function (s) {
-		/// <summary>
-		/// Get array of bytes.
-		/// </summary>
+		/// <summary>Encodes all the characters in the specified string into a sequence of bytes.</summary>
+		/// <param name="s">The string containing the characters to encode.</param>
+		/// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
 		var bytes = [];
 		var c = 0;
 		for (var i = 0; i < s.length; i++) {
-			c = s.charCodeAt(i);
+			// If high surrogate code then...
+			c = System.Char._ConvertToUtf32_2(s, i);
+			// If this is a Unicode Supplementary character then...
+			if (c > 0xFFFF)
+				i++;
 			// Convert char code to bytes.
 			if (c < 0x80) {
 				bytes.push(c);
@@ -822,7 +826,7 @@ System.Text.UTF8Encoder = function () {
 			out_bytesUsed.Value = 3;
 		}
 		// If 4 byte (11110xxx) char and all bytes available then...
-		else if (bytes[i] >> 3 === 0x1C && ln > i + 3) {
+		else if (bytes[i] >> 3 === 0x1E && ln > i + 3) {
 			c = (bytes[i++] & 0x07) << 18 | (bytes[i++] & 0x3F) << 12 | (bytes[i++] & 0x3F) << 6 | bytes[i] & 0x3F;
 			out_bytesUsed.Value = 4;
 		}
@@ -831,7 +835,7 @@ System.Text.UTF8Encoder = function () {
 			c = 0x3F;
 			out_bytesUsed.Value = 1;
 		}
-		return String.fromCharCode(c);
+		return System.Char.ConvertFromUtf32(c);
 	};
 	//---------------------------------------------------------
 	this.InitializeClass = function () {
@@ -922,16 +926,14 @@ System.Text.UTF32Encoder = function () {
 		for (var i = 0; i < s.length; i++) {
 			// If high surrogate code then...
 			c = System.Char._ConvertToUtf32_2(s, i);
-			// Push low bytes.
+			// Push bytes.
 			bytes.push(c & 0xFF);
 			bytes.push(c >> 8 & 0xFF);
+			bytes.push(c >> 16 & 0xFF);
+			bytes.push(c >> 24 & 0xFF);
 			// If this is a Unicode Supplementary character then...
-			if (c > 0xFFFF) {
-				// Push high bytes.
-				bytes.push(c >> 16 & 0xFF);
-				bytes.push(c >> 24 & 0xFF);
+			if (c > 0xFFFF)
 				i++;
-			}
 		}
 		return bytes;
 	};
