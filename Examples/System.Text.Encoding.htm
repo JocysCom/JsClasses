@@ -31,12 +31,12 @@
 		}
 
 		function TestButton_Click(sender, e) {
-			var s = $("#ValueTextBox").text();
+			var s = $("#ValueTextBox").val();
 			ConvertValue(s);
 		}
 
 		function ClearButton_Click(sender, e) {
-			$("#LogTextBox").text("");
+			$("#LogTextBox").val("");
 		}
 
 		function JoinBytes(bytes) {
@@ -56,8 +56,8 @@
 
 		function WriteLog(s) {
 			// Append to text box.
-			var text = $("#LogTextBox").text();
-			$("#LogTextBox").text(text + s + "\r\n");
+			var text = $("#LogTextBox").val();
+			$("#LogTextBox").val(text + s + "\r\n");
 		}
 
 		function WriteArray(name, input, encoding) {
@@ -92,7 +92,7 @@
 		//#endregion
 
 		function ConvertValue(s) {
-			$("#LogTextBox").text("");
+			$("#LogTextBox").val("");
 			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
 			WriteArray("UTF-32 Bytes (Unicode)", s, System.Text.Encoding.UTF32);
 			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
