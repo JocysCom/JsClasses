@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<td>
-				<asp:TextBox ID="LogTextBox" runat="server" Rows="32" TextMode="MultiLine" Width="100%" /></td>
+				<asp:TextBox ID="LogTextBox" runat="server" Rows="34" TextMode="MultiLine" Width="100%" /></td>
 		</tr>
 	</table>
 </asp:Content>
