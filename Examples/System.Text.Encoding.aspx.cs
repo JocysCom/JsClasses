@@ -16,9 +16,9 @@ namespace Scripts.Classes.Examples
 
 		#region Log Function
 
-		public void WriteLog(string text)
+		public void WriteLog(string s)
 		{
-			LogTextBox.Text += text + " \r\n";
+			LogTextBox.Text += s + " \r\n";
 		}
 
 		private void WriteArray(string name, string input, System.Text.Encoding encoding)
@@ -48,7 +48,8 @@ namespace Scripts.Classes.Examples
 					for (int x = 0; x < bits.Length; x++)
 						bitString += bits[bits.Length - x - 1] ? '1' : '0';
 				}
-				sb.AppendFormat("\t{0,2}. {1:X8} - {2,-16} - {3,-36} - {4}\r\n", i, code, byteString, bitString, s);
+				var s2 = encoding.GetString(bytes);
+				sb.AppendFormat("\t{0,2}. {1:X8} - {2,-16} - {3,-36} - {4}\r\n", i, code, byteString, bitString, s2);
 			}
 			WriteLog(sb.ToString());
 		}

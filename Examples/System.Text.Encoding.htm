@@ -52,6 +52,15 @@
 			return s;
 		}
 
+		//#region Log Function
+
+		function WriteLog(s)
+		{
+			// Append to text box.
+			var text = $("#LogTextBox").text();
+			$("#LogTextBox").text(text + s + "\r\n");
+		}
+
 		function WriteArray(name, input, encoding) {
 			var sb = new System.Text.StringBuilder();
 			sb.AppendLine(name);
@@ -75,14 +84,13 @@
 					for (var x = 0; x < bits.length; x++)
 						bitString += bits[bits.length - x - 1] ? '1' : '0';
 				}
-				var codeHex = code.toString(16).toUpperCase();
-				var codeHex = "00000000".substr(0, 8 - codeHex.length) + codeHex;
 				var s2 = encoding.GetString(bytes);
-				sb.AppendFormat("\t{0}. {1} - {2} - {3} - {4}\r\n", i, codeHex, byteString, bitString, s2);
+				sb.AppendFormat("\t{0,2}. {1:X8} - {2,-16} - {3,-36} - {4}\r\n", i, code, byteString, bitString, s2);
 			}
-			var text = $("#LogTextBox").text();
-			$("#LogTextBox").text(text + sb.ToString() + "\r\n");
+			WriteLog(sb.ToString());
 		}
+
+		//#endregion
 
 		function ConvertValue(s) {
 			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
