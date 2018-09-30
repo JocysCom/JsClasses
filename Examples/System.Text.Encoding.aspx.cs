@@ -11,7 +11,6 @@ namespace Scripts.Classes.Examples
 			{
 				ConvertValue(ValueTextBox.Text);
 			}
-
 		}
 
 		#region Log Function
@@ -68,6 +67,7 @@ namespace Scripts.Classes.Examples
 
 		void ConvertValue(string s)
 		{
+			LogTextBox.Text = "";
 			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
 			WriteArray("UTF-32 Bytes (Unicode)", s, System.Text.Encoding.UTF32);
 			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);

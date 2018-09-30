@@ -54,8 +54,7 @@
 
 		//#region Log Function
 
-		function WriteLog(s)
-		{
+		function WriteLog(s) {
 			// Append to text box.
 			var text = $("#LogTextBox").text();
 			$("#LogTextBox").text(text + s + "\r\n");
@@ -93,6 +92,7 @@
 		//#endregion
 
 		function ConvertValue(s) {
+			$("#LogTextBox").text("");
 			WriteArray("UTF-16 Bytes (JavaScript/C#)", s, System.Text.Encoding.Unicode);
 			WriteArray("UTF-32 Bytes (Unicode)", s, System.Text.Encoding.UTF32);
 			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
@@ -128,7 +128,7 @@
 			</td>
 		</tr>
 	</table>
-	
+
 
 </body>
 </html>
