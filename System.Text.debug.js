@@ -473,7 +473,7 @@ System.Text.StringArray.AddValue = function (values, value, addValue) {
 	/// <summary>
 	/// 
 	/// </summary>
-	// Replace semicomas with comas.
+	// Replace semi-comas with comas.
 	var rxSemi = new RegExp(";", "g");
 	values = values.replace(rxSemi, ",");
 	// Remove all non allowed chars.
@@ -542,16 +542,6 @@ System.Text.RegularExpressions.GetByTag = function (tagName, ignoreCase) {
 	return regex;
 };
 
-
-//System.Text.RegularExpressions.GetFromTag  = function(valTagName){
-//	var fragment = "(?:<"+valTagName+".*?>)((n|.)*?)(?:</"+valTagName+">)";
-//	var matchRegExp = new RegExp(fragment, 'im');
-//	// Retunr inline text.
-//	// innerText = someText.match(matchRegExp)[1];
-//	return match;
-//}
-
-
 System.Text.RegularExpressions.GetMatch = function (text, matchPattern, variable) {
 	// Get first match;
 	var results = "";
@@ -564,7 +554,6 @@ System.Text.RegularExpressions.GetMatch = function (text, matchPattern, variable
 	}
 	return results;
 };
-
 
 System.Text.RegularExpressions.GetEscapedPattern = function (s) {
 	/// <summary>
@@ -579,7 +568,6 @@ System.Text.RegularExpressions.GetEscapedPattern = function (s) {
 	}
 	return pattern;
 };
-
 
 System.Text.RegularExpressions.Trim = function (text, symbols, escapePattern) {
 	/// <summary>
@@ -681,7 +669,7 @@ System.Text.StringBuilder = function (value) {
 					value = hexMatch[1] === "x"
 						? value.toLowerCase()
 						: value.toUpperCase();
-					// Add zeroes.
+					// Add zeros.
 					num = parseInt(hexMatch[2]);
 					var z = "";
 					for (i = value.length; i < num; i++)
@@ -828,8 +816,6 @@ System.Text.UTF8Encoder = function () {
 	// Reference Parameters:
 	//
 	// var bytesUsed = { Value: 0 };
-	// var charsUsed = { Value: 0 };
-	// var completed = { Value: false };
 	//
 	this.ReadChar = function (bytes, index, out_bytesUsed) {
 		/// <summary>Read char from byte array.</summary>
@@ -837,6 +823,8 @@ System.Text.UTF8Encoder = function () {
 		/// <param name="index">The index of the first byte to decode.</param>
 		/// <param name="out_bytesUsed">Contains the number of bytes that were used in decoding.</param>
 		/// <returns>Decoded character from the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
 		var c = 0;
 		var i = index;
 		var ln = bytes.length;
@@ -909,7 +897,7 @@ System.Text.UnicodeEncoder = function () {
 	};
 	//---------------------------------------------------------
 	this.GetString = function (bytes, index, count) {
-		/// <summary>Decodes a sequence of bytes from the specified byte array into a string.</summary>
+		/// <summary>decodes a sequence of bytes from the specified byte array into a string.</summary>
 		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
 		/// <param name="index">The index of the first byte to decode.</param>
 		/// <param name="count">The number of bytes to decode.</param>
@@ -919,12 +907,47 @@ System.Text.UnicodeEncoder = function () {
 		if (typeof count === "undefined")
 			count = bytes.length - index;
 		var s = "";
-		var b1 = 0;
-		var b2 = 0;
-		for (var i = index; i < index + count; i++) {
+		var bytesUsed = { Value: 0 };
+		var used = 0;
+		while (used < count) {
+			s += this.ReadChar(bytes, index + used, bytesUsed);
+			used += bytesUsed.Value;
+			// If no more bytes to read then...
+			if (bytesUsed.Value === 0)
+				// Break loop.
+				break;
+		}
+		return s;
+	};
+	//---------------------------------------------------------
+	// Reference Parameters:
+	//
+	// var bytesUsed = { Value: 0 };
+	//
+	this.ReadChar = function (bytes, index, out_bytesUsed) {
+		/// <summary>Read char from byte array.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="out_bytesUsed">Contains the number of bytes that were used in decoding.</param>
+		/// <returns>Decoded character from the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		var i = index;
+		var b1 = bytes[i++];
+		var b2 = bytes[i++];
+		var code = b2 << 8 | b1;
+		var s = String.fromCharCode(code);
+		out_bytesUsed.Value = 2;
+		// If next 2 bytes available and high surrogate then...
+		if (i < bytes.length - 1 && 0xD800 <= code && code <= 0xDBFF) {
 			b1 = bytes[i++];
-			b2 = bytes[i];
-			s += String.fromCharCode(b2 << 8 | b1);
+			b2 = bytes[i++];
+			code = b2 << 8 | b1;
+			// If low surrogate then...
+			if (0xDC00 <= code && code <= 0xDFFF) {
+				s += String.fromCharCode(code);
+				out_bytesUsed.Value = 4;
+			}
 		}
 		return s;
 	};
@@ -979,19 +1002,44 @@ System.Text.UTF32Encoder = function () {
 		if (typeof count === "undefined")
 			count = bytes.length - index;
 		var s = "";
+		var bytesUsed = { Value: 0 };
+		var used = 0;
+		while (used < count) {
+			s += this.ReadChar(bytes, index + used, bytesUsed);
+			used += bytesUsed.Value;
+			// If no more bytes to read then...
+			if (bytesUsed.Value === 0)
+				// Break loop.
+				break;
+		}
+		return s;
+	};
+	//---------------------------------------------------------
+	// Reference Parameters:
+	//
+	// var bytesUsed = { Value: 0 };
+	//
+	this.ReadChar = function (bytes, index, out_bytesUsed) {
+		/// <summary>Read char from byte array.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="out_bytesUsed">Contains the number of bytes that were used in decoding.</param>
+		/// <returns>Decoded character from the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		var i = index;
 		var b1 = 0;
 		var b2 = 0;
 		var b3 = 0;
 		var b4 = 0;
 		var code = 0;
-		for (var i = index; i < index + count; i++) {
-			b1 = bytes[i++];
-			b2 = bytes[i++];
-			b3 = bytes[i++];
-			b4 = bytes[i];
-			code = b4 << 24 | b3 << 16 | b2 << 8 | b1;
-			s += System.Char.ConvertFromUtf32(code);
-		}
+		b1 = bytes[i++];
+		b2 = bytes[i++];
+		b3 = bytes[i++];
+		b4 = bytes[i];
+		code = b4 << 24 | b3 << 16 | b2 << 8 | b1;
+		out_bytesUsed.Value = 4;
+		var s = System.Char.ConvertFromUtf32(code);
 		return s;
 	};
 	//---------------------------------------------------------
@@ -1031,14 +1079,44 @@ System.Text.ASCIIEncoder = function () {
 		return bytes;
 	};
 	//---------------------------------------------------------
-	this.GetString = function (bytes) {
-		/// <summary>
-		/// Get string from array of bytes.
-		/// </summary>
+	this.GetString = function (bytes, index, count) {
+		/// <summary>decodes a sequence of bytes from the specified byte array into a string.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="count">The number of bytes to decode.</param>
+		/// <returns>String containing the results of decoding the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		if (typeof count === "undefined")
+			count = bytes.length - index;
 		var s = "";
-		for (var i = 0; i < bytes.length; i++) {
-			s += String.fromCharCode(bytes[i]);
+		var bytesUsed = { Value: 0 };
+		var used = 0;
+		while (used < count) {
+			s += this.ReadChar(bytes, index + used, bytesUsed);
+			used += bytesUsed.Value;
+			// If no more bytes to read then...
+			if (bytesUsed.Value === 0)
+				// Break loop.
+				break;
 		}
+		return s;
+	};
+	//---------------------------------------------------------
+	// Reference Parameters:
+	//
+	// var bytesUsed = { Value: 0 };
+	//
+	this.ReadChar = function (bytes, index, out_bytesUsed) {
+		/// <summary>Read char from byte array.</summary>
+		/// <param name="bytes">The byte array containing the sequence of bytes to decode.</param>
+		/// <param name="index">The index of the first byte to decode.</param>
+		/// <param name="out_bytesUsed">Contains the number of bytes that were used in decoding.</param>
+		/// <returns>Decoded character from the specified sequence of bytes.</returns>
+		if (typeof index === "undefined")
+			index = 0;
+		out_bytesUsed.Value = 1;
+		var s = String.fromCharCode(bytes[index]);
 		return s;
 	};
 	//---------------------------------------------------------
