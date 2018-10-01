@@ -76,7 +76,6 @@ namespace Scripts.Classes.Examples
 			WriteArray("UTF-8 Bytes", s, System.Text.Encoding.UTF8);
 			WriteArray("ASCII Bytes", s, System.Text.Encoding.ASCII);
 		}
-
 	}
 
 }
