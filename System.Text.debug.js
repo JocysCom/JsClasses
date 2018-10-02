@@ -29,6 +29,8 @@ System.Char.IsHighSurrogate = function (s, index) {
 	/// <param name="index">The position of the character to evaluate in s.</param>
 	/// <returns>True if the numeric value of the specified character in the s parameter is high surrogate; otherwise, false.</returns>
 	var code = s.charCodeAt(index);
+	// From: ‭110110 0000000000‬
+	‭// To:   110110 1111111111‬
 	return 0xD800 <= code && code <= 0xDBFF;
 };
 
@@ -38,6 +40,8 @@ System.Char.IsLowSurrogate = function (s, index) {
 	/// <param name="index">The position of the character to evaluate in s.</param>
 	/// <returns>True if the numeric value of the specified character is low surrogate; otherwise, false.</returns>
 	var code = s.charCodeAt(index);
+	// ‭From: 110111 0000000000‬
+	// To:   ‭110111 1111111111‬
 	return 0xDC00 <= code && code <= 0xDFFF;
 };
 
