@@ -1124,6 +1124,35 @@ System.Text.ASCIIEncoder = function () {
 		return s;
 	};
 	//---------------------------------------------------------
+	// Reference Parameters:
+	//
+	// var bytesUsed = { Value: 0 };
+	// var charsUsed = { Value: 0 };
+	// var completed = { Value: 0 };
+	//
+	this.Convert = function (bytes, byteIndex, byteCount, chars, charIndex, charCount, flush, out_bytesUsed, out_charsUsed, out_completed) {
+		/// <summary>Converts an array of encoded bytes to UTF-16 encoded characters and stores the result in a byte array.</summary>
+		/// <param name="bytes">A byte array to convert.</param>
+		/// <param name="byteIndex">The first element of bytes to convert.</param>
+		/// <param name="byteCount">The number of elements of bytes to convert.</param>
+		/// <param name="chars">An array to store the converted characters.</param>
+		/// <param name="charIndex">The first element of chars in which data is stored.</param>
+		/// <param name="charCount">The maximum number of elements of chars to use in the conversion.</param>
+		/// <param name="flush">True to indicate that no further data is to be converted; otherwise, false.</param>
+		/// <param name="bytesUsed">Number of bytes that were used in the conversion.</param>
+		/// <param name="charsUsed">number of characters from chars that were produced by the conversion.</param>
+		/// <param name="completed">True if all the characters specified by byteCount were converted; otherwise, false.</param>
+		for (var i = 0; i < byteCount; i++) {
+			var c = String.fromCharCode(bytes[byteIndex + i]);
+			chars[charIndex + i] = c;
+			out_bytesUsed.Value = i;
+			out_charsUsed.Value = i;
+			if (charCount >= i)
+				break;
+		}
+		out_completed.Value = true;
+	};
+	//---------------------------------------------------------
 	this.InitializeClass = function () {
 	};
 	this.InitializeClass();
