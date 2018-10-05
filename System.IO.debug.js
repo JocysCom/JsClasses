@@ -794,12 +794,94 @@ System.IO.BinaryReader = function (input) {
 		this.Stream.Read(m_buffer, 0, numBytes);
 	};
 	//---------------------------------------------------------
+	/// <summary>
+	/// Read an Int32, 7 bits at a time.
+	/// </summary>
+	function Read7BitEncodedInt()
+	{
+		var value = 0;
+		var b = 0;
+		var i = 0;
+		do {
+			i++;
+			// 5 bytes max per Int32.
+			if (i > 5)  
+				throw new Exception("Bad7BitInt32");
+			// Read byte.
+			b = this.ReadByte();
+			// Add 7 bit value and shift
+			value |= (b & 0x7F) << shift;
+			// If first bit is 1 then...
+			if (b >> 7 === 1)
+				// Shift by 7 bits.
+				value <<= 7;
+		}
+		// Continue if first bit is 1.
+		while (b >> 7 === 1);
+		return value;
+	}
+	//---------------------------------------------------------
 	this.Initialize = function () {
 		this.Stream = new System.IO.Stream(arguments[0]);
 	};
 	this.Initialize.apply(this, arguments);
 };
 System.Type.RegisterClass("System.IO.BinaryReader");
+
+//=============================================================================
+// CLASS: BinaryReader
+//-----------------------------------------------------------------------------
+
+System.IO.BinaryWriter = function (input) {
+	this.Stream = new System.IO.Stream(input);
+	var m_buffer = [];
+	//---------------------------------------------------------
+	this.Close = function () {
+		this.Stream.Close();
+	};
+	//---------------------------------------------------------
+	this.Dispose = function () {
+		this.Stream.Dispose();
+	};
+	//---------------------------------------------------------
+	this.Dispose = function () {
+		this.Stream.Dispose();
+	};
+	//---------------------------------------------------------
+	this.Write = function (value, typeCode) {
+	};
+	//---------------------------------------------------------
+	/// <summary>
+	/// Write an Int32, 7 bits at a time.
+	/// </summary>
+	/// <param name="value"></param>
+	function Write7BitEncodedInt(value)
+	{
+		// Support negative numbers.
+		var v = value;
+		var b = 0;
+		do {
+			// Store 7 bits.
+			b = v | 0x7F;
+			// Shift by 7 bits.
+			v >>= 7;
+			// If more bits left then...
+			if (v > 0)
+				// set first bit to 1.
+				b |= 0x80;
+			this.Write(b, System.TypeCode.Byte);
+		}
+		// Continue if more bits left.
+		while (v > 0);
+	}
+	//---------------------------------------------------------
+	this.Initialize = function () {
+		this.Stream = new System.IO.Stream(arguments[0]);
+	};
+	this.Initialize.apply(this, arguments);
+};
+System.Type.RegisterClass("System.IO.BinaryWriter");
+
 
 //=============================================================================
 // CLASS: System.IO.MemoryStream

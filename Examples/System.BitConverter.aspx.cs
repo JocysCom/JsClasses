@@ -117,6 +117,38 @@ namespace Scripts.Classes.Examples
 			WriteLog("bytes = System.BitConverter.GetBytes(u32);");
 			WriteLog("str = System.BitConverter.ToString(bytes); // str = " + str + "");
 			WriteLog("u32 = System.BitConverter.ToUInt32(bytes, 0); // u32 = " + u32);
+			// Test bit converter.
+			TestBitConverter();
 		}
+
+		void TestBitConverter()
+		{
+			var s = "a𐋄b";
+			var b1 = System.Text.Encoding.UTF8.GetBytes(s);
+			WriteArray("Bytes", b1);
+			var b2 = WriteString(s);
+			WriteArray("Write", b2);
+			var s2 = ReadString(b2);
+		}
+
+		byte[] WriteString(string s)
+		{
+			var ms = new System.IO.MemoryStream();
+			var bw = new System.IO.BinaryWriter(ms);
+			bw.Write(s);
+			bw.Flush();
+			var bytes = ms.ToArray();
+			return bytes;
+		}
+
+		string ReadString(byte[] bytes)
+		{
+			var ms = new System.IO.MemoryStream(bytes);
+			var bw = new System.IO.BinaryReader(ms);
+			var s = bw.ReadString();
+			return s;
+		}
+
 	}
+
 }
