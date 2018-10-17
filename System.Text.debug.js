@@ -656,45 +656,7 @@ System.Text.StringBuilder = function (value) {
 	};
 	//---------------------------------------------------------
 	this.AppendFormat = function (format, args) {
-		/// <summary>Appends the string returned by processing a composite format string.</summary>
-		/// <param name="format">A composite format string.</param>
-		/// <param name="An array of objects to format.">A composite format string.</param>
-		/// <returns>A reference to this instance with format appended.</returns>
-		//
-		// Sync this method with String.Format later.
-		args = Array.prototype.slice.call(arguments, 1);
-		var value = format.replace(/{(\d+)(:([xX]?\d+))?(,([-]?\d+))?}/g,
-			function (matchString, number) {
-				var value = typeof args[number] !== 'undefined' ? args[number] : matchString;
-				var hexMatch = matchString.match(":([xX])(\\d+)");
-				if (hexMatch) {
-					value = value.toString(16);
-					// Change case.
-					value = hexMatch[1] === "x"
-						? value.toLowerCase()
-						: value.toUpperCase();
-					// Add zeros.
-					num = parseInt(hexMatch[2]);
-					var z = "";
-					for (i = value.length; i < num; i++)
-						z += "0";
-					value = z + value;
-				}
-				var padMatch = matchString.match(",([-]?\\d+)");
-				var num;
-				if (padMatch) {
-					num = parseInt(padMatch[1]);
-					value = value.toString();
-					var ln = Math.abs(num);
-					var s = "";
-					for (i = value.length; i < ln; i++)
-						s += " ";
-					value = num >= 0
-						? s + value
-						: value + s;
-				}
-				return value;
-			});
+		var value = String.Format.apply(this, arguments);		
 		return this.Append(value);
 	};
 	//---------------------------------------------------------

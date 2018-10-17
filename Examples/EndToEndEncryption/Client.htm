@@ -5,26 +5,48 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<title>End-To-End Encryption Web Messaging Example Client</title>
-	<link type="text/css" rel="stylesheet" href="../Styles/Default.css" />
-	<link rel="stylesheet" type="text/css" href="../../System.Web.UI.Interface.debug.css" />
-	<script type="text/javascript" src="../../System.debug.js"></script>
-	<script type="text/javascript" src="../../System.Text.debug.js"></script>
-	<script type="text/javascript" src="../../System.Security.Cryptography.debug.js"></script>
-	<script type="text/javascript" src="../../System.BitConverter.debug.js"></script>
-	<script type="text/javascript" src="../../System.BigInt.debug.js"></script>
-	<script type="text/javascript" src="../Scripts/LogFunctions.js"></script>
+	<link href="../Styles/Default.css" rel="stylesheet" />
+	<link href="../../System.Web.UI.Interface.debug.css" rel="stylesheet" />
+	<script src="../../System.debug.js"></script>
+	<script src="../../System.Text.debug.js"></script>
+	<script src="../../System.Security.Cryptography.debug.js"></script>
+	<script src="../../System.BitConverter.debug.js"></script>
+	<script src="../../System.BigInt.debug.js"></script>
+	<script src="../Scripts/LogFunctions.js"></script>
+	<script src="../../System.IO.debug.js"></script>
+	<script src="../../System.IO.BinaryReader.debug.js"></script>
 </head>
 <body style="background-color:cadetblue">
-	<div id="TraceLog" style="width: 100%; height: 100px;"></div>
 	<script type="text/javascript">
 
 		function Window_Load() {
 			Trace.IsEnabled = true;
 			WriteLog("Start Demo");
+			var rnd = new System.Random();
+			var num = rnd.Next(0x0, 0xFFFF);
+			var hex = String.Format("Anonymous {0:X4}", num);
 		}
 
 		window.onload = Window_Load;
 
 	</script>
+	<!-- Server and Seder properties -->
+	<span>Server:</span><br />
+	<input id="ServerTextBox" type="text" value="." /><br />
+	<span>From:</span><br />
+	<input id="FromNameTextBox" type="text" value="Anonymous 1" /><br />
+	<span>Sender's Private Key (auto):</span><br />
+	<textarea id="FromPrivateKeyTextBox" rows="2"></textarea><br />
+	<button id="ConnectButton">Connect</button><br />
+	<!-- Message -->
+	<span>To:</span><br />
+	<input id="ToNameTextBox" type="text" value="Anonymous 2" /><br />
+	<span>Body:</span><br />
+	<textarea id="BodyTextBox" rows="2" value="Message body"></textarea><br />
+	<span>Recipient's Public Key (auto):</span><br />
+	<textarea id="ToPublicKeyTextBox" rows="2"></textarea><br />
+	<button id="SendButton">Send</button><br />
+	<!-- Log -->
+	<div id="TraceLog" style="width: 100%; height: 100px;"></div>
 </body>
 </html>

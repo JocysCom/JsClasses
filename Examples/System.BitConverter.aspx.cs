@@ -25,20 +25,6 @@ namespace Scripts.Classes.Examples
 			LogTextBox.Text += text + " \r\n";
 		}
 
-		private void WriteArray(string name, byte[] input)
-		{
-			System.Collections.BitArray ba = new System.Collections.BitArray(input);
-			int length = ba.Length;
-			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-			for (int i = 0; i < length; i++)
-			{
-				if ((i > 0) && (i % 8 == 0)) sb.Append(' ');
-				sb.Append(ba[i] ? '1' : '0');
-			}
-			WriteLog(name + " = [" + System.BitConverter.ToString(input) + "]" +
-			" // [" + sb.ToString() + "]");
-		}
-
 		#endregion
 
 		protected void TestButton_Click(object sender, EventArgs e)
@@ -121,14 +107,33 @@ namespace Scripts.Classes.Examples
 			TestBitConverter();
 		}
 
+		#region Test Bit Converter
+
+		void WriteArray(string name, byte[] input)
+		{
+			var ba = new System.Collections.BitArray(input);
+			var length = ba.Length;
+			var sb = new System.Text.StringBuilder();
+			for (var i = 0; i < length; i++)
+			{
+				if ((i > 0) && (i % 8 == 0)) sb.Append(' ');
+				sb.Append(ba[i] ? '1' : '0');
+			}
+			WriteLog(name + " = [" + System.BitConverter.ToString(input) + "]" +
+			" // [" + sb.ToString() + "]");
+		}
+
 		void TestBitConverter()
 		{
+			WriteLog("// === TestBitConverter()");
 			var s = "a𐋄b";
 			var b1 = System.Text.Encoding.UTF8.GetBytes(s);
 			WriteArray("Bytes", b1);
 			var b2 = WriteString(s);
 			WriteArray("Write", b2);
 			var s2 = ReadString(b2);
+			WriteLog("s2 = " + s2);
+
 		}
 
 		byte[] WriteString(string s)
@@ -148,6 +153,8 @@ namespace Scripts.Classes.Examples
 			var s = bw.ReadString();
 			return s;
 		}
+
+		#endregion
 
 	}
 

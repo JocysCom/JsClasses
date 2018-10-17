@@ -829,6 +829,7 @@
     <Content Include="System.Extensions.Array.debug.js" />
     <Content Include="System.Globalization.KeyboardLayouts.debug.js" />
     <Content Include="System.GPS.debug.js" />
+    <Content Include="System.IO.BinaryReader.debug.js" />
     <Content Include="System.IO.Compression.debug.js" />
     <Content Include="System.IO.debug.js" />
     <Content Include="System.Linq.debug.js" />

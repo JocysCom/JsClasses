@@ -26,16 +26,18 @@
 		}
 
 		.ClientCell {
-			width: 240px;
+			width: 320px;
 		}
 
 		.ClientFrame {
 			width: 100%;
-			height: 240px;
+			height: 400px;
 		}
 
 		.ServerCell {
+			/* 24 + 4 + 48 + 4 + 24  */
 			vertical-align: bottom;
+			width: 104px;
 		}
 
 		.ServerFrame {
@@ -64,7 +66,6 @@
 		}
 
 			table th {
-				
 			}
 
 			table tr td {
@@ -79,6 +80,11 @@
 			width: 48px;
 		}
 
+		.Title {
+			text-align: center;
+			font-weight: bold;
+		}
+
 		.Header {
 			background-color: darkslategray;
 			color: white;
@@ -91,26 +97,18 @@
 </head>
 <body>
 
+	<div class="Title">End-To-End Encryption Web Messaging Example (work in progress)</div>
 	<table>
-			<tr>
-			<td class="Center">&nbsp;</td>
-			<th colspan="7">End-To-End Encryption Web Messaging Example (work in progress)</th>
-			<td class="Center">&nbsp;</td>
-		</tr>
-
-
 		<tr>
 			<td>&nbsp;</td>
 			<td class="ClientCell">
 				<div class="Header">Client 1</div>
 				<iframe id="Client1Frame" frameborder="0" class="ClientFrame" src="Client.htm"></iframe>
 			</td>
-			<td class="W48">&nbsp;</td>
 			<td class="ServerCell" colspan="3">
 				<div class="Header">Server</div>
 				<iframe id="ServerFrame" class="ServerFrame" frameborder="0" name="I1" scrolling="no" src="Server.aspx"></iframe>
 			</td>
-			<td class="W48">&nbsp;</td>
 			<td class="ClientCell">
 				<div class="Header">Client 2</div>
 				<iframe id="Client2Frame" frameborder="0" class="ClientFrame" src="Client.htm"></iframe>
@@ -120,33 +118,35 @@
 		<tr>
 			<td class="Center">&nbsp;</td>
 			<td class="Right">
-				<img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /><img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /></td>
-			<td>&nbsp;</td>
+				<img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /><img alt="" class="C24" src="Images/Arrow_Down_24x24.png" />
+			</td>
 			<td class="Center" colspan="3">
-				<img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /><img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /></td>
-			<td>&nbsp;</td>
+				<img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /><img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" />
+			</td>
 			<td class="Left">
-				<img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /><img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" /></td>
+				<img alt="" class="C24" src="Images/Arrow_Down_24x24.png" /><img alt="" class="C24" src="Images/Arrow_Up_24x_24.png" />
+			</td>
 			<td class="Center">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="Center">&nbsp;</td>
 			<td class="Right">
-				<img alt="" class="C48" src="Images/Computer_48x48.png" /></td>
-			<td>
-				<img alt="" class="C48" src="Images/Wall_48x48.png" /></td>
+				<img alt="" class="C48" src="Images/Computer_48x48.png" />
+			</td>
 			<td class="W24">
 				<img alt="" class="C24" src="Images/Arrow_Right_24x24.png" /><br />
-				<img alt="" class="C24" src="Images/Arrow_Left_24x24.png" /></td>
+				<img alt="" class="C24" src="Images/Arrow_Left_24x24.png" />
+			</td>
 			<td class="W48">
-				<img alt="" class="C48" src="Images/Server_48x48.png" /></td>
+				<img alt="" class="C48" src="Images/Server_48x48.png" />
+			</td>
 			<td class="W24">
 				<img alt="" class="C24" src="Images/Arrow_Left_24x24.png" /><br />
-				<img alt="" class="C24" src="Images/Arrow_Right_24x24.png" /></td>
-			<td>
-				<img alt="" class="C48" src="Images/Wall_48x48.png" /></td>
+				<img alt="" class="C24" src="Images/Arrow_Right_24x24.png" />
+			</td>
 			<td class="Left">
-				<img alt="" class="C48" src="Images/Computer_48x48.png" /></td>
+				<img alt="" class="C48" src="Images/Computer_48x48.png" />
+			</td>
 			<td class="Center">&nbsp;</td>
 		</tr>
 
