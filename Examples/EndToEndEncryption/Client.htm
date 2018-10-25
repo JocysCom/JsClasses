@@ -7,6 +7,7 @@
 	<title>End-To-End Encryption Web Messaging Example Client</title>
 	<link href="../Styles/Default.css" rel="stylesheet" />
 	<link href="../../System.Web.UI.Interface.debug.css" rel="stylesheet" />
+	<script src="../../Includes/jquery-3.3.1.js"></script>
 	<script src="../../System.debug.js"></script>
 	<script src="../../System.Text.debug.js"></script>
 	<script src="../../System.Security.Cryptography.debug.js"></script>
@@ -25,9 +26,10 @@
 			var rnd = new System.Random();
 			var num = rnd.Next(0x0, 0xFFFF);
 			var hex = String.Format("Anonymous {0:X4}", num);
+			$("#FromNameTextBox").val(hex);
 		}
 
-		window.onload = Window_Load;
+		$(Window_Load);
 
 	</script>
 	<!-- Server and Seder properties -->
