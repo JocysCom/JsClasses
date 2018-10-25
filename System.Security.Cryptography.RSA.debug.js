@@ -306,7 +306,8 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 		//
 		// RSA Key Structure:
 		//
-		var br = new System.IO.BinaryReader(keyBlob);
+		var ms = new System.IO.MemoryStream(keyBlob);
+		var br = new System.IO.BinaryReader(ms);
 		//	Blob Header
 		var blobType = br.ReadByte();
 		var version = br.ReadByte(); // 2 - RSA public key exchange, 3 - Digital Signature.
@@ -339,6 +340,13 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 			exponent2 = br.ReadBytes(bitlen / 16);
 			coefficient = br.ReadBytes(bitlen / 16);
 			privateExponent = br.ReadBytes(bitlen / 8);
+		} else {
+			prime1 = [];
+			prime2 = [];
+			exponent1 = [];
+			exponent2 = [];
+			coefficient = [];
+			privateExponent = [];
 		}
 		// Reverse all byte arrays.
 		System.Array.Reverse(publicExponent);
@@ -349,7 +357,7 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 		System.Array.Reverse(coefficient);
 		System.Array.Reverse(prime1);
 		System.Array.Reverse(prime2);
-		// Create RSA paramaters.
+		// Create RSA parameters.
 		var parameters = new System.Security.Cryptography.RSAParameters();
 		parameters.Exponent = publicExponent;
 		parameters.Modulus = modulus;

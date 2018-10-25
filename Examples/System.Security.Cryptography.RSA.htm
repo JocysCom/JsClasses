@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="../System.Text.debug.js"></script>
 	<script type="text/javascript" src="../System.Convert.debug.js"></script>
 	<script type="text/javascript" src="../System.BitConverter.debug.js"></script>
+	<script type="text/javascript" src="../System.IO.BinaryReader.debug.js"></script>
 	<script type="text/javascript" src="../System.BigInt.debug.js"></script>
 	<script type="text/javascript" src="../System.Security.Cryptography.SHA1.debug.js"></script>
 	<script type="text/javascript" src="../System.Security.Cryptography.debug.js"></script>
@@ -36,8 +37,8 @@
 			WriteLog("Start Demo");
 			$("EncryptButton").onclick = EncryptButton_Click;
 			$("DecryptButton").onclick = DecryptButton_Click;
-            $("SignButton").onclick = SignButton_Click;
-            $("VerifyButton").onclick = VerifyButton_Click;
+			$("SignButton").onclick = SignButton_Click;
+			$("VerifyButton").onclick = VerifyButton_Click;
 			$("TestButton").onclick = TestButton_Click;
 			$("NewKeyButton").onclick = NewKeyButton_Click;
 			$("NewKeyApiButton").onclick = NewKeyApiButton_Click;
@@ -128,48 +129,46 @@
 			// Display the decrypted data.
 			var decryptedString = System.Text.Encoding.UTF8.GetString(decryptedBytes);
 			$("DecryptedTextBox").value = decryptedString;
-        }
+		}
 
-        function SignButton_Click(sender, e)
-        {
-            $("EncryptedTextBox").value = "";
-            var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
-            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
-            // ------------------------------------------------
-            // Sign
-            // ------------------------------------------------
-            var rsa = GetNewRsaProvider();
-            // Import the RSA Key information (include private key).
-            rsa.ImportParameters(GetRsaKey(true));
-            // Sign data.
-            var signatureBytes = rsa.SignData(decryptedBytes, "SHA1", doOaepPadding);
-            // Encode bytes for display.
-            var encodedSignature = System.Convert.ToBase64String(signatureBytes);
-            // ------------------------------------------------
-            // Display signature.
-            $("EncryptedTextBox").value = encodedSignature;
-        }
+		function SignButton_Click(sender, e) {
+			$("EncryptedTextBox").value = "";
+			var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
+			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
+			// ------------------------------------------------
+			// Sign
+			// ------------------------------------------------
+			var rsa = GetNewRsaProvider();
+			// Import the RSA Key information (include private key).
+			rsa.ImportParameters(GetRsaKey(true));
+			// Sign data.
+			var signatureBytes = rsa.SignData(decryptedBytes, "SHA1", doOaepPadding);
+			// Encode bytes for display.
+			var encodedSignature = System.Convert.ToBase64String(signatureBytes);
+			// ------------------------------------------------
+			// Display signature.
+			$("EncryptedTextBox").value = encodedSignature;
+		}
 
-        function VerifyButton_Click(sender, e)
-        {
-            $("DecryptedTextBox").value = "";
-            var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
-            var signatureBytes = System.Convert.FromBase64String($("EncryptedTextBox").value);
-            var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
-            // ------------------------------------------------
-            // Verify
-            // ------------------------------------------------
-            var rsa = GetNewRsaProvider();
-            // Import the RSA Key information (exclude private key).
-            rsa.ImportParameters(GetRsaKey(false));
-            // Verify the hash.
-            var success = rsa.VerifyData(decryptedBytes, "SHA1", signatureBytes, doOaepPadding);
-            // ------------------------------------------------
-            // Display results.
-            $("DecryptedTextBox").value = success
-                ? "Digital Signature: Valid"
-                : "Digital Signature: Failed";
-        }
+		function VerifyButton_Click(sender, e) {
+			$("DecryptedTextBox").value = "";
+			var decryptedBytes = System.Text.Encoding.UTF8.GetBytes($("DataTextBox").value);
+			var signatureBytes = System.Convert.FromBase64String($("EncryptedTextBox").value);
+			var doOaepPadding = $("PaddingDropDownList").options[$("PaddingDropDownList").selectedIndex].value === "OAEP";
+			// ------------------------------------------------
+			// Verify
+			// ------------------------------------------------
+			var rsa = GetNewRsaProvider();
+			// Import the RSA Key information (exclude private key).
+			rsa.ImportParameters(GetRsaKey(false));
+			// Verify the hash.
+			var success = rsa.VerifyData(decryptedBytes, "SHA1", signatureBytes, doOaepPadding);
+			// ------------------------------------------------
+			// Display results.
+			$("DecryptedTextBox").value = success
+				? "Digital Signature: Valid"
+				: "Digital Signature: Failed";
+		}
 
 		var maxTests = 0;
 
@@ -210,7 +209,7 @@
 			System.Security.Cryptography.RSA.CreateKeyCompleted = RSA_CreateKeyCompleted;
 			System.Security.Cryptography.RSA.CreateKeyAsync(keySize);
 		}
-		
+
 		function ConvertToBasePrivateKeyButton_Click(sender, e) {
 			ConvertKeyToBase64(true);
 		}
@@ -218,8 +217,8 @@
 		function ConvertToBasePublicKeyButton_Click(sender, e) {
 			ConvertKeyToBase64(false);
 		}
-		
-		function ConvertKeyToBase64(includePrivateKey){
+
+		function ConvertKeyToBase64(includePrivateKey) {
 			var keyParams = $("KeyTextBox").value;
 			// ------------------------------------------------
 			// RSA Keys
@@ -255,11 +254,13 @@
 			}
 		}
 
-		//#endregion
+			//#endregion
 
 	</script>
 	<style type="text/css">
-		.style1 { color: #808080; }
+		.style1 {
+			color: #808080;
+		}
 	</style>
 </head>
 <body>
