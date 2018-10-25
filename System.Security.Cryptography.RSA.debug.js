@@ -385,7 +385,8 @@ System.Security.Cryptography.RSACryptoServiceProvider = function () {
 		size += 4 + bitlen / 8; // Public key.
 		size += blobType === 0x7 ? 5 * bitlen / 16 + bitlen / 8 : 0; // Private key.
 		var ms = new System.IO.MemoryStream();
-		var clone = rsaParams.Clone(includePrivateParameters);
+		var key = GetKeyPair.call(this);
+		var clone = key.Clone(includePrivateParameters);
 		// Write Header.
 		var blobTypeBytes = [blobType];
 		var versionBytes = [version];

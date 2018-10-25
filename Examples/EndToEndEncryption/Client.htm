@@ -8,17 +8,20 @@
 	<link href="../Styles/Default.css" rel="stylesheet" />
 	<link href="../../System.Web.UI.Interface.debug.css" rel="stylesheet" />
 	<script src="../../Includes/jquery-3.3.1.js"></script>
-	<script src="../../System.debug.js"></script>
-	<script src="../../System.Text.debug.js"></script>
-	<script src="../../System.Security.Cryptography.debug.js"></script>
-	<script src="../../System.BitConverter.debug.js"></script>
-	<script src="../../System.BigInt.debug.js"></script>
 	<script src="../Scripts/LogFunctions.js"></script>
+	<script src="../../System.debug.js"></script>
 	<script src="../../System.IO.debug.js"></script>
+	<script src="../../System.Text.debug.js"></script>
+	<script src="../../System.Convert.debug.js"></script>
+	<script src="../../System.BitConverter.debug.js"></script>
 	<script src="../../System.IO.BinaryReader.debug.js"></script>
+	<script src="../../System.BigInt.debug.js"></script>
+	<script src="../../System.Security.Cryptography.SHA1.debug.js"></script>
+	<script src="../../System.Security.Cryptography.debug.js"></script>
+	<script src="../../System.Security.Cryptography.RSA.debug.js"></script>
 </head>
-<body style="background-color:cadetblue">
-	<script type="text/javascript">
+<body style="background-color:#5F9EA0">
+	<script>
 
 		function Window_Load() {
 			Trace.IsEnabled = true;
@@ -27,6 +30,15 @@
 			var num = rnd.Next(0x0, 0xFFFF);
 			var hex = String.Format("Anonymous {0:X4}", num);
 			$("#FromNameTextBox").val(hex);
+			$("#ServerTextBox").val("Server.aspx");
+			$("#ConnectButton").click(ConnectButton_Click);
+		}
+
+		function ConnectButton_Click() {
+			var rsa = new System.Security.Cryptography.RSACryptoServiceProvider(512);
+			var bytes = rsa.ExportCspBlob(true);
+			var base64 = System.Convert.ToBase64String(bytes);
+			$("#FromPrivateKeyTextBox").val(base64);
 		}
 
 		$(Window_Load);
@@ -38,7 +50,7 @@
 	<span>From:</span><br />
 	<input id="FromNameTextBox" type="text" value="Anonymous 1" /><br />
 	<span>Sender's Private Key (auto):</span><br />
-	<textarea id="FromPrivateKeyTextBox" rows="2"></textarea><br />
+	<textarea id="FromPrivateKeyTextBox" rows="7" class="Small" cols="64"></textarea><br />
 	<button id="ConnectButton">Connect</button><br />
 	<!-- Message -->
 	<span>To:</span><br />

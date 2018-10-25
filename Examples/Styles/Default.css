@@ -1,21 +1,44 @@
-﻿body { background-color: aliceblue; 
-font-family: Consolas, Verdana; font-size: small;
+﻿body {
+	background-color: aliceblue;
+	font-family: Consolas, Verdana;
+	font-size: small;
 }
 
-td.DataTableHighlight { background-color: whitesmoke !important; cursor: pointer; }
+td.DataTableHighlight {
+	background-color: whitesmoke !important;
+	cursor: pointer;
+}
 
-.SQUI_DataTables thead tr th { font-size: small; }
-.SQUI_DataTables tbody tr td { cursor: pointer; font-size: small; padding: 2px 2px 2px 2px; margin: 0; }
-.SQUI_DataTables { width: 100%; }
-	.SQUI_DataTables tr td { font-family: Consolas, Verdana; font-size: small; }
+.SQUI_DataTables thead tr th {
+	font-size: small;
+}
 
-input { font-family: Consolas, Verdana; font-size: small; }
+.SQUI_DataTables tbody tr td {
+	cursor: pointer;
+	font-size: small;
+	padding: 2px 2px 2px 2px;
+	margin: 0;
+}
+
+.SQUI_DataTables {
+	width: 100%;
+}
+
+	.SQUI_DataTables tr td {
+		font-family: Consolas, Verdana;
+		font-size: small;
+	}
+
+input {
+	font-family: Consolas, Verdana;
+	font-size: small;
+}
 
 textarea {
-font-family: Consolas, Verdana; 
--webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
--moz-box-sizing: border-box; /* FF1+ */
-box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+	font-family: Consolas, Verdana;
+	-webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+	-moz-box-sizing: border-box; /* FF1+ */
+	box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
 textarea.Small {
@@ -26,7 +49,11 @@ textarea.Small {
 	box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
-
 /* jQuery-UI DataTables */
-table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover { background-color: #95d0ff !important; }
-	table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected { background-color: #95d0ff !important; }
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+	background-color: #95d0ff !important;
+}
+
+	table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
+		background-color: #95d0ff !important;
+	}
