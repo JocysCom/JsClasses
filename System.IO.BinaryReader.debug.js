@@ -160,18 +160,16 @@ System.IO.BinaryReader = function (input) {
 		var b = 0;
 		var i = 0;
 		do {
-			i++;
-			// 5 bytes max per Int32.
-			if (i > 5)
-				throw new Exception("Bad 7-bit encoded integer!");
 			// Read byte.
 			b = me.ReadByte();
+			// if end of stream and no more bytes to read then...
+			if (b === -1)
+				throw new Exception("7-bit Decoder Error: Number is too large.");
+			if (i === 4 && b > 0xF)
+				throw new Exception("7-bit Decoder Error: Number is too large.");
 			// Add 7 bit value
-			value |= b & 0x7F;
-			// If first bit is 1 then...
-			if (b >> 7 === 1)
-				// Shift by 7 bits.
-				value <<= 7;
+			v |= (b & 0x7F) << 7 * i;
+			i++;
 		}
 		// Continue if first bit is 1.
 		while (b >> 7 === 1);
