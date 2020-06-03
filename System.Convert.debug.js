@@ -69,7 +69,7 @@ System.Convert.ToBase64String = function (b, options) {
 	/// <remarks>
 	/// A very fast and memory efficient class to encode and decode to and from BASE64
 	/// in full accordance with RFC 2045. Based on http://migbase64.sourceforge.net/
-	/// Converted to JavaScript by Evaldas Jocys [evaldas@jocys.com], http://www.jocys.com
+	/// Converted to JavaScript by Evaldas Jocys [evaldas@jocys.com], https://www.jocys.com
 	/// </remarks>
 	var insertBreaks = options === System.Base64FormattingOptions.InsertLineBreaks || options === true;
 	var B64 = new System.Convert.Base64Array();
@@ -125,7 +125,7 @@ System.Convert.FromBase64String = function (s, fix) {
 	/// <remarks>
 	/// A very fast and memory efficient class to encode and decode to and from BASE64
 	/// in full accordance with RFC 2045. Based on http://migbase64.sourceforge.net/
-	/// Converted to JavaScript by Evaldas Jocys [evaldas@jocys.com], http://www.jocys.com
+	/// Converted to JavaScript by Evaldas Jocys [evaldas@jocys.com], https://www.jocys.com
 	/// </remarks>
 	var B64 = new System.Convert.Base64Array();
 	// Check special case

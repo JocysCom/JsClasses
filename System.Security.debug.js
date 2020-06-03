@@ -14,7 +14,7 @@ System.Type.RegisterNamespace("System.Security");
 //=============================================================================
 
 //------------------------------------------------------------------------------
-//	Created by: Evaldas Jocys (http://www.jocys.com/evaldas/)
+//	Created by: Evaldas Jocys (https://www.jocys.com/evaldas/)
 //	Updated by: Your Name...
 //------------------------------------------------------------------------------
 //	UPDATES:

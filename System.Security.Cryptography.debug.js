@@ -31,7 +31,7 @@ System.Security.Cryptography.Rfc2898DeriveBytes = function (password, salt, iter
 	/// <param name="password">The password to derive the key for.</param>
 	/// <param name="salt">The key salt to use to derive the key.</param>
 	/// <remarks>
-	/// Recreated as class by Evaldas Jocys (http://www.jocys.com)
+	/// Recreated as class by Evaldas Jocys (https://www.jocys.com)
 	///
 	/// Original Author: Sebastien Pouliot (sebastien@ximian.com)
 	/// (C) 2003 Motus Technologies Inc. (http://www.motus.com)

@@ -16,7 +16,7 @@ System.Web.Mobile = System.Web.Mobile ? System.Web.Mobile : {};
 System.Type.RegisterNamespace("System.Web.Mobile");
 //=============================================================================
 
-System.Web.Mobile.Url = "http://www.jocys.com/Common/JsClasses/Examples/System.Web.Mobile.asmx";
+System.Web.Mobile.Url = "https://www.jocys.com/Common/JsClasses/Examples/System.Web.Mobile.asmx";
 
 //=============================================================
 // Basic classes
