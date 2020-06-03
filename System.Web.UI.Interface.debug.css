@@ -17,10 +17,10 @@ Custom CheckBox
 .SWUI_PrgLink a:active { font-size: small; color: #ff0000; font-family: tahoma; text-decoration: none; }
 .SWUI_PrgLink a:hover { font-size: small; color: #000080; font-family: tahoma; text-decoration: underline; }
 
-.SWUI_PrgLink:link { font-size: small; color: #000080; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink:visited { font-size: small; color: #004080; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink:active { font-size: small; color: #ff0000; font-family: tahoma; text-decoration: none; }
-.SWUI_PrgLink:hover { font-size: small; color: #000080; font-family: tahoma; text-decoration: underline; }
+a.SWUI_PrgLink:link { font-size: small; color: #000080; font-family: tahoma; text-decoration: none; }
+a.SWUI_PrgLink:visited { font-size: small; color: #004080; font-family: tahoma; text-decoration: none; }
+a.SWUI_PrgLink:active { font-size: small; color: #ff0000; font-family: tahoma; text-decoration: none; }
+a.SWUI_PrgLink:hover { font-size: small; color: #000080; font-family: tahoma; text-decoration: underline; }
 
 button.SWUI_Prg { padding: 0 4px 0 0; }
 	button.SWUI_Prg img { margin: 0 0 0 4px; padding: 0 0 0 0; border-width: 0; height: 16px; width: 16px; float: left; outline: none; }
