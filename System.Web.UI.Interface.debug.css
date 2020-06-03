@@ -126,8 +126,14 @@ Table
 GridViewTable
 -----------------------------------------------------------------------------*/
 
-.SWUI_GridViewTableAddBorders { border: solid 1px #5D7B9D; }
-	.SWUI_GridViewTableAddBorders tr td { border-bottom: solid 1px #b8d9ff; border-right: solid 1px #b8d9ff; border-top: solid 1px #5D7B9D; }
+.SWUI_GridViewTableAddAlignMiddle {}
+	.SWUI_GridViewTableAddAlignMiddle tr th { vertical-align: middle; }
+	.SWUI_GridViewTableAddAlignMiddle tr td { vertical-align: middle; }
+
+.SWUI_GridViewTableAddBorders { border: solid 1px #5D7B9D !important;  }
+	.SWUI_GridViewTableAddBorders tr th { border: solid 1px #6F8AAA !important; }
+	.SWUI_GridViewTableAddBorders tr td { border: solid 1px #b8d9ff !important; }
+
 .SWUI_GridViewTable { border: hidden; border-collapse: collapse; border-width: 0; empty-cells: show; }
 	.SWUI_GridViewTable tbody tr { background-color: #F7F6F3; }
 	.SWUI_GridViewTable thead tr th { font-family: Verdana; font-size: small; font-weight: bold; color: #ffffff; background-color: #5D7B9D; border: hidden; border-width: 0; padding: 2px 4px 2px 4px; }
