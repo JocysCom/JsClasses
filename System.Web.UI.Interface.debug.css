@@ -22,9 +22,9 @@ a.SWUI_PrgLink:visited { font-size: small; color: #004080; font-family: tahoma; 
 a.SWUI_PrgLink:active { font-size: small; color: #ff0000; font-family: tahoma; text-decoration: none; }
 a.SWUI_PrgLink:hover { font-size: small; color: #000080; font-family: tahoma; text-decoration: underline; }
 
-button.SWUI_Prg { padding: 0 4px 0 0; }
-	button.SWUI_Prg img { margin: 0 0 0 4px; padding: 0 0 0 0; border-width: 0; height: 16px; width: 16px; float: left; outline: none; }
-	button.SWUI_Prg div { cursor: default; font: menu; padding: 2px 0 0 0; margin: 0 0 0 0; overflow: hidden; text-align: center; }
+button.SWUI_Prg { padding: 2px 4px 2px 4px; white-space:nowrap; }
+	button.SWUI_Prg img { margin: 0 0 0 0; padding: 0 0 0 0; border-width: 0; height: 16px; width: 16px; outline: none; vertical-align: middle; }
+	button.SWUI_Prg span { cursor: default; font: menu; padding: 0 4px 0 4px; margin: 0 0 0 0; text-align: left; vertical-align: middle; }
 
 label.PrgCheckBox { padding-left: 20px; height: 16px; }
 input[type="checkbox"].PrgCheckBox { visibility: hidden; width: 0; height: 0; padding: 0; margin: 0; }
@@ -171,11 +171,29 @@ GridViewTable
 .SWUI_GridViewTable_NoWrap tbody tr th { white-space: nowrap; }
 
 /*=============================================================================
+		ToolBar table
+-----------------------------------------------------------------------------*/
+
+div.SWUI_ToolBar {
+	background-color: #ccd5f0;
+}
+table.SWUI_ToolBar {
+	background-color: #ccd5f0;
+	border-spacing: 4px;
+	border-collapse: separate;
+}
+
+	table.SWUI_ToolBar tr td {
+		vertical-align: middle;
+		white-space: nowrap
+	}
+
+/*=============================================================================
 		Console - Default, Trace, Matrix, DOS
 -----------------------------------------------------------------------------*/
 .SWUI_Console { border: solid 1px #668eaf; width: 100%; height: 100%; background-color: InfoBackground; margin: 4px 0 0 0; padding: 0; }
-.SWUI_Console_Head { height: 22px; background-color: #f0f0f0; background: linear-gradient(to bottom, #f0f0ff, #b8d9ff); }
-.SWUI_Console_HeadContent { height: 22px; padding-left: 6px; font-family: Consolas, Verdana; font-size: small; display: table-cell; vertical-align: middle; }
+.SWUI_Console_Head { background-color: #f0f0f0; background: linear-gradient(to bottom, #f0f0ff, #b8d9ff); }
+.SWUI_Console_HeadContent { padding: 2px 6px 2px 6px; font-family: Consolas, Verdana; font-size: small; display: table-cell; }
 .SWUI_Console_Body { border-top: solid 1px #668eaf; border-bottom: solid 1px #668eaf; overflow: auto;
 height: -webkit-calc(100% - 22px - 16px - 3px); /* Chrome 19-> */
 height: -moz-calc(100% - 22px - 16px - 3px); /* Firefox */
