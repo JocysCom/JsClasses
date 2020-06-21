@@ -177,6 +177,11 @@ GridViewTable
 div.SWUI_ToolBar {
 	background-color: #ccd5f0;
 }
+
+.SWUI_ToolBarAddBorderTop {
+	border-top: solid 1px #6F8AAA !important;
+}
+
 table.SWUI_ToolBar {
 	background-color: #ccd5f0;
 	border-spacing: 4px;
