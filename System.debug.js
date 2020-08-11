@@ -622,7 +622,7 @@ System.Uri = function (uriString) {
 		// Turn argument into a string type.
 		var u = arguments[0] + "";
 		this.OriginalString = u;
-		this.AbsolutePath = u.indexOf("?") > -1 ? u.substring(0, u.indexOf("?") - 1) : u;
+		this.AbsolutePath = u.indexOf("?") > -1 ? u.substring(0, u.indexOf("?")) : u;
 		this.Query = u.indexOf("?") > -1 ? u.substring(u.indexOf("?"), u.length) : null;
 		this.QueryParams = this.GetParameters(this.Query);
 	}
