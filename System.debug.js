@@ -619,7 +619,8 @@ System.Uri = function (uriString) {
 	};
 	//---------------------------------------------------------
 	function initialize() {
-		var u = arguments[0];
+		// Turn argument into a string type.
+		var u = arguments[0] + "";
 		this.OriginalString = u;
 		this.AbsolutePath = u.indexOf("?") > -1 ? u.substring(0, u.indexOf("?") - 1) : u;
 		this.Query = u.indexOf("?") > -1 ? u.substring(u.indexOf("?"), u.length) : null;
