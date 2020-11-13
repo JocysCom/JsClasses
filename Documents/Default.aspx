@@ -4,6 +4,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;">
 <head runat="server">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-P64C5YGPR7"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-P64C5YGPR7');
+	</script>
+
 	<title>Jocys.com JavaScript.NET Class Library Browser</title>
 	<link type="text/css" rel="stylesheet" href="../System.Web.UI.Interface.debug.css" />
 	<link type="text/css" rel="stylesheet" href="SyntaxHighlighter/styles/shCore.css" />
