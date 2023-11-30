@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<title>System.Drawing.Colors.Generator</title>
+	<link rel="stylesheet" type="text/css" href="../System.Web.UI.Interface.debug.css" />
+	<link rel="stylesheet" type="text/css" href="Styles/Default.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        body {
+            font-family: Consolas;
+            font-size: small;
+        }
+
+        #colorTable {
+            border-collapse: collapse;
+			background-color: #ffffff;
+        }
+
+            #colorTable td, #colorTable th {
+                border: 1px solid #ddd;
+                padding: 4px;
+            }
+
+            #colorTable tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #colorTable th {
+                padding-top: 4px;
+                padding-bottom: 4px;
+                text-align: left;
+                background-color: #404040;
+                color: white;
+            }
+
+        .colorSwatch {
+            width: 32px;
+            height: 16px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <label for="numColors">Enter the number of unique colors:</label>
+    <input type="number" id="numColors" name="numColors" min="1" value="24">
+    <button onclick="generateColors()">Generate Colors</button>
+    <table border="0">
+        <tr>
+            <td>
+                <table id="colorTable">
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Group</th>
+                            <th>∆H</th>
+                            <th>∆S</th>
+                            <th>∆L</th>
+                            <th>Color</th>
+                            <th>HSL Values</th>
+                            <th>RGB Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </td>
+            <td style="vertical-align: top;"><textarea id="ScssTextArea" style="height: 100%;" cols="34" lang=""></textarea>
+            <textarea id="Scss2TextArea" style="height: 100%;" cols="16" lang=""></textarea></td>
+        </tr>
+    </table>
+    <script>
+        function hslToRgb(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1 / 6) return p + (q - p) * 6 * t;
+                    if (t < 1 / 2) return q;
+                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                    return p;
+                };
+
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+            const toHex = x => {
+                const hex = Math.round(x * 255).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        }
+
+        // Base hues for primary and secondary colors
+        const baseHues = [240, 300, 0, 60, 120, 180];
+
+        function getChartColor(index) {
+            const groupSize = baseHues.length;
+            let group = Math.floor(index / groupSize);
+            let hueIndex = index % groupSize;
+            // Don't use primary colours.
+            // Range between primary colours is 60 degrees. We can shift 15 degrees, plus from 0 to 31 degree.
+            let hueShift = -15 + GetFurthestNumber(maxBits, group) + 360; // A smaller shift for a more gradual change between groups
+            // Rotate the base hue starting point for each new group to avoid color repetition
+            hueIndex = (hueIndex + group) % groupSize;
+            let hue = (baseHues[hueIndex] + hueShift) % 360;
+            // Use consistent moderate saturation and higher lightness for pastel colors
+            // You may adjust these ranges to fit your preference for pastel shades
+            // Never go to saturation 100%
+            let saturation = 60 + GetFurthestNumber(maxBits, group);
+            // Alternate lightning.
+            let lightness = 60 - GetFurthestNumber(maxBits, group);
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        var maxBits = 5; // 32 values.
+
+        function GetFurthestNumber(bits, index) {
+            var max = Math.pow(2, bits);
+            index = index % max;
+            if (index == 0)
+                return 0
+            var part = Math.ceil(Math.log(index + 1) / Math.log(2), 0);
+            var pPower = Math.pow(2, part) / 2;
+            var step = max / pPower;
+            var shift = step / 2;
+            var partIndex = index % pPower;
+            value = partIndex * step + shift;
+            return value;
+        }
+
+        function generateColors() {
+            const numColors = document.getElementById('numColors').value;
+            const tableBody = document.querySelector("#colorTable tbody");
+            tableBody.innerHTML = ""; // Clear the table
+            var scss = "";
+            var scss2 = "$chart-colours:";
+
+
+            for (let i = 0; i < numColors; i++) {
+                const groupSize = baseHues.length;
+                let group = Math.floor(i / groupSize);
+
+                const hslColor = getChartColor(i);
+                const [hue, saturation, lightness] = hslColor.match(/\d+/g).map(Number);
+                const rgbColor = hslToRgb(hue, saturation, lightness);
+
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                        <td>${i}</td>
+                        <td>${group}</td>
+                        <td>${GetFurthestNumber(maxBits, group)}</td>
+                        <td>${GetFurthestNumber(maxBits, group)}</td>
+                        <td>${-GetFurthestNumber(maxBits, group)}</td>
+                        <td><div class="colorSwatch" style="background-color:${hslColor};"></div></td>
+                        <td>${hslColor}</td>
+                        <td>${rgbColor}</td>
+                    `;
+                scss += `$dataColor${i}: ${hslColor};\r\n`;
+                scss2 += ` $dataColor${i}`;
+            }
+            scss2 += ";";
+            var b1 = document.getElementById('ScssTextArea');
+            var b2 = document.getElementById('Scss2TextArea');
+            b1.setAttribute("rows", (+numColors+1));
+            b2.setAttribute("rows", (+numColors+1));
+            b1.value = scss;
+            b2.value = scss2;
+        }
+
+        // Uncomment the below line to automatically generate colors on page load
+        window.onload = () => generateColors(24);
+    </script>
+</body>
+</html>
