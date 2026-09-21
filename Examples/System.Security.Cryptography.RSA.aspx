@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="SiteExamples.Master" AutoEventWireup="true"
 	ValidateRequest="false"
 	Title="System.Security.Cryptography.RSA"
-	CodeFile="System.Security.Cryptography.RSA.aspx.cs"
+	CodeBehind="System.Security.Cryptography.RSA.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Security_Cryptography_RSA" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

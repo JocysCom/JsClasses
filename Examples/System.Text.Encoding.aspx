@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="SiteExamples.Master" AutoEventWireup="true"
 	Title="System.Text.Encoding"
-	CodeFile="System.Text.Encoding.aspx.cs"
+	CodeBehind="System.Text.Encoding.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Text_Encoding" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="System.BitConverter"
-	CodeFile="System.BitConverter.aspx.cs"
+	CodeBehind="System.BitConverter.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_BitConverter" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

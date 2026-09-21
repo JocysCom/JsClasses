@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="Examples"
 	Inherits="JocysCom.WebSites.WebApp.Scripts.Classes.Examples.Default"
-	CodeFile="Default.aspx.cs" %>
+	CodeBehind="Default.aspx.cs" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>

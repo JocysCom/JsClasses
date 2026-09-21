@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="System.BigInt"
-	CodeFile="System.BigInt.aspx.cs"
+	CodeBehind="System.BigInt.aspx.cs"
 	Inherits="JocysCom.WebSites.WebApp.Common.JsClasses.Examples.System_BigInt" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

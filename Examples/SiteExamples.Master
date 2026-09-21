@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="SiteExamples.Master.cs" Inherits="JocysCom.WebSites.WebApp.Scripts.Classes.Examples.SiteExamples" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteExamples.Master.cs" Inherits="JocysCom.WebSites.WebApp.Scripts.Classes.Examples.SiteExamples" %>
 
 <!DOCTYPE html>
 <html>
