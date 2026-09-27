@@ -1,0 +1,41 @@
+# Line endings: the repository stores text files with LF, and Git writes them with the operating system's line
+# ending (CRLF on Windows, LF on Linux and macOS) whenever it clones, pulls or checks out. Files pinned to LF
+# below stay LF everywhere.
+#
+# Files already on disk are not rewritten when these rules change. To make the repository and every file match
+# the rules, exactly as a fresh clone, commit .gitattributes and your changes, then run once in the repository root:
+#   git add --renormalize .
+#   git commit -m "Normalize line endings"
+#   git rm --cached -r -q .
+#   git reset --hard
+
+* text=auto
+
+# Shell scripts and Dockerfiles MUST stay LF even on Windows checkout. When
+# a Windows dev clone has `core.autocrlf=true`, the `text=auto` rule above
+# converts them to CRLF in the working tree; Docker COPY then carries CRLF
+# into the image and Linux's kernel can't exec the shebang (#!/bin/bash\r),
+# so the container exits 1 with no log output. Pin LF explicitly.
+*.sh         text eol=lf
+*.bash       text eol=lf
+Dockerfile   text eol=lf
+*.dockerfile text eol=lf
+# The shared cross-platform job runner is run via python on both Linux and
+# Windows; keep it LF so the container copy never carries CRLF.
+Files/Docker/ai-dev-agent/run-agent-task.py text eol=lf
+Files/Docker/ai-dev-agent/agent-poll.py text eol=lf
+Files/Docker/ai-dev-agent/clean_jobs.py text eol=lf
+
+# Mark common binary formats so Git never tries EOL normalization/diff heuristics
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary
+*.7z   binary
+*.gz   binary
+*.tar  binary
+*.dll  binary
+*.exe  binary
