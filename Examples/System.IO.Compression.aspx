@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="System.IO.Compression"
-	CodeFile="System.IO.Compression.aspx.cs"
+	CodeBehind="System.IO.Compression.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_IO_Compression" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

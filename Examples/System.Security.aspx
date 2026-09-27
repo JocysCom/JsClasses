@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="SiteExamples.Master"
 	Title="System.Security"
-	CodeFile="System.Security.aspx.cs"
+	CodeBehind="System.Security.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Security" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

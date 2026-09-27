@@ -13,6 +13,18 @@ namespace JocysCom.WebSites.WebApp.Scripts.Classes.Documents
 {
 	public partial class ShowItem : System.Web.UI.Page
 	{
+		/// <summary>
+		/// ExampleFrame control.
+		/// </summary>
+		/// <remarks>
+		/// Declared here, not in the designer file, so regeneration keeps this type.
+		/// ASP.NET parses &lt;iframe runat="server"&gt; as <see cref="HtmlIframe"/> when the
+		/// application targets .NET 4.5 or later, and as <see cref="HtmlGenericControl"/> below that.
+		/// This folder runs as its own IIS application targeting 4.0 in production and inside the
+		/// 4.5 site locally, so the field uses <see cref="HtmlContainerControl"/>, the base of both.
+		/// </remarks>
+		protected HtmlContainerControl ExampleFrame;
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!Page.IsPostBack)

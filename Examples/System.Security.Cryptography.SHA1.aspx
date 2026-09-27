@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="SiteExamples.Master" AutoEventWireup="true"
 	Title="System.Security.Cryptography.SHA1"
-	CodeFile="System.Security.Cryptography.SHA1.aspx.cs"
+	CodeBehind="System.Security.Cryptography.SHA1.aspx.cs"
 	Inherits="Scripts.Classes.Examples.System_Security_Cryptography_SHA1" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

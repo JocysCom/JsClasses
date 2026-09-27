@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="SiteExamples.Master" AutoEventWireup="true"
 	Title="System.Web.UI.WebControls.ListView"
-	CodeFile="System.Web.UI.WebControls.ListView.aspx.cs"
+	CodeBehind="System.Web.UI.WebControls.ListView.aspx.cs"
 	Inherits="JocysCom.WebSites.WebApp.Scripts.Classes.Examples.System_Web_UI_WebControls_ListView" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
